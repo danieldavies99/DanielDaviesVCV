@@ -2,12 +2,10 @@
 
 Plugin* pluginInstance;
 
-
 void init(Plugin* p) {
 	pluginInstance = p;
 
 	// Add modules here
-	p->addModel(modelMyModule);
 	p->addModel(modelSeqLights8Module);
 
 	// Any other plugin initialization may go here.

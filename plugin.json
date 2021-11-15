@@ -1,24 +1,18 @@
 {
-  "slug": "DanHelloWorld",
-  "name": "DanHelloWorld",
+  "slug": "Sequel",
+  "name": "Sequel",
   "version": "1.0.0",
   "license": "proprietary",
-  "brand": "DanHelloWorld",
-  "author": "",
+  "brand": "Daniel Davies",
+  "author": "Daniel Davies",
   "authorEmail": "",
   "authorUrl": "",
   "pluginUrl": "",
   "manualUrl": "",
-  "sourceUrl": "",
+  "sourceUrl": "https://github.com/danieldavies99/sequel",
   "donateUrl": "",
   "changelogUrl": "",
   "modules": [
-    {
-      "slug": "MyModule",
-      "name": "MyModule",
-      "description": "",
-      "tags": []
-    },
     {
       "slug": "SeqLights8Module",
       "name": "SeqLights8Module",
