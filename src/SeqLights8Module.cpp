@@ -358,104 +358,205 @@ struct SeqLights8ModuleWidget : ModuleWidget {
 		setModule(module);
 		setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/SeqLights8Module.svg")));
 
+		// addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
+		// addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
+		// addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		// addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(37.237, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C0_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(61.446, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C1_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(85.654, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C2_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(109.863, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C3_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(134.071, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C4_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(158.28, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C5_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(182.488, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C6_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(206.696, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C7_PARAM));
+
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(37.237, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C0_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(61.446, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C1_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(85.654, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C2_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(109.863, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C3_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(134.071, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C4_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(158.28, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C5_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(182.488, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C6_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(206.696, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C7_PARAM));
+
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(37.237, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C0_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(61.446, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C1_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(85.654, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C2_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(109.863, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C3_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(134.071, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C4_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(158.28, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C5_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(182.488, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C6_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(206.696, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C7_PARAM));
+
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(37.237, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C0_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(61.446, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C1_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(85.654, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C2_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(109.863, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C3_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(134.071, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C4_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(158.28, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C5_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(182.488, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C6_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(206.696, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C7_PARAM));
+
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(37.237, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C0_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(61.446, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C1_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(85.654, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C2_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(109.863, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C3_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(134.071, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C4_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(158.28, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C5_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(182.488, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C6_PARAM));
+		// addParam(createParamCentered<RedKnob>(mm2px(Vec(206.696, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C7_PARAM));
+
+		// addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(15.41, 39.85)), module, SeqLights8Module::KNOB_TIME_DIVIDE_R0_PARAM));
+		// addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(15.41, 65.25)), module, SeqLights8Module::KNOB_TIME_DIVIDE_R1_PARAM));
+		// addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(15.41, 90.65)), module, SeqLights8Module::KNOB_TIME_DIVIDE_R2_PARAM));
+		// addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(109.863, 16.565)), module, SeqLights8Module::KNOB_STEP_COUNT_PARAM));
+
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(37.237, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C0_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(61.446, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C1_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(85.654, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C2_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(109.863, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C3_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(134.071, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C4_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(158.28, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C5_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(182.488, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C6_PARAM));
+		// addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(206.696, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C7_PARAM));
+
+
+		// addInput(createInputCentered<PJ301MPort>(mm2px(Vec(85.654, 16.565)), module, SeqLights8Module::IN_CLOCK_INPUT));
+
+		// addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(234.493, 34.294)), module, SeqLights8Module::OUT_CV_R0_OUTPUT));
+		// addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(234.493, 45.406)), module, SeqLights8Module::OUT_GATE_R0_OUTPUT));
+		// addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(234.493, 59.694)), module, SeqLights8Module::OUT_CV_R1_OUTPUT));
+		// addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(234.493, 70.806)), module, SeqLights8Module::OUT_GATE_R1_OUTPUT));
+		// addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(234.493, 85.094)), module, SeqLights8Module::OUT_CV_R2_OUTPUT));
+		// addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(234.493, 96.206)), module, SeqLights8Module::OUT_GATE_R2_OUTPUT));
+
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(43.644, 29.7)), module, SeqLights8Module::LIGHT_R0_C0_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(67.852, 29.7)), module, SeqLights8Module::LIGHT_R0_C1_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(92.061, 29.7)), module, SeqLights8Module::LIGHT_R0_C2_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(116.269, 29.7)), module, SeqLights8Module::LIGHT_R0_C3_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(140.477, 29.7)), module, SeqLights8Module::LIGHT_R0_C4_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(164.686, 29.7)), module, SeqLights8Module::LIGHT_R0_C5_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(188.894, 29.7)), module, SeqLights8Module::LIGHT_R0_C6_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(213.103, 29.7)), module, SeqLights8Module::LIGHT_R0_C7_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(43.644, 55.1)), module, SeqLights8Module::LIGHT_R1_C0_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(67.852, 55.1)), module, SeqLights8Module::LIGHT_R1_C1_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(92.061, 55.1)), module, SeqLights8Module::LIGHT_R1_C2_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(116.269, 55.1)), module, SeqLights8Module::LIGHT_R1_C3_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(140.477, 55.1)), module, SeqLights8Module::LIGHT_R1_C4_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(164.686, 55.1)), module, SeqLights8Module::LIGHT_R1_C5_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(188.894, 55.1)), module, SeqLights8Module::LIGHT_R1_C6_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(213.103, 55.1)), module, SeqLights8Module::LIGHT_R1_C7_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(43.644, 80.5)), module, SeqLights8Module::LIGHT_R2_C0_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(67.852, 80.5)), module, SeqLights8Module::LIGHT_R2_C1_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(92.061, 80.5)), module, SeqLights8Module::LIGHT_R2_C2_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(116.269, 80.5)), module, SeqLights8Module::LIGHT_R2_C3_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(140.477, 80.5)), module, SeqLights8Module::LIGHT_R2_C4_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(164.686, 80.5)), module, SeqLights8Module::LIGHT_R2_C5_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(188.894, 80.5)), module, SeqLights8Module::LIGHT_R2_C6_LIGHT));
+		// addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(213.103, 80.5)), module, SeqLights8Module::LIGHT_R2_C7_LIGHT));
+
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(37.237, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C0_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(61.446, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C1_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(85.654, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C2_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(109.863, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C3_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(134.071, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C4_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(158.28, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C5_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(182.488, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C6_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(206.696, 34.294)), module, SeqLights8Module::KNOB_STEP_R0_C7_PARAM));
+		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(96.113, 16.145)), module, SeqLights8Module::KNOB_STEP_COUNT_PARAM));
 
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(37.237, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C0_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(61.446, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C1_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(85.654, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C2_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(109.863, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C3_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(134.071, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C4_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(158.28, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C5_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(182.488, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C6_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(206.696, 45.406)), module, SeqLights8Module::SWITCH_GATE_R0_C7_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(38.188, 33.874)), module, SeqLights8Module::KNOB_STEP_R0_C0_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(57.496, 33.874)), module, SeqLights8Module::KNOB_STEP_R0_C2_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(76.805, 33.874)), module, SeqLights8Module::KNOB_STEP_R0_C3_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(96.113, 33.874)), module, SeqLights8Module::KNOB_STEP_R0_C4_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(115.422, 33.874)), module, SeqLights8Module::KNOB_STEP_R0_C1_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(134.731, 33.874)), module, SeqLights8Module::KNOB_STEP_R0_C5_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(154.039, 33.874)), module, SeqLights8Module::KNOB_STEP_R0_C6_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(173.348, 33.874)), module, SeqLights8Module::KNOB_STEP_R0_C7_PARAM));
 
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(37.237, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C0_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(61.446, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C1_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(85.654, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C2_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(109.863, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C3_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(134.071, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C4_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(158.28, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C5_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(182.488, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C6_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(206.696, 59.694)), module, SeqLights8Module::KNOB_STEP_R1_C7_PARAM));
+		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(18.574, 39.431)), module, SeqLights8Module::KNOB_TIME_DIVIDE_R0_PARAM));
 
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(37.237, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C0_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(61.446, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C1_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(85.654, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C2_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(109.863, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C3_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(134.071, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C4_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(158.28, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C5_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(182.488, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C6_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(206.696, 70.806)), module, SeqLights8Module::SWITCH_GATE_R1_C7_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(38.188, 44.987)), module, SeqLights8Module::SWITCH_GATE_R0_C0_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(57.496, 44.987)), module, SeqLights8Module::SWITCH_GATE_R0_C2_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(76.805, 44.987)), module, SeqLights8Module::SWITCH_GATE_R0_C3_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(96.113, 44.987)), module, SeqLights8Module::SWITCH_GATE_R0_C4_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(115.422, 44.987)), module, SeqLights8Module::SWITCH_GATE_R0_C1_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(134.731, 44.987)), module, SeqLights8Module::SWITCH_GATE_R0_C5_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(154.039, 44.987)), module, SeqLights8Module::SWITCH_GATE_R0_C6_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(173.348, 44.987)), module, SeqLights8Module::SWITCH_GATE_R0_C7_PARAM));
 
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(37.237, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C0_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(61.446, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C1_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(85.654, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C2_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(109.863, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C3_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(134.071, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C4_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(158.28, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C5_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(182.488, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C6_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(206.696, 85.094)), module, SeqLights8Module::KNOB_STEP_R2_C7_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(38.188, 63.772)), module, SeqLights8Module::KNOB_STEP_R1_C0_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(57.496, 63.772)), module, SeqLights8Module::KNOB_STEP_R1_C1_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(76.805, 63.772)), module, SeqLights8Module::KNOB_STEP_R1_C2_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(96.113, 63.772)), module, SeqLights8Module::KNOB_STEP_R1_C3_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(115.422, 63.772)), module, SeqLights8Module::KNOB_STEP_R1_C4_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(134.731, 63.772)), module, SeqLights8Module::KNOB_STEP_R1_C5_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(154.039, 63.772)), module, SeqLights8Module::KNOB_STEP_R1_C6_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(173.348, 63.772)), module, SeqLights8Module::KNOB_STEP_R1_C7_PARAM));
 
-		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(15.41, 39.85)), module, SeqLights8Module::KNOB_TIME_DIVIDE_R0_PARAM));
-		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(15.41, 65.25)), module, SeqLights8Module::KNOB_TIME_DIVIDE_R1_PARAM));
-		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(15.41, 90.65)), module, SeqLights8Module::KNOB_TIME_DIVIDE_R2_PARAM));
-		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(109.863, 16.565)), module, SeqLights8Module::KNOB_STEP_COUNT_PARAM));
+		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(18.574, 69.329)), module, SeqLights8Module::KNOB_TIME_DIVIDE_R1_PARAM));
 
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(37.237, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C0_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(61.446, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C1_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(85.654, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C2_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(109.863, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C3_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(134.071, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C4_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(158.28, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C5_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(182.488, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C6_PARAM));
-		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(206.696, 96.206)), module, SeqLights8Module::SWITCH_GATE_R2_C7_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(38.188, 74.885)), module, SeqLights8Module::SWITCH_GATE_R1_C0_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(57.496, 74.885)), module, SeqLights8Module::SWITCH_GATE_R1_C1_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(76.805, 74.885)), module, SeqLights8Module::SWITCH_GATE_R1_C2_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(96.113, 74.885)), module, SeqLights8Module::SWITCH_GATE_R1_C3_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(115.422, 74.885)), module, SeqLights8Module::SWITCH_GATE_R1_C4_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(134.731, 74.885)), module, SeqLights8Module::SWITCH_GATE_R1_C5_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(154.039, 74.885)), module, SeqLights8Module::SWITCH_GATE_R1_C6_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(173.348, 74.885)), module, SeqLights8Module::SWITCH_GATE_R1_C7_PARAM));
 
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(38.188, 93.67)), module, SeqLights8Module::KNOB_STEP_R2_C0_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(57.496, 93.67)), module, SeqLights8Module::KNOB_STEP_R2_C1_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(76.805, 93.67)), module, SeqLights8Module::KNOB_STEP_R2_C2_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(96.113, 93.67)), module, SeqLights8Module::KNOB_STEP_R2_C3_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(115.422, 93.67)), module, SeqLights8Module::KNOB_STEP_R2_C4_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(134.731, 93.67)), module, SeqLights8Module::KNOB_STEP_R2_C5_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(154.039, 93.67)), module, SeqLights8Module::KNOB_STEP_R2_C6_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(173.348, 93.67)), module, SeqLights8Module::KNOB_STEP_R2_C7_PARAM));
 
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(85.654, 16.565)), module, SeqLights8Module::IN_CLOCK_INPUT));
+		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(18.574, 99.226)), module, SeqLights8Module::KNOB_TIME_DIVIDE_R2_PARAM));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(234.493, 34.294)), module, SeqLights8Module::OUT_CV_R0_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(234.493, 45.406)), module, SeqLights8Module::OUT_GATE_R0_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(234.493, 59.694)), module, SeqLights8Module::OUT_CV_R1_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(234.493, 70.806)), module, SeqLights8Module::OUT_GATE_R1_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(234.493, 85.094)), module, SeqLights8Module::OUT_CV_R2_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(234.493, 96.206)), module, SeqLights8Module::OUT_GATE_R2_OUTPUT));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(38.188, 104.783)), module, SeqLights8Module::SWITCH_GATE_R2_C0_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(57.496, 104.783)), module, SeqLights8Module::SWITCH_GATE_R2_C1_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(76.805, 104.783)), module, SeqLights8Module::SWITCH_GATE_R2_C2_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(96.113, 104.783)), module, SeqLights8Module::SWITCH_GATE_R2_C3_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(115.422, 104.783)), module, SeqLights8Module::SWITCH_GATE_R2_C4_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(134.731, 104.783)), module, SeqLights8Module::SWITCH_GATE_R2_C5_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(154.039, 104.783)), module, SeqLights8Module::SWITCH_GATE_R2_C6_PARAM));
+		addParam(createParamCentered<LatchingSwitch<CKD6>>(mm2px(Vec(173.348, 104.783)), module, SeqLights8Module::SWITCH_GATE_R2_C7_PARAM));
 
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(43.644, 29.7)), module, SeqLights8Module::LIGHT_R0_C0_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(67.852, 29.7)), module, SeqLights8Module::LIGHT_R0_C1_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(92.061, 29.7)), module, SeqLights8Module::LIGHT_R0_C2_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(116.269, 29.7)), module, SeqLights8Module::LIGHT_R0_C3_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(140.477, 29.7)), module, SeqLights8Module::LIGHT_R0_C4_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(164.686, 29.7)), module, SeqLights8Module::LIGHT_R0_C5_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(188.894, 29.7)), module, SeqLights8Module::LIGHT_R0_C6_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(213.103, 29.7)), module, SeqLights8Module::LIGHT_R0_C7_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(43.644, 55.1)), module, SeqLights8Module::LIGHT_R1_C0_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(67.852, 55.1)), module, SeqLights8Module::LIGHT_R1_C1_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(92.061, 55.1)), module, SeqLights8Module::LIGHT_R1_C2_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(116.269, 55.1)), module, SeqLights8Module::LIGHT_R1_C3_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(140.477, 55.1)), module, SeqLights8Module::LIGHT_R1_C4_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(164.686, 55.1)), module, SeqLights8Module::LIGHT_R1_C5_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(188.894, 55.1)), module, SeqLights8Module::LIGHT_R1_C6_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(213.103, 55.1)), module, SeqLights8Module::LIGHT_R1_C7_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(43.644, 80.5)), module, SeqLights8Module::LIGHT_R2_C0_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(67.852, 80.5)), module, SeqLights8Module::LIGHT_R2_C1_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(92.061, 80.5)), module, SeqLights8Module::LIGHT_R2_C2_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(116.269, 80.5)), module, SeqLights8Module::LIGHT_R2_C3_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(140.477, 80.5)), module, SeqLights8Module::LIGHT_R2_C4_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(164.686, 80.5)), module, SeqLights8Module::LIGHT_R2_C5_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(188.894, 80.5)), module, SeqLights8Module::LIGHT_R2_C6_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(213.103, 80.5)), module, SeqLights8Module::LIGHT_R2_C7_LIGHT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(76.805, 16.145)), module, SeqLights8Module::IN_CLOCK_INPUT));
+
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.144, 33.591)), module, SeqLights8Module::OUT_CV_R0_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.144, 44.704)), module, SeqLights8Module::OUT_GATE_R0_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.144, 63.772)), module, SeqLights8Module::OUT_CV_R1_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.144, 74.885)), module, SeqLights8Module::OUT_GATE_R1_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.144, 93.67)), module, SeqLights8Module::OUT_CV_R2_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.144, 104.783)), module, SeqLights8Module::OUT_GATE_R2_OUTPUT));
+
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(44.594, 29.28)), module, SeqLights8Module::LIGHT_R0_C0_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(63.903, 29.28)), module, SeqLights8Module::LIGHT_R0_C2_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(83.211, 29.28)), module, SeqLights8Module::LIGHT_R0_C3_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(102.52, 29.28)), module, SeqLights8Module::LIGHT_R0_C4_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(121.828, 29.28)), module, SeqLights8Module::LIGHT_R0_C1_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(141.137, 29.28)), module, SeqLights8Module::LIGHT_R0_C5_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(160.446, 29.28)), module, SeqLights8Module::LIGHT_R0_C6_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 29.28)), module, SeqLights8Module::LIGHT_R0_C7_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(44.594, 59.178)), module, SeqLights8Module::LIGHT_R1_C0_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(63.903, 59.178)), module, SeqLights8Module::LIGHT_R1_C1_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(83.211, 59.178)), module, SeqLights8Module::LIGHT_R1_C2_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(102.52, 59.178)), module, SeqLights8Module::LIGHT_R1_C3_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(121.828, 59.178)), module, SeqLights8Module::LIGHT_R1_C4_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(141.137, 59.178)), module, SeqLights8Module::LIGHT_R1_C5_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(160.446, 59.178)), module, SeqLights8Module::LIGHT_R1_C6_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 59.178)), module, SeqLights8Module::LIGHT_R1_C7_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(44.594, 89.076)), module, SeqLights8Module::LIGHT_R2_C0_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(63.903, 89.076)), module, SeqLights8Module::LIGHT_R2_C1_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(83.211, 89.076)), module, SeqLights8Module::LIGHT_R2_C2_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(102.52, 89.076)), module, SeqLights8Module::LIGHT_R2_C3_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(121.828, 89.076)), module, SeqLights8Module::LIGHT_R2_C4_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(141.137, 89.076)), module, SeqLights8Module::LIGHT_R2_C5_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(160.446, 89.076)), module, SeqLights8Module::LIGHT_R2_C6_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 89.076)), module, SeqLights8Module::LIGHT_R2_C7_LIGHT));
 	}
 };
 
