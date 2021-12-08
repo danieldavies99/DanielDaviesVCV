@@ -209,6 +209,7 @@ struct Sequel8 : Module {
 		KNOB_TIME_DIVIDE_R2_PARAM,
 		KNOB_STEP_COUNT_PARAM,
 		KNOB_CLOCK_SPEED_PARAM,
+		SWITCH_GATE_MODE_PARAM,
 		NUM_PARAMS
 	};
 	enum InputIds {
@@ -251,6 +252,8 @@ struct Sequel8 : Module {
 		LIGHT_R2_C5_LIGHT,
 		LIGHT_R2_C6_LIGHT,
 		LIGHT_R2_C7_LIGHT,
+		LIGHT_GATE_MODE_CONTINOUS_LIGHT,
+		LIGHT_GATE_MODE_TRIGGER_LIGHT,
 		NUM_LIGHTS
 	};
 
@@ -260,6 +263,8 @@ struct Sequel8 : Module {
 		configParam(KNOB_STEP_COUNT_PARAM, 0.f, 8.f, 8.f, "");
 	
 		configParam(KNOB_CLOCK_SPEED_PARAM, 0.f, 1.0f, 0.5f, "");
+
+		configParam(SWITCH_GATE_MODE_PARAM, 0.f, 1.f, 0.f, "");
 
 		configParam(KNOB_TIME_DIVIDE_R0_PARAM, 1.f, 10.f, 1.f, "");
 		configParam(KNOB_TIME_DIVIDE_R1_PARAM, 1.f, 10.f, 1.f, "");
@@ -353,11 +358,14 @@ struct Sequel8 : Module {
 
 	float lastclockVoltage = 0.0f;
 	float lastResetInput = 0.0f;
+
 	dsp::PulseGenerator gatePulseR0;
 	dsp::PulseGenerator gatePulseR1;
 	dsp::PulseGenerator gatePulseR2;
 
 	ClockTracker clockTracker;
+
+	bool gateTriggerModeEnabled = true;
 
 	bool shouldPulseThisStep(short row) {
 		return params[getButtonId(row, clockTracker.getCurrentStepForRow(row))].getValue() > 0.5 && clockTracker.getHasPulsedThisStepForRow(row) == false;
@@ -469,7 +477,6 @@ struct Sequel8 : Module {
 			}
 		}
 
-
 		// Handle step indicator lights
 		turnOffAllLights();
 		lights[getLightId(0, clockTracker.getCurrentStepForRow(0))].setBrightness(1.0f);
@@ -477,20 +484,49 @@ struct Sequel8 : Module {
 		lights[getLightId(2, clockTracker.getCurrentStepForRow(2))].setBrightness(1.0f);
 		// End
 
-		// Handle pulse outputs
-		if(outputs[OUT_GATE_R0_OUTPUT].isConnected()) {
+		// handle gate trigger/continous toggle
+		if(params[SWITCH_GATE_MODE_PARAM].getValue() > 0) {
+			gateTriggerModeEnabled = true;
+			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(1);
+			lights[LIGHT_GATE_MODE_CONTINOUS_LIGHT].setBrightness(0);
+		} else {
+			gateTriggerModeEnabled = false;
+			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(0);
+			lights[LIGHT_GATE_MODE_CONTINOUS_LIGHT].setBrightness(1);
+		}
+		// end
+
+		// Handle pulse (trigger) gate outputs
+		if(outputs[OUT_GATE_R0_OUTPUT].isConnected() && gateTriggerModeEnabled) {
 			const bool pulseR0 = gatePulseR0.process(1.0 / args.sampleRate);
 			outputs[OUT_GATE_R0_OUTPUT].setVoltage(pulseR0 ? 10.0 : 0.0);		
 		}
 
-		if(outputs[OUT_GATE_R1_OUTPUT].isConnected()) {
+		if(outputs[OUT_GATE_R1_OUTPUT].isConnected() && gateTriggerModeEnabled) {
 			const bool pulseR1 = gatePulseR1.process(1.0 / args.sampleRate);
 			outputs[OUT_GATE_R1_OUTPUT].setVoltage(pulseR1 ? 10.0 : 0.0);
 		}
 
-		if(outputs[OUT_GATE_R2_OUTPUT].isConnected()) {
+		if(outputs[OUT_GATE_R2_OUTPUT].isConnected() && gateTriggerModeEnabled) {
 			const bool pulseR2 = gatePulseR2.process(1.0 / args.sampleRate);
 			outputs[OUT_GATE_R2_OUTPUT].setVoltage(pulseR2 ? 10.0 : 0.0);
+		}
+		// End
+
+		// Handle continous gate outputs
+		if(outputs[OUT_GATE_R0_OUTPUT].isConnected() && !gateTriggerModeEnabled) {
+			const bool shouldGateR0 = params[getButtonId(0, clockTracker.getCurrentStepForRow(0))].getValue() > 0;
+			outputs[OUT_GATE_R0_OUTPUT].setVoltage(shouldGateR0 ? 10.0 : 0.0);		
+		}
+
+		if(outputs[OUT_GATE_R1_OUTPUT].isConnected() && !gateTriggerModeEnabled) {
+			const bool shouldGateR1 = params[getButtonId(0, clockTracker.getCurrentStepForRow(0))].getValue() > 0;
+			outputs[OUT_GATE_R1_OUTPUT].setVoltage(shouldGateR1 ? 10.0 : 0.0);		
+		}
+
+		if(outputs[OUT_GATE_R2_OUTPUT].isConnected() && !gateTriggerModeEnabled) {
+			const bool shouldGateR2 = params[getButtonId(0, clockTracker.getCurrentStepForRow(0))].getValue() > 0;
+			outputs[OUT_GATE_R2_OUTPUT].setVoltage(shouldGateR2 ? 10.0 : 0.0);		
 		}
 		// End
 
@@ -593,6 +629,10 @@ struct Sequel8ModuleWidget : ModuleWidget {
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.629, 74.885)), module, Sequel8::OUT_GATE_R1_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.629, 93.67)), module, Sequel8::OUT_CV_R2_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.629, 104.783)), module, Sequel8::OUT_GATE_R2_OUTPUT));
+
+		addParam(createParamCentered<CKD6InvisibleLatch>(mm2px(Vec(173.348, 16.145)), module, Sequel8::SWITCH_GATE_MODE_PARAM));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 11.551)), module, Sequel8::LIGHT_GATE_MODE_CONTINOUS_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 20.902)), module, Sequel8::LIGHT_GATE_MODE_TRIGGER_LIGHT));
 
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(44.594, 29.28)), module, Sequel8::LIGHT_R0_C0_LIGHT));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(63.903, 29.28)), module, Sequel8::LIGHT_R0_C1_LIGHT));
