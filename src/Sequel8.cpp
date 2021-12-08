@@ -252,7 +252,7 @@ struct Sequel8 : Module {
 		LIGHT_R2_C5_LIGHT,
 		LIGHT_R2_C6_LIGHT,
 		LIGHT_R2_C7_LIGHT,
-		LIGHT_GATE_MODE_CONTINOUS_LIGHT,
+		LIGHT_GATE_MODE_continuous_LIGHT,
 		LIGHT_GATE_MODE_TRIGGER_LIGHT,
 		NUM_LIGHTS
 	};
@@ -260,65 +260,78 @@ struct Sequel8 : Module {
 	Sequel8() {
 		config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
 
-		configParam(KNOB_STEP_COUNT_PARAM, 0.f, 8.f, 8.f, "");
+		configInput(IN_RESET_INPUT, "Reset");
+		configInput(IN_CLOCK_INPUT, "Clock");
+
+		configOutput(OUT_CV_R0_OUTPUT, "Row 1 CV");
+		configOutput(OUT_CV_R1_OUTPUT, "Row 2 CV");
+		configOutput(OUT_CV_R2_OUTPUT, "Row 3 CV");
+
+		configOutput(OUT_GATE_R0_OUTPUT, "Row 1 gate");
+		configOutput(OUT_GATE_R1_OUTPUT, "Row 2 gate");
+		configOutput(OUT_GATE_R2_OUTPUT, "Row 3 gate");
+
+		configOutput(OUT_CLOCK_OUTPUT, "Clock");
+
+		configParam(KNOB_STEP_COUNT_PARAM, 0.f, 8.f, 8.f, "Step count");
 	
-		configParam(KNOB_CLOCK_SPEED_PARAM, 0.f, 1.0f, 0.5f, "");
+		configParam(KNOB_CLOCK_SPEED_PARAM, 0.f, 1.0f, 0.5f, "Speed");
 
-		configParam(SWITCH_GATE_MODE_PARAM, 0.f, 1.f, 0.f, "");
+		configSwitch(SWITCH_GATE_MODE_PARAM, 0, 1, 0, "Gate Mode", {"Continuous", "Trigger"});
 
-		configParam(KNOB_TIME_DIVIDE_R0_PARAM, 1.f, 10.f, 1.f, "");
-		configParam(KNOB_TIME_DIVIDE_R1_PARAM, 1.f, 10.f, 1.f, "");
-		configParam(KNOB_TIME_DIVIDE_R2_PARAM, 1.f, 10.f, 1.f, "");
+		configParam(KNOB_TIME_DIVIDE_R0_PARAM, 1.f, 10.f, 1.f, "Clock Divide Row 1");
+		configParam(KNOB_TIME_DIVIDE_R1_PARAM, 1.f, 10.f, 1.f, "Clock Divide Row 2");
+		configParam(KNOB_TIME_DIVIDE_R2_PARAM, 1.f, 10.f, 1.f, "Clock Divide Row 3");
 
-		configParam(KNOB_STEP_R0_C0_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R0_C1_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R0_C2_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R0_C3_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R0_C4_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R0_C5_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R0_C6_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R0_C7_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R1_C0_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R1_C1_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R1_C2_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R1_C3_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R1_C4_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R1_C5_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R1_C6_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R1_C7_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R2_C0_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R2_C1_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R2_C2_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R2_C3_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R2_C4_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R2_C5_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R2_C6_PARAM, 0.f, 10.f, 0.f, "");
-		configParam(KNOB_STEP_R2_C7_PARAM, 0.f, 10.f, 0.f, "");
+		configParam(KNOB_STEP_R0_C0_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R0_C1_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R0_C2_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R0_C3_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R0_C4_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R0_C5_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R0_C6_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R0_C7_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R1_C0_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R1_C1_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R1_C2_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R1_C3_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R1_C4_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R1_C5_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R1_C6_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R1_C7_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R2_C0_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R2_C1_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R2_C2_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R2_C3_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R2_C4_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R2_C5_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R2_C6_PARAM, 0.f, 10.f, 0.f, "Step CV");
+		configParam(KNOB_STEP_R2_C7_PARAM, 0.f, 10.f, 0.f, "Step CV");
 
-		configParam(SWITCH_GATE_R1_C0_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R1_C1_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R1_C2_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R1_C3_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R1_C4_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R1_C5_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R1_C6_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R1_C7_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R0_C0_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R0_C1_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R0_C2_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R0_C3_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R0_C4_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R0_C5_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R0_C6_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R0_C7_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R2_C0_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R2_C1_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R2_C2_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R2_C3_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R2_C4_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R2_C5_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R2_C6_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(SWITCH_GATE_R2_C7_PARAM, 0.f, 1.f, 0.f, "");
+		configSwitch(SWITCH_GATE_R1_C0_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C1_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C2_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C3_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C4_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C5_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C6_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C7_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R0_C0_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R0_C1_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R0_C2_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R0_C3_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R0_C4_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R0_C5_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R0_C6_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R0_C7_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R2_C0_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R2_C1_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R2_C2_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R2_C3_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R2_C4_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R2_C5_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R2_C6_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R2_C7_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
 	}
 
 	// ****** Right click menu methods *******
@@ -484,15 +497,15 @@ struct Sequel8 : Module {
 		lights[getLightId(2, clockTracker.getCurrentStepForRow(2))].setBrightness(1.0f);
 		// End
 
-		// handle gate trigger/continous toggle
+		// handle gate trigger/continuous toggle
 		if(params[SWITCH_GATE_MODE_PARAM].getValue() > 0) {
 			gateTriggerModeEnabled = true;
 			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(1);
-			lights[LIGHT_GATE_MODE_CONTINOUS_LIGHT].setBrightness(0);
+			lights[LIGHT_GATE_MODE_continuous_LIGHT].setBrightness(0);
 		} else {
 			gateTriggerModeEnabled = false;
 			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(0);
-			lights[LIGHT_GATE_MODE_CONTINOUS_LIGHT].setBrightness(1);
+			lights[LIGHT_GATE_MODE_continuous_LIGHT].setBrightness(1);
 		}
 		// end
 
@@ -513,7 +526,7 @@ struct Sequel8 : Module {
 		}
 		// End
 
-		// Handle continous gate outputs
+		// Handle continuous gate outputs
 		if(outputs[OUT_GATE_R0_OUTPUT].isConnected() && !gateTriggerModeEnabled) {
 			const bool shouldGateR0 = params[getButtonId(0, clockTracker.getCurrentStepForRow(0))].getValue() > 0;
 			outputs[OUT_GATE_R0_OUTPUT].setVoltage(shouldGateR0 ? 10.0 : 0.0);		
@@ -631,7 +644,7 @@ struct Sequel8ModuleWidget : ModuleWidget {
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.629, 104.783)), module, Sequel8::OUT_GATE_R2_OUTPUT));
 
 		addParam(createParamCentered<CKD6InvisibleLatch>(mm2px(Vec(173.348, 16.145)), module, Sequel8::SWITCH_GATE_MODE_PARAM));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 11.551)), module, Sequel8::LIGHT_GATE_MODE_CONTINOUS_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 11.551)), module, Sequel8::LIGHT_GATE_MODE_continuous_LIGHT));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 20.902)), module, Sequel8::LIGHT_GATE_MODE_TRIGGER_LIGHT));
 
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(44.594, 29.28)), module, Sequel8::LIGHT_R0_C0_LIGHT));
