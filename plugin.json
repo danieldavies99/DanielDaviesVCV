@@ -1,11 +1,11 @@
 {
-  "slug": "Sequel",
-  "name": "Sequel",
-  "version": "1.0.0",
+  "slug": "Sequel_sequencers",
+  "name": "Sequel Sequencers",
+  "version": "2.0.0",
   "license": "proprietary",
   "brand": "Daniel Davies",
   "author": "Daniel Davies",
-  "authorEmail": "",
+  "authorEmail": "danieldaives99@gmail.com",
   "authorUrl": "",
   "pluginUrl": "",
   "manualUrl": "",
@@ -14,10 +14,13 @@
   "changelogUrl": "",
   "modules": [
     {
-      "slug": "SeqLights8Module",
-      "name": "SeqLights8Module",
-      "description": "",
-      "tags": []
+      "slug": "Sequel8",
+      "name": "Sequel 8",
+      "description": "3 row / 8 step sequencer with built-in clock divider, by Daniel Davies",
+      "tags": [
+        "Clock modulator",
+        "Sequencer"
+      ]
     }
   ]
 }
