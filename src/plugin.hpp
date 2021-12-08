@@ -34,6 +34,15 @@ struct CKD6Latch : app::SvgSwitch {
 	}
 };
 
+struct CKD6InvisibleLatch : app::SvgSwitch {
+	CKD6InvisibleLatch() {
+		momentary = false;
+        latch = true; // this is WEIRD seems to be reversed (value is latched but animation frame is as if it's momentary)
+		addFrame(Svg::load(asset::system("res/ComponentLibrary/CKD6_0.svg")));
+		addFrame(Svg::load(asset::system("res/ComponentLibrary/CKD6_1.svg")));
+	}
+};
+
 struct DigitDisplay : SvgWidget {
     std::shared_ptr<rack::Svg> digit0 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay0.svg"));
     std::shared_ptr<rack::Svg> digit1 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay1.svg"));
