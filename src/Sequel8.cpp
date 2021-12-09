@@ -252,7 +252,7 @@ struct Sequel8 : Module {
 		LIGHT_R2_C5_LIGHT,
 		LIGHT_R2_C6_LIGHT,
 		LIGHT_R2_C7_LIGHT,
-		LIGHT_GATE_MODE_continuous_LIGHT,
+		LIGHT_GATE_MODE_CONTINUOUS_LIGHT,
 		LIGHT_GATE_MODE_TRIGGER_LIGHT,
 		NUM_LIGHTS
 	};
@@ -501,11 +501,11 @@ struct Sequel8 : Module {
 		if(params[SWITCH_GATE_MODE_PARAM].getValue() > 0) {
 			gateTriggerModeEnabled = true;
 			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(1);
-			lights[LIGHT_GATE_MODE_continuous_LIGHT].setBrightness(0);
+			lights[LIGHT_GATE_MODE_CONTINUOUS_LIGHT].setBrightness(0);
 		} else {
 			gateTriggerModeEnabled = false;
 			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(0);
-			lights[LIGHT_GATE_MODE_continuous_LIGHT].setBrightness(1);
+			lights[LIGHT_GATE_MODE_CONTINUOUS_LIGHT].setBrightness(1);
 		}
 		// end
 
@@ -644,7 +644,7 @@ struct Sequel8ModuleWidget : ModuleWidget {
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.629, 104.783)), module, Sequel8::OUT_GATE_R2_OUTPUT));
 
 		addParam(createParamCentered<CKD6InvisibleLatch>(mm2px(Vec(173.348, 16.145)), module, Sequel8::SWITCH_GATE_MODE_PARAM));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 11.551)), module, Sequel8::LIGHT_GATE_MODE_continuous_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 11.551)), module, Sequel8::LIGHT_GATE_MODE_CONTINUOUS_LIGHT));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 20.902)), module, Sequel8::LIGHT_GATE_MODE_TRIGGER_LIGHT));
 
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(44.594, 29.28)), module, Sequel8::LIGHT_R0_C0_LIGHT));
