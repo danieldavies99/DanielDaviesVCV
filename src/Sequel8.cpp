@@ -279,9 +279,9 @@ struct Sequel8 : Module {
 
 		configSwitch(SWITCH_GATE_MODE_PARAM, 0, 1, 0, "Gate Mode", {"Continuous", "Trigger"});
 
-		configParam(KNOB_TIME_DIVIDE_R0_PARAM, 1.f, 10.f, 1.f, "Clock Divide Row 1");
-		configParam(KNOB_TIME_DIVIDE_R1_PARAM, 1.f, 10.f, 1.f, "Clock Divide Row 2");
-		configParam(KNOB_TIME_DIVIDE_R2_PARAM, 1.f, 10.f, 1.f, "Clock Divide Row 3");
+		configSwitch(KNOB_TIME_DIVIDE_R0_PARAM, 1, 10, 1, "Clock Divide Row 1", {"1", "2", "3", "4", "6", "8", "16", "32", "48", "64"});
+		configSwitch(KNOB_TIME_DIVIDE_R1_PARAM, 1, 10, 1, "Clock Divide Row 2", {"1", "2", "3", "4", "6", "8", "16", "32", "48", "64"});
+		configSwitch(KNOB_TIME_DIVIDE_R2_PARAM, 1, 10, 1, "Clock Divide Row 3", {"1", "2", "3", "4", "6", "8", "16", "32", "48", "64"});
 
 		configParam(KNOB_STEP_R0_C0_PARAM, 0.f, 10.f, 0.f, "Step CV");
 		configParam(KNOB_STEP_R0_C1_PARAM, 0.f, 10.f, 0.f, "Step CV");
