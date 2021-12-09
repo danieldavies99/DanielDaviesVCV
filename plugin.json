@@ -1,13 +1,13 @@
 {
-  "slug": "Sequel_sequencers",
+  "slug": "SequelSequencers",
   "name": "Sequel Sequencers",
   "version": "2.0.0",
-  "license": "proprietary",
+  "license": "GPL-3.0-or-later",
   "brand": "Daniel Davies",
   "author": "Daniel Davies",
-  "authorEmail": "danieldaives99@gmail.com",
-  "authorUrl": "",
-  "pluginUrl": "",
+  "authorEmail": "danieldavies99@gmail.com",
+  "authorUrl": "https://github.com/danieldavies99",
+  "pluginUrl": "https://github.com/danieldavies99/sequel",
   "manualUrl": "",
   "sourceUrl": "https://github.com/danieldavies99/sequel",
   "donateUrl": "",
@@ -16,7 +16,7 @@
     {
       "slug": "Sequel8",
       "name": "Sequel 8",
-      "description": "3 row / 8 step sequencer with built-in clock divider, by Daniel Davies",
+      "description": "3 row / 8 step sequencer with built-in clock divider",
       "tags": [
         "Clock modulator",
         "Sequencer"
