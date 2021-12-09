@@ -8,16 +8,22 @@ std::string DigitDisplay::formatDigitValue(int value) {
     if(value < 10) {
         res = "0" + res;
     }
+    if(res.length() < 2) {
+    	return "00";
+    }
     return res;
 };
 
 void DigitDisplay::draw(const DrawArgs &args)  {
+    if(!&args.vg) {
+    	return;
+    }
     nvgBeginPath(args.vg);
     nvgRoundedRect(args.vg, 0, mm2px(-1), mm2px(8.5), mm2px(7), 1);
     nvgFillColor(args.vg, nvgRGBA(0, 0, 0, 255));
     nvgFill(args.vg);
     std::string twoDigitValue = formatDigitValue(*value);
-    for(int i = 0; i < 2; i++) {
+    for(std::string::size_type i = 0; i < twoDigitValue.length(); i++) {
         switch(twoDigitValue[i]) {
             case '0':
                 svgDraw(args.vg, digit0->handle);
