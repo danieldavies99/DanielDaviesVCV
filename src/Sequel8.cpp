@@ -252,10 +252,36 @@ struct Sequel8 : Module {
 		LIGHT_R2_C5_LIGHT,
 		LIGHT_R2_C6_LIGHT,
 		LIGHT_R2_C7_LIGHT,
+		GATE_LIGHT_R0_C0_LIGHT,
+		GATE_LIGHT_R0_C1_LIGHT,
+		GATE_LIGHT_R0_C2_LIGHT,
+		GATE_LIGHT_R0_C3_LIGHT,
+		GATE_LIGHT_R0_C4_LIGHT,
+		GATE_LIGHT_R0_C5_LIGHT,
+		GATE_LIGHT_R0_C6_LIGHT,
+		GATE_LIGHT_R0_C7_LIGHT,
+		GATE_LIGHT_R1_C0_LIGHT,
+		GATE_LIGHT_R1_C1_LIGHT,
+		GATE_LIGHT_R1_C2_LIGHT,
+		GATE_LIGHT_R1_C3_LIGHT,
+		GATE_LIGHT_R1_C4_LIGHT,
+		GATE_LIGHT_R1_C5_LIGHT,
+		GATE_LIGHT_R1_C6_LIGHT,
+		GATE_LIGHT_R1_C7_LIGHT,
+		GATE_LIGHT_R2_C0_LIGHT,
+		GATE_LIGHT_R2_C1_LIGHT,
+		GATE_LIGHT_R2_C2_LIGHT,
+		GATE_LIGHT_R2_C3_LIGHT,
+		GATE_LIGHT_R2_C4_LIGHT,
+		GATE_LIGHT_R2_C5_LIGHT,
+		GATE_LIGHT_R2_C6_LIGHT,
+		GATE_LIGHT_R2_C7_LIGHT,
 		LIGHT_GATE_MODE_CONTINUOUS_LIGHT,
 		LIGHT_GATE_MODE_TRIGGER_LIGHT,
 		NUM_LIGHTS
 	};
+
+
 
 	Sequel8() {
 		config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
@@ -384,8 +410,8 @@ struct Sequel8 : Module {
 		return params[getButtonId(row, clockTracker.getCurrentStepForRow(row))].getValue() > 0.5 && clockTracker.getHasPulsedThisStepForRow(row) == false;
 	}
 
-	void turnOffAllLights() {
-		for(int i = 0; i < NUM_LIGHTS; i++ ) {
+	void turnOffAllStepIndicatorLights() {
+		for(int i = 0; i < 24; i++ ) {
 			lights[i].setBrightness(0);
 		}
 	}
@@ -441,6 +467,16 @@ struct Sequel8 : Module {
 		return shouldClockOutPulse ? 10.0 : 0.0;
 	}
 
+	void handleGateButtonLeds() {
+		for(int i = 0; i < 24; i++) {
+			if(params[i + 24].getValue() > 0) {
+				lights[i+24].setBrightness(0.5);
+			} else {
+				lights[i+24].setBrightness(0.0);
+			}
+		}
+	}
+
 	void process(const ProcessArgs& args) override {
 
 		clockTracker.divideR0 = clockDivideDisplayValueR0 = mapClockDivideValues(round(params[KNOB_TIME_DIVIDE_R0_PARAM].getValue()));
@@ -464,8 +500,10 @@ struct Sequel8 : Module {
 
 		clockTracker.numSteps = round(params[KNOB_STEP_COUNT_PARAM].getValue());
 
+		handleGateButtonLeds();
+
 		if(clockTracker.numSteps == 0) { // don't output anything if steps = 0;
-			turnOffAllLights();
+			turnOffAllStepIndicatorLights();
 			return;
 		}
 
@@ -491,7 +529,7 @@ struct Sequel8 : Module {
 		}
 
 		// Handle step indicator lights
-		turnOffAllLights();
+		turnOffAllStepIndicatorLights();
 		lights[getLightId(0, clockTracker.getCurrentStepForRow(0))].setBrightness(1.0f);
 		lights[getLightId(1, clockTracker.getCurrentStepForRow(1))].setBrightness(1.0f);
 		lights[getLightId(2, clockTracker.getCurrentStepForRow(2))].setBrightness(1.0f);
@@ -596,6 +634,15 @@ struct Sequel8ModuleWidget : ModuleWidget {
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(154.039, 44.987)), module, Sequel8::SWITCH_GATE_R0_C6_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(173.348, 44.987)), module, Sequel8::SWITCH_GATE_R0_C7_PARAM));
 
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(38.188, 44.987)), module, Sequel8::GATE_LIGHT_R0_C0_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(57.496, 44.987)), module, Sequel8::GATE_LIGHT_R0_C1_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(76.805, 44.987)), module, Sequel8::GATE_LIGHT_R0_C2_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(96.113, 44.987)), module, Sequel8::GATE_LIGHT_R0_C3_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(115.422, 44.987)), module, Sequel8::GATE_LIGHT_R0_C4_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(134.731, 44.987)), module, Sequel8::GATE_LIGHT_R0_C5_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(154.039, 44.987)), module, Sequel8::GATE_LIGHT_R0_C6_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(173.348, 44.987)), module, Sequel8::GATE_LIGHT_R0_C7_LIGHT));
+
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(38.188, 63.772)), module, Sequel8::KNOB_STEP_R1_C0_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(57.496, 63.772)), module, Sequel8::KNOB_STEP_R1_C1_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(76.805, 63.772)), module, Sequel8::KNOB_STEP_R1_C2_PARAM));
@@ -618,6 +665,15 @@ struct Sequel8ModuleWidget : ModuleWidget {
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(154.039, 74.885)), module, Sequel8::SWITCH_GATE_R1_C6_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(173.348, 74.885)), module, Sequel8::SWITCH_GATE_R1_C7_PARAM));
 
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(38.188, 74.885)), module, Sequel8::GATE_LIGHT_R1_C0_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(57.496, 74.885)), module, Sequel8::GATE_LIGHT_R1_C1_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(76.805, 74.885)), module, Sequel8::GATE_LIGHT_R1_C2_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(96.113, 74.885)), module, Sequel8::GATE_LIGHT_R1_C3_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(115.422, 74.885)), module, Sequel8::GATE_LIGHT_R1_C4_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(134.731, 74.885)), module, Sequel8::GATE_LIGHT_R1_C5_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(154.039, 74.885)), module, Sequel8::GATE_LIGHT_R1_C6_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(173.348, 74.885)), module, Sequel8::GATE_LIGHT_R1_C7_LIGHT));
+
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(38.188, 93.67)), module, Sequel8::KNOB_STEP_R2_C0_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(57.496, 93.67)), module, Sequel8::KNOB_STEP_R2_C1_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(76.805, 93.67)), module, Sequel8::KNOB_STEP_R2_C2_PARAM));
@@ -636,6 +692,15 @@ struct Sequel8ModuleWidget : ModuleWidget {
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(154.039, 104.783)), module, Sequel8::SWITCH_GATE_R2_C6_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(173.348, 104.783)), module, Sequel8::SWITCH_GATE_R2_C7_PARAM));
 
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(38.188, 104.783)), module, Sequel8::GATE_LIGHT_R2_C0_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(57.496, 104.783)), module, Sequel8::GATE_LIGHT_R2_C1_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(76.805, 104.783)), module, Sequel8::GATE_LIGHT_R2_C2_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(96.113, 104.783)), module, Sequel8::GATE_LIGHT_R2_C3_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(115.422, 104.783)), module, Sequel8::GATE_LIGHT_R2_C4_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(134.731, 104.783)), module, Sequel8::GATE_LIGHT_R2_C5_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(154.039, 104.783)), module, Sequel8::GATE_LIGHT_R2_C6_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(173.348, 104.783)), module, Sequel8::GATE_LIGHT_R2_C7_LIGHT));
+
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.628, 33.591)), module, Sequel8::OUT_CV_R0_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.628, 44.704)), module, Sequel8::OUT_GATE_R0_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.629, 63.772)), module, Sequel8::OUT_CV_R1_OUTPUT));
@@ -646,7 +711,7 @@ struct Sequel8ModuleWidget : ModuleWidget {
 		addParam(createParamCentered<CKD6InvisibleLatch>(mm2px(Vec(173.348, 16.145)), module, Sequel8::SWITCH_GATE_MODE_PARAM));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 11.551)), module, Sequel8::LIGHT_GATE_MODE_CONTINUOUS_LIGHT));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 20.902)), module, Sequel8::LIGHT_GATE_MODE_TRIGGER_LIGHT));
-
+		
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(44.594, 29.28)), module, Sequel8::LIGHT_R0_C0_LIGHT));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(63.903, 29.28)), module, Sequel8::LIGHT_R0_C1_LIGHT));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(83.211, 29.28)), module, Sequel8::LIGHT_R0_C2_LIGHT));
