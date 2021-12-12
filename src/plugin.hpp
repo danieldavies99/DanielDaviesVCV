@@ -64,3 +64,54 @@ struct DigitDisplay : SvgWidget {
     private:
         std::string formatDigitValue(int value);
 };
+
+
+// Timing Utils
+struct IgnoreClockAfterResetTimer {
+
+	dsp::Timer timer;
+	bool shouldIgnore = false;
+
+	void resetTriggered();
+	void process(float deltaTime);
+};
+
+struct ClockTracker {
+
+    ClockTracker(short initializeNumSteps) {
+        numSteps = initializeNumSteps;
+    }
+
+	short numSteps;
+
+	short currentStepR0 = 0;
+	short currentStepR1 = 0;
+	short currentStepR2 = 0;
+
+	int gatesSinceLastStepR0 = 0;
+	int gatesSinceLastStepR1 = 0;
+	int gatesSinceLastStepR2 = 0;
+
+	bool hasPulsedThisStepR0 = false;
+	bool hasPulsedThisStepR1 = false;
+	bool hasPulsedThisStepR2 = false;
+
+	int divideR0 = 1;
+	int divideR1 = 1;
+	int divideR2 = 1;
+
+	void nextClock();
+
+	void nextStepR0();
+
+	void nextStepR1();
+
+	void nextStepR2();
+
+	int getCurrentStepForRow(short row);
+
+	bool getHasPulsedThisStepForRow(short row);
+
+	void setHasPulsedThisStepForRow(short row, bool val);
+};
+// End
