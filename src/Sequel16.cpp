@@ -246,7 +246,7 @@ struct Sequel16 : Module {
 		// Params
 		configParam(KNOB_STEP_COUNT_PARAM, 0.f, 16.f, 16.f, "Step count");
 		configParam(KNOB_CLOCK_SPEED_PARAM, 0.f, 1.0f, 0.5f, "Speed");
-		configSwitch(SWITCH_GATE_MODE_PARAM, 0, 1, 0, "Gate Mode", {"Continuous", "Trigger"});
+		configSwitch(SWITCH_GATE_MODE_PARAM, 0, 1, 1, "Gate Mode", {"Continuous", "Trigger"});
 		configSwitch(KNOB_TIME_DIVIDE_R0_PARAM, 1, 10, 1, "Clock Divide Row 1", {"1", "2", "3", "4", "6", "8", "16", "32", "48", "64"});
 		configSwitch(KNOB_TIME_DIVIDE_R1_PARAM, 1, 10, 1, "Clock Divide Row 2", {"1", "2", "3", "4", "6", "8", "16", "32", "48", "64"});
 		configSwitch(KNOB_TIME_DIVIDE_R2_PARAM, 1, 10, 1, "Clock Divide Row 3", {"1", "2", "3", "4", "6", "8", "16", "32", "48", "64"});
