@@ -21,6 +21,15 @@
         "Clock modulator",
         "Sequencer"
       ]
+    },
+    {
+      "slug": "Sequel16",
+      "name": "Sequel 16",
+      "description": "3 row / 16 step sequencer with built-in clock divider",
+      "tags": [
+        "Clock modulator",
+        "Sequencer"
+      ]
     }
   ]
 }

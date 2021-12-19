@@ -3,37 +3,7 @@
 
 using namespace rack;
 
-int mapClockDivideValues(int value) {
-	switch(value) {
-		case 1:
-			return 1;
-		case 2:
-			return 2;
-		case 3:
-			return 3;
-		case 4:
-			return 4;
-		case 5:
-			return 6;
-		case 6:
-			return 8;
-		case 7:
-			return 16;
-		case 8:
-			return 32;
-		case 9:
-			return 48;
-		case 10:
-			return 64;
-		default:
-			return 1;
-	}
-}
-
 struct Sequel8 : Module {
-	int clockDivideDisplayValueR0 = 0;
-	int clockDivideDisplayValueR1 = 0;
-	int clockDivideDisplayValueR2 = 0;
 	// https://coolors.co/ed6a5a-f4f1bb-9bc1bc-5d576b-e6ebe0
 	enum ParamIds {
 		KNOB_STEP_R0_C0_PARAM,
@@ -93,18 +63,18 @@ struct Sequel8 : Module {
 		NUM_PARAMS
 	};
 	enum InputIds {
-		IN_RESET_INPUT,
 		IN_CLOCK_INPUT,
+		IN_RESET_INPUT,
 		NUM_INPUTS
 	};
 	enum OutputIds {
+		OUT_CLOCK_OUTPUT,
 		OUT_CV_R0_OUTPUT,
 		OUT_GATE_R0_OUTPUT,
 		OUT_CV_R1_OUTPUT,
 		OUT_GATE_R1_OUTPUT,
 		OUT_CV_R2_OUTPUT,
 		OUT_GATE_R2_OUTPUT,
-		OUT_CLOCK_OUTPUT,
 		NUM_OUTPUTS
 	};
 	enum LightIds {
@@ -161,30 +131,26 @@ struct Sequel8 : Module {
 		NUM_LIGHTS
 	};
 
-
-
 	Sequel8() {
 		config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
 
+		// Inputs
 		configInput(IN_RESET_INPUT, "Reset");
 		configInput(IN_CLOCK_INPUT, "Clock");
-
+		
+		// Outputs
 		configOutput(OUT_CV_R0_OUTPUT, "Row 1 CV");
 		configOutput(OUT_CV_R1_OUTPUT, "Row 2 CV");
 		configOutput(OUT_CV_R2_OUTPUT, "Row 3 CV");
-
 		configOutput(OUT_GATE_R0_OUTPUT, "Row 1 gate");
 		configOutput(OUT_GATE_R1_OUTPUT, "Row 2 gate");
 		configOutput(OUT_GATE_R2_OUTPUT, "Row 3 gate");
-
 		configOutput(OUT_CLOCK_OUTPUT, "Clock");
 
+		// Params
 		configParam(KNOB_STEP_COUNT_PARAM, 0.f, 8.f, 8.f, "Step count");
-	
 		configParam(KNOB_CLOCK_SPEED_PARAM, 0.f, 1.0f, 0.5f, "Speed");
-
 		configSwitch(SWITCH_GATE_MODE_PARAM, 0, 1, 0, "Gate Mode", {"Continuous", "Trigger"});
-
 		configSwitch(KNOB_TIME_DIVIDE_R0_PARAM, 1, 10, 1, "Clock Divide Row 1", {"1", "2", "3", "4", "6", "8", "16", "32", "48", "64"});
 		configSwitch(KNOB_TIME_DIVIDE_R1_PARAM, 1, 10, 1, "Clock Divide Row 2", {"1", "2", "3", "4", "6", "8", "16", "32", "48", "64"});
 		configSwitch(KNOB_TIME_DIVIDE_R2_PARAM, 1, 10, 1, "Clock Divide Row 3", {"1", "2", "3", "4", "6", "8", "16", "32", "48", "64"});
@@ -214,14 +180,6 @@ struct Sequel8 : Module {
 		configParam(KNOB_STEP_R2_C6_PARAM, 0.f, 10.f, 0.f, "Step CV");
 		configParam(KNOB_STEP_R2_C7_PARAM, 0.f, 10.f, 0.f, "Step CV");
 
-		configSwitch(SWITCH_GATE_R1_C0_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
-		configSwitch(SWITCH_GATE_R1_C1_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
-		configSwitch(SWITCH_GATE_R1_C2_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
-		configSwitch(SWITCH_GATE_R1_C3_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
-		configSwitch(SWITCH_GATE_R1_C4_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
-		configSwitch(SWITCH_GATE_R1_C5_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
-		configSwitch(SWITCH_GATE_R1_C6_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
-		configSwitch(SWITCH_GATE_R1_C7_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
 		configSwitch(SWITCH_GATE_R0_C0_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
 		configSwitch(SWITCH_GATE_R0_C1_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
 		configSwitch(SWITCH_GATE_R0_C2_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
@@ -230,6 +188,14 @@ struct Sequel8 : Module {
 		configSwitch(SWITCH_GATE_R0_C5_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
 		configSwitch(SWITCH_GATE_R0_C6_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
 		configSwitch(SWITCH_GATE_R0_C7_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C0_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C1_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C2_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C3_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C4_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C5_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C6_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
+		configSwitch(SWITCH_GATE_R1_C7_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
 		configSwitch(SWITCH_GATE_R2_C0_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
 		configSwitch(SWITCH_GATE_R2_C1_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
 		configSwitch(SWITCH_GATE_R2_C2_PARAM, 0, 1, 0, "Gate", {"Off", "On"});
@@ -270,10 +236,14 @@ struct Sequel8 : Module {
 	}
 	// ****** End *******
 
+	int clockDivideDisplayValueR0 = 0;
+	int clockDivideDisplayValueR1 = 0;
+	int clockDivideDisplayValueR2 = 0;
+
 	dsp::Timer timer;
 	float clockSpeed = 0.5f;
 	dsp::PulseGenerator clockOutPulse;
-	IgnoreClockAfterResetTimer ignoreClockAfterResetTimer();
+	IgnoreClockAfterResetTimer ignoreClockAfterResetTimer;
 
 	float lastclockVoltage = 0.0f;
 	float lastResetInput = 0.0f;
@@ -282,7 +252,7 @@ struct Sequel8 : Module {
 	dsp::PulseGenerator gatePulseR1;
 	dsp::PulseGenerator gatePulseR2;
 
-	ClockTracker clockTracker(8);
+	ClockTracker clockTracker{8};
 
 	bool gateTriggerModeEnabled = true;
 
@@ -354,6 +324,33 @@ struct Sequel8 : Module {
 			} else {
 				lights[i+24].setBrightness(0.0);
 			}
+		}
+	}
+
+	int mapClockDivideValues(int value) {
+		switch(value) {
+			case 1:
+				return 1;
+			case 2:
+				return 2;
+			case 3:
+				return 3;
+			case 4:
+				return 4;
+			case 5:
+				return 6;
+			case 6:
+				return 8;
+			case 7:
+				return 16;
+			case 8:
+				return 32;
+			case 9:
+				return 48;
+			case 10:
+				return 64;
+			default:
+				return 1;
 		}
 	}
 
@@ -495,6 +492,14 @@ struct Sequel8ModuleWidget : ModuleWidget {
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(154.039, 16.145)), module, Sequel8::IN_RESET_INPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(115.422, 16.145)), module, Sequel8::OUT_CLOCK_OUTPUT));
 
+		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.076, 39.431)), module, Sequel8::KNOB_TIME_DIVIDE_R0_PARAM));
+		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.076, 69.329)), module, Sequel8::KNOB_TIME_DIVIDE_R1_PARAM));
+		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.076, 99.226)), module, Sequel8::KNOB_TIME_DIVIDE_R2_PARAM));
+
+		addParam(createParamCentered<CKD6InvisibleLatch>(mm2px(Vec(173.348, 16.145)), module, Sequel8::SWITCH_GATE_MODE_PARAM));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 11.551)), module, Sequel8::LIGHT_GATE_MODE_CONTINUOUS_LIGHT));
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 20.902)), module, Sequel8::LIGHT_GATE_MODE_TRIGGER_LIGHT));
+
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(38.188, 33.874)), module, Sequel8::KNOB_STEP_R0_C0_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(57.496, 33.874)), module, Sequel8::KNOB_STEP_R0_C1_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(76.805, 33.874)), module, Sequel8::KNOB_STEP_R0_C2_PARAM));
@@ -530,10 +535,6 @@ struct Sequel8ModuleWidget : ModuleWidget {
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(134.731, 63.772)), module, Sequel8::KNOB_STEP_R1_C5_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(154.039, 63.772)), module, Sequel8::KNOB_STEP_R1_C6_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(173.348, 63.772)), module, Sequel8::KNOB_STEP_R1_C7_PARAM));
-
-		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.076, 39.431)), module, Sequel8::KNOB_TIME_DIVIDE_R0_PARAM));
-		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.076, 69.329)), module, Sequel8::KNOB_TIME_DIVIDE_R1_PARAM));
-		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.076, 99.226)), module, Sequel8::KNOB_TIME_DIVIDE_R2_PARAM));
 
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(38.188, 74.885)), module, Sequel8::SWITCH_GATE_R1_C0_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(57.496, 74.885)), module, Sequel8::SWITCH_GATE_R1_C1_PARAM));
@@ -586,10 +587,6 @@ struct Sequel8ModuleWidget : ModuleWidget {
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.629, 74.885)), module, Sequel8::OUT_GATE_R1_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.629, 93.67)), module, Sequel8::OUT_CV_R2_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.629, 104.783)), module, Sequel8::OUT_GATE_R2_OUTPUT));
-
-		addParam(createParamCentered<CKD6InvisibleLatch>(mm2px(Vec(173.348, 16.145)), module, Sequel8::SWITCH_GATE_MODE_PARAM));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 11.551)), module, Sequel8::LIGHT_GATE_MODE_CONTINUOUS_LIGHT));
-		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 20.902)), module, Sequel8::LIGHT_GATE_MODE_TRIGGER_LIGHT));
 		
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(44.594, 29.28)), module, Sequel8::LIGHT_R0_C0_LIGHT));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(63.903, 29.28)), module, Sequel8::LIGHT_R0_C1_LIGHT));
