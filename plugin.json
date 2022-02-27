@@ -16,7 +16,7 @@
     {
       "slug": "Sequel8",
       "name": "Sequel 8",
-      "description": "yeet",
+      "description": "3 row / 8 step sequencer with built-in clock divider, this module can now be found as part of the Daniel Davies plugin",
       "tags": [
         "Clock modulator",
         "Sequencer"
@@ -27,7 +27,7 @@
     {
       "slug": "Sequel16",
       "name": "Sequel 16",
-      "description": "yeet",
+      "description": "3 row / 16 step sequencer with built-in clock divider, this module can now be found as part of the Daniel Davies plugin",
       "tags": [
         "Clock modulator",
         "Sequencer"
