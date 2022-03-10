@@ -1,39 +1,67 @@
 {
-  "slug": "SequelSequencers",
-  "name": "Sequel Sequencers",
-  "version": "2.1.0",
+  "slug": "DanielDavies",
+  "name": "Daniel Davies",
+  "version": "2.0.0",
   "license": "GPL-3.0-or-later",
   "brand": "Daniel Davies",
   "author": "Daniel Davies",
   "authorEmail": "danieldavies99@gmail.com",
   "authorUrl": "https://github.com/danieldavies99",
-  "pluginUrl": "https://github.com/danieldavies99/sequel",
-  "manualUrl": "",
-  "sourceUrl": "https://github.com/danieldavies99/sequel",
+  "pluginUrl": "https://github.com/danieldavies99/DanielDaviesVCV",
+  "manualUrl": "https://github.com/danieldavies99/DanielDaviesVCV/blob/master/manual/daniel_davies_modular_manual.pdf",
+  "sourceUrl": "https://github.com/danieldavies99/DanielDaviesVCV",
   "donateUrl": "",
   "changelogUrl": "",
   "modules": [
     {
       "slug": "Sequel8",
       "name": "Sequel 8",
-      "description": "DEPRECATED: this module can now be found as part of the Daniel Davies plugin",
+      "description": "3 row / 8 step sequencer with built-in clock divider",
       "tags": [
         "Clock modulator",
         "Sequencer"
-      ],
-      "deprecated": true,
-      "hidden": true 
+      ]
     },
     {
       "slug": "Sequel16",
       "name": "Sequel 16",
-      "description": "DEPRECATED: this module can now be found as part of the Daniel Davies plugin",
+      "description": "3 row / 16 step sequencer with built-in clock divider",
       "tags": [
         "Clock modulator",
         "Sequencer"
-      ],
-      "deprecated": true,
-      "hidden": true 
+      ]
+    },
+    {
+      "slug": "Quantify",
+      "name": "Quantify",
+      "description": "3x Quantizer with attenuverted inputs + nudge and transpose controls",
+      "tags": [
+        "Quantizer"
+      ]
+    },
+    {
+      "slug": "Samuel",
+      "name": "Samuel",
+      "description": "Morse code based rhythm generator",
+      "tags": [
+        "Clock modulator"
+      ]
+    },
+    {
+      "slug": "Blank3",
+      "name": "Blank3",
+      "description": "3HP wide blank panel",
+      "tags": [
+        "Blank"
+      ]
+    },
+    {
+      "slug": "Blank5",
+      "name": "Blank5",
+      "description": "5HP wide blank panel",
+      "tags": [
+        "Blank"
+      ]
     }
   ]
 }
