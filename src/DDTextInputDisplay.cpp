@@ -20,7 +20,6 @@ void TextInputDisplay::drawMessage() {
         drawLetter((*message)[i], (i - lineNum*lineLength)*6, lineNum * 8);
 
         int cursorLineNum = floor( (i + 1) / lineLength);
-        // DEBUG(std::to_string(cursorLineNum).c_str());
         if(i == (int)message->size() - 1) {
             drawCursor((i + 1 - cursorLineNum*lineLength)*6, cursorLineNum * 8);
         }

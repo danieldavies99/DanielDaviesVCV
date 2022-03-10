@@ -8,6 +8,7 @@ void init(Plugin* p) {
 	// Add modules here
 	p->addModel(modelSequel8Module);
 	p->addModel(modelSequel16Module);
+	p->addModel(modelSequelSwitchModule);
 	p->addModel(modelQuantify);
 	p->addModel(modelSamuel);
 	p->addModel(modelBlank3);
