@@ -31,7 +31,7 @@ struct SequelSaveModule : Module {
 		LIGHTS_LEN
 	};
 
-	SequelSaveInterface leftMessages[2];// messages from mother (first index is page), see enum called AuxFromMotherIds in MixerCommon.hpp
+	SequelSaveInterface leftMessages[2];
 
 	SequelSaveModule() {
 		leftExpander.producerMessage = &leftMessages[0];
@@ -81,10 +81,7 @@ struct SequelSaveModule : Module {
 
 	const SequelSaveInterface cleanInterface;
 
-	SequelSaveInterface sequelSaveStateRow0;
-	SequelSaveInterface sequelSaveStateRow1;
-	SequelSaveInterface sequelSaveStateRow2;
-	SequelSaveInterface sequelSaveStateRow3;
+	SequelSaveInterface sequelSaveStates[4];
 
 	void process(const ProcessArgs& args) override {
 		sequelPresent = leftExpander.module && (leftExpander.module->model == modelSequel8Module || leftExpander.module->model == modelSequel16Module);
@@ -130,45 +127,31 @@ struct SequelSaveModule : Module {
 			}
 
 			if(messagesFromMother->isDirty) { // info received from mother
-				switch(selectedSaveRow) {
-					case 0:
-						sequelSaveStateRow0 = *messagesFromMother;
-						break;
-					case 1:
-						sequelSaveStateRow1 = *messagesFromMother;
-						break;
-					case 2:
-						sequelSaveStateRow2 = *messagesFromMother;
-						break;
-					case 3:
-						sequelSaveStateRow3 = *messagesFromMother;
-					break;
-				}
-
+				sequelSaveStates[selectedSaveRow] = *messagesFromMother;
 			}
 			*messagesFromMother = cleanInterface;
 
 			if((loadButton0Val > 0 && lastLoadButton0Val == 0) || (loadInput0Val > 0 && lastLoadInput0 == 0)) { // sending saved info to mother
 				SequelSaveInterface *messagesToMother = (SequelSaveInterface*)leftExpander.module->rightExpander.producerMessage;
-				*messagesToMother = sequelSaveStateRow0;
+				*messagesToMother = sequelSaveStates[0];
 				messagesToMother->isDirty = true;
 				leftExpander.module->rightExpander.messageFlipRequested = true;
 			}
 			if((loadButton1Val > 0 && lastLoadButton1Val == 0) || (loadInput1Val > 0 && lastLoadInput1 == 0)) { // sending saved info to mother
 				SequelSaveInterface *messagesToMother = (SequelSaveInterface*)leftExpander.module->rightExpander.producerMessage;
-				*messagesToMother = sequelSaveStateRow1;
+				*messagesToMother = sequelSaveStates[1];
 				messagesToMother->isDirty = true;
 				leftExpander.module->rightExpander.messageFlipRequested = true;
 			}
 			if((loadButton2Val > 0 && lastLoadButton2Val == 0) || (loadInput2Val > 0 && lastLoadInput2 == 0)) { // sending saved info to mother
 				SequelSaveInterface *messagesToMother = (SequelSaveInterface*)leftExpander.module->rightExpander.producerMessage;
-				*messagesToMother = sequelSaveStateRow2;
+				*messagesToMother = sequelSaveStates[2];
 				messagesToMother->isDirty = true;
 				leftExpander.module->rightExpander.messageFlipRequested = true;
 			}
 			if((loadButton3Val > 0 && lastLoadButton3Val == 0) || (loadInput3Val > 0 && lastLoadInput3 == 0)) { // sending saved info to mother
 				SequelSaveInterface *messagesToMother = (SequelSaveInterface*)leftExpander.module->rightExpander.producerMessage;
-				*messagesToMother = sequelSaveStateRow3;
+				*messagesToMother = sequelSaveStates[3];
 				messagesToMother->isDirty = true;
 				leftExpander.module->rightExpander.messageFlipRequested = true;
 			}
@@ -228,36 +211,25 @@ struct SequelSaveModule : Module {
 		return clockDivideVals;
 	}
 
+	json_t* getFullJsonForRow(int rowNumber) {
+		json_t *rootJ = json_object();
+		json_object_set_new(rootJ, "knobVals", getJsonKnobsForRow(sequelSaveStates[rowNumber]));
+		json_object_set_new(rootJ, "switchVals", getJsonSwitchesForRow(sequelSaveStates[rowNumber]));
+		json_object_set_new(rootJ, "clockDivideVals", getJsonClockDivideValsForRow(sequelSaveStates[rowNumber]));
+		json_object_set_new(rootJ, "speedVal", json_real(sequelSaveStates[rowNumber].speed));
+		json_object_set_new(rootJ, "stepCountVal", json_integer(sequelSaveStates[rowNumber].stepCount));
+		json_object_set_new(rootJ, "triggerModeVal", json_boolean(sequelSaveStates[rowNumber].triggerMode));
+		return rootJ;
+	}
+
 	json_t *dataToJson() override {
 		json_t *rootJ = json_object();
 
-		json_object_set_new(rootJ, "knobsRow0", getJsonKnobsForRow(sequelSaveStateRow0));
-		json_object_set_new(rootJ, "switchesRow0", getJsonSwitchesForRow(sequelSaveStateRow0));
-		json_object_set_new(rootJ, "clockDivideValsRow0", getJsonClockDivideValsForRow(sequelSaveStateRow0));
-		json_object_set_new(rootJ, "speedValRow0", json_real(sequelSaveStateRow0.speed));
-		json_object_set_new(rootJ, "stepCountValRow0", json_integer(sequelSaveStateRow0.stepCount));
-		json_object_set_new(rootJ, "triggerModeValRow0", json_boolean(sequelSaveStateRow0.triggerMode));
+		json_object_set_new(rootJ, "rowState0", getFullJsonForRow(0));
+		json_object_set_new(rootJ, "rowState1", getFullJsonForRow(1));
+		json_object_set_new(rootJ, "rowState2", getFullJsonForRow(2));
+		json_object_set_new(rootJ, "rowState3", getFullJsonForRow(3));
 
-		json_object_set_new(rootJ, "knobsRow1", getJsonKnobsForRow(sequelSaveStateRow1));
-		json_object_set_new(rootJ, "switchesRow1", getJsonSwitchesForRow(sequelSaveStateRow1));
-		json_object_set_new(rootJ, "clockDivideValsRow1", getJsonClockDivideValsForRow(sequelSaveStateRow1));
-		json_object_set_new(rootJ, "speedValRow1", json_real(sequelSaveStateRow1.speed));
-		json_object_set_new(rootJ, "stepCountValRow1", json_integer(sequelSaveStateRow1.stepCount));
-		json_object_set_new(rootJ, "triggerModeValRow1", json_boolean(sequelSaveStateRow1.triggerMode));
-
-		json_object_set_new(rootJ, "knobsRow2", getJsonKnobsForRow(sequelSaveStateRow2));
-		json_object_set_new(rootJ, "switchesRow2", getJsonSwitchesForRow(sequelSaveStateRow2));
-		json_object_set_new(rootJ, "clockDivideValsRow2", getJsonClockDivideValsForRow(sequelSaveStateRow2));
-		json_object_set_new(rootJ, "speedValRow2", json_real(sequelSaveStateRow2.speed));
-		json_object_set_new(rootJ, "stepCountValRow2", json_integer(sequelSaveStateRow2.stepCount));
-		json_object_set_new(rootJ, "triggerModeValRow2", json_boolean(sequelSaveStateRow2.triggerMode));
-
-		json_object_set_new(rootJ, "knobsRow3", getJsonKnobsForRow(sequelSaveStateRow3));
-		json_object_set_new(rootJ, "switchesRow3", getJsonSwitchesForRow(sequelSaveStateRow3));
-		json_object_set_new(rootJ, "clockDivideValsRow3", getJsonClockDivideValsForRow(sequelSaveStateRow3));
-		json_object_set_new(rootJ, "speedValRow3", json_real(sequelSaveStateRow3.speed));
-		json_object_set_new(rootJ, "stepCountValRow3", json_integer(sequelSaveStateRow3.stepCount));
-		json_object_set_new(rootJ, "triggerModeValRow3", json_boolean(sequelSaveStateRow3.triggerMode));
 		return rootJ;
 	}
 
@@ -283,54 +255,27 @@ struct SequelSaveModule : Module {
 		}
 	}
 
-	void dataFromJson(json_t *rootJ) override { // TO DO refactor this bullshit
-		json_t *knobsRow0 = json_object_get(rootJ, "knobsRow0");
-		json_t *switchesRow0 = json_object_get(rootJ, "switchesRow0");
-		json_t *clockDivideValsRow0 = json_object_get(rootJ, "clockDivideValsRow0");
-		if(knobsRow0 && switchesRow0 && clockDivideValsRow0) {
-			loadKnobsFromJson(knobsRow0, sequelSaveStateRow0);
-			loadSwitchesFromJson(switchesRow0, sequelSaveStateRow0);
-			loadClockDivideValsFromJson(clockDivideValsRow0, sequelSaveStateRow0);
-			sequelSaveStateRow0.speed = json_real_value(json_object_get(rootJ, "speedValRow0"));
-			sequelSaveStateRow0.stepCount = json_integer_value(json_object_get(rootJ, "stepCountValRow0"));
-			sequelSaveStateRow0.triggerMode = json_boolean_value(json_object_get(rootJ, "triggerModeValRow0"));
+	void loadRowFromJson(int rowNumber, json_t *rootJ) {
+		std::string rowIdentifier = "rowState" + std::to_string(rowNumber);
+		json_t *row = json_object_get(rootJ, rowIdentifier.c_str());
+		json_t *knobVals= json_object_get(row, "knobVals");
+		json_t *switchVals = json_object_get(row, "switchVals");
+		json_t *clockDivideVals = json_object_get(row, "clockDivideVals");
+		if(knobVals && switchVals && clockDivideVals) {
+			loadKnobsFromJson(knobVals, sequelSaveStates[rowNumber]);
+			loadSwitchesFromJson(switchVals, sequelSaveStates[rowNumber]);
+			loadClockDivideValsFromJson(clockDivideVals, sequelSaveStates[rowNumber]);
+			sequelSaveStates[rowNumber].speed = json_real_value(json_object_get(rootJ, "speedVal"));
+			sequelSaveStates[rowNumber].stepCount = json_integer_value(json_object_get(rootJ, "stepCountVal"));
+			sequelSaveStates[rowNumber].triggerMode = json_boolean_value(json_object_get(rootJ, "triggerModeVal"));
 		}
+	}
 
-		json_t *knobsRow1 = json_object_get(rootJ, "knobsRow1");
-		json_t *switchesRow1 = json_object_get(rootJ, "switchesRow1");
-		json_t *clockDivideValsRow1 = json_object_get(rootJ, "clockDivideValsRow1");
-		if(knobsRow1 && switchesRow1 && clockDivideValsRow1) {
-			loadKnobsFromJson(knobsRow1, sequelSaveStateRow1);
-			loadSwitchesFromJson(switchesRow1, sequelSaveStateRow1);
-			loadClockDivideValsFromJson(clockDivideValsRow1, sequelSaveStateRow1);
-			sequelSaveStateRow1.speed = json_real_value(json_object_get(rootJ, "speedValRow1"));
-			sequelSaveStateRow1.stepCount = json_integer_value(json_object_get(rootJ, "stepCountValRow1"));
-			sequelSaveStateRow1.triggerMode = json_boolean_value(json_object_get(rootJ, "triggerModeValRow1"));
-		}
-
-		json_t *knobsRow2 = json_object_get(rootJ, "knobsRow2");
-		json_t *switchesRow2 = json_object_get(rootJ, "switchesRow2");
-		json_t *clockDivideValsRow2 = json_object_get(rootJ, "clockDivideValsRow2");
-		if(knobsRow2 && switchesRow2 && clockDivideValsRow2) {
-			loadKnobsFromJson(knobsRow2, sequelSaveStateRow2);
-			loadSwitchesFromJson(switchesRow2, sequelSaveStateRow2);
-			loadClockDivideValsFromJson(clockDivideValsRow2, sequelSaveStateRow2);
-			sequelSaveStateRow2.speed = json_real_value(json_object_get(rootJ, "speedValRow2"));
-			sequelSaveStateRow2.stepCount = json_integer_value(json_object_get(rootJ, "stepCountValRow2"));
-			sequelSaveStateRow2.triggerMode = json_boolean_value(json_object_get(rootJ, "triggerModeValRow2"));
-		}
-
-		json_t *knobsRow3 = json_object_get(rootJ, "knobsRow3");
-		json_t *switchesRow3 = json_object_get(rootJ, "switchesRow3");
-		json_t *clockDivideValsRow3 = json_object_get(rootJ, "clockDivideValsRow3");
-		if(knobsRow3 && switchesRow3 && clockDivideValsRow3) {
-			loadKnobsFromJson(knobsRow3, sequelSaveStateRow3);
-			loadSwitchesFromJson(switchesRow3, sequelSaveStateRow3);
-			loadClockDivideValsFromJson(clockDivideValsRow3, sequelSaveStateRow3);
-			sequelSaveStateRow3.speed = json_real_value(json_object_get(rootJ, "speedValRow3"));
-			sequelSaveStateRow3.stepCount = json_integer_value(json_object_get(rootJ, "stepCountValRow3"));
-			sequelSaveStateRow3.triggerMode = json_boolean_value(json_object_get(rootJ, "triggerModeValRow3"));
-		}
+	void dataFromJson(json_t *rootJ) override {
+		loadRowFromJson(0, rootJ);
+		loadRowFromJson(1, rootJ);
+		loadRowFromJson(2, rootJ);
+		loadRowFromJson(3, rootJ);
 	}
 };
 
