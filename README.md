@@ -3,11 +3,10 @@ This repo contains the source code for the Daniel Davies VCV rack modules. If yo
 
 I can't wait to see/hear what you come up with!
 
-#### manual ####
 The manual for all my modules can be found here (this is very much a WIP): 
 https://github.com/danieldavies99/sequel/blob/master/manual/daniel_davies_modular_manual.pdf
 
-The manual is released under the same GPL3-or-later license as used by my module source code.
+The manual is released under the GPL3-or-later license.
 
 
 ![All modules](https://i.imgur.com/aRMtW7k.png)
