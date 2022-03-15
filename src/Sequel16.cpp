@@ -548,7 +548,7 @@ struct Sequel16 : Module {
 	// end
 
 	void process(const ProcessArgs& args) override {
-		sequelSavePresent = (rightExpander.module && rightExpander.module->model == modelSequelSaveModule);
+		sequelSavePresent = (rightExpander.module && rightExpander.module->model == modelSequelSave);
 		if(sequelSavePresent) {
 			handleSequelSave();
 		}
@@ -578,6 +578,8 @@ struct Sequel16 : Module {
 
 		if(clockTracker.numSteps == 0) { // don't output anything if steps = 0;
 			turnOffAllStepIndicatorLights();
+			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(0);
+			lights[LIGHT_GATE_MODE_CONTINUOUS_LIGHT].setBrightness(0);
 			return;
 		}
 
