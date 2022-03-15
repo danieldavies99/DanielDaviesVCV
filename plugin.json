@@ -62,6 +62,12 @@
       "tags": [
         "Blank"
       ]
+    },
+    {
+      "slug": "SequelSave",
+      "name": "Sequel Save",
+      "description": "Save state expander for Sequel 8/Sequel 16",
+      "tags": []
     }
   ]
 }

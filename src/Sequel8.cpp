@@ -132,7 +132,7 @@ struct Sequel8 : Module {
 	};
 
 	// Expander
-	SequelSwitchInterface rightMessages[2];
+	SequelSaveInterface rightMessages[2];
 
 	Sequel8() {
 		rightExpander.producerMessage = &rightMessages[0];
@@ -360,53 +360,53 @@ struct Sequel8 : Module {
 		}
 	}
 
-	// Sequel Switch Expander handling
-	const SequelSwitchInterface cleanInterface;
-	bool sequelSwitchPresent = false;
+	// Sequel Save Expander handling
+	const SequelSaveInterface cleanInterface;
+	bool sequelSavePresent = false;
 
-	void handleSequelSwitch() {
-		SequelSwitchInterface *messagesToSwitch = (SequelSwitchInterface*)rightExpander.module->leftExpander.producerMessage;
+	void handleSequelSave() {
+		SequelSaveInterface *messagesToSave = (SequelSaveInterface*)rightExpander.module->leftExpander.producerMessage;
 			for(int i = 0; i < 3; i++) {
 				for(int j = 0; j < 8; j++) {
-					messagesToSwitch->knobVals[i][j] = params[getKnobId(i, j)].getValue();
-					messagesToSwitch->switchVals[i][j] = params[getButtonId(i, j)].getValue() > 0 ? true : false;
+					messagesToSave->knobVals[i][j] = params[getKnobId(i, j)].getValue();
+					messagesToSave->switchVals[i][j] = params[getButtonId(i, j)].getValue() > 0 ? true : false;
 				}
 			}
-			messagesToSwitch->clockDivideVals[0] = params[KNOB_TIME_DIVIDE_R0_PARAM].getValue();
-			messagesToSwitch->clockDivideVals[1] = params[KNOB_TIME_DIVIDE_R1_PARAM].getValue();
-			messagesToSwitch->clockDivideVals[2] = params[KNOB_TIME_DIVIDE_R2_PARAM].getValue();
-			messagesToSwitch->speed = params[KNOB_CLOCK_SPEED_PARAM].getValue();
-			messagesToSwitch->stepCount = params[KNOB_STEP_COUNT_PARAM].getValue();
-			messagesToSwitch->triggerMode = params[SWITCH_GATE_MODE_PARAM].getValue() > 0;
-			messagesToSwitch->isDirty = true;
+			messagesToSave->clockDivideVals[0] = params[KNOB_TIME_DIVIDE_R0_PARAM].getValue();
+			messagesToSave->clockDivideVals[1] = params[KNOB_TIME_DIVIDE_R1_PARAM].getValue();
+			messagesToSave->clockDivideVals[2] = params[KNOB_TIME_DIVIDE_R2_PARAM].getValue();
+			messagesToSave->speed = params[KNOB_CLOCK_SPEED_PARAM].getValue();
+			messagesToSave->stepCount = params[KNOB_STEP_COUNT_PARAM].getValue();
+			messagesToSave->triggerMode = params[SWITCH_GATE_MODE_PARAM].getValue() > 0;
+			messagesToSave->isDirty = true;
 			
 
-			SequelSwitchInterface *messagesFromSwitch = (SequelSwitchInterface*)rightExpander.consumerMessage;
-			if(messagesFromSwitch->isDirty) {
+			SequelSaveInterface *messagesFromSave = (SequelSaveInterface*)rightExpander.consumerMessage;
+			if(messagesFromSave->isDirty) {
 				for(int i = 0; i < 3; i++) {
 					for(int j = 0; j < 8; j++) {
-						params[getKnobId(i, j)].setValue(messagesFromSwitch->knobVals[i][j]);
-						paramQuantities[getKnobId(i, j)]->setValue(messagesFromSwitch->knobVals[i][j]);
-						params[getButtonId(i, j)].setValue(messagesFromSwitch->switchVals[i][j] ? 10.f : 0.f);
+						params[getKnobId(i, j)].setValue(messagesFromSave->knobVals[i][j]);
+						paramQuantities[getKnobId(i, j)]->setValue(messagesFromSave->knobVals[i][j]);
+						params[getButtonId(i, j)].setValue(messagesFromSave->switchVals[i][j] ? 10.f : 0.f);
 					}
 				}
-				params[KNOB_TIME_DIVIDE_R0_PARAM].setValue(messagesFromSwitch->clockDivideVals[0]);
-				params[KNOB_TIME_DIVIDE_R1_PARAM].setValue(messagesFromSwitch->clockDivideVals[1]);
-				params[KNOB_TIME_DIVIDE_R2_PARAM].setValue(messagesFromSwitch->clockDivideVals[2]);
-				params[KNOB_CLOCK_SPEED_PARAM].setValue(messagesFromSwitch->speed);
-				paramQuantities[KNOB_CLOCK_SPEED_PARAM]->setValue(messagesFromSwitch->speed);
-				params[KNOB_STEP_COUNT_PARAM].setValue(messagesFromSwitch->stepCount);
-				paramQuantities[KNOB_STEP_COUNT_PARAM]->setValue(messagesFromSwitch->stepCount);
-				params[SWITCH_GATE_MODE_PARAM].setValue(messagesFromSwitch->triggerMode ? 1.f : 0.f);
+				params[KNOB_TIME_DIVIDE_R0_PARAM].setValue(messagesFromSave->clockDivideVals[0]);
+				params[KNOB_TIME_DIVIDE_R1_PARAM].setValue(messagesFromSave->clockDivideVals[1]);
+				params[KNOB_TIME_DIVIDE_R2_PARAM].setValue(messagesFromSave->clockDivideVals[2]);
+				params[KNOB_CLOCK_SPEED_PARAM].setValue(messagesFromSave->speed);
+				paramQuantities[KNOB_CLOCK_SPEED_PARAM]->setValue(messagesFromSave->speed);
+				params[KNOB_STEP_COUNT_PARAM].setValue(messagesFromSave->stepCount);
+				paramQuantities[KNOB_STEP_COUNT_PARAM]->setValue(messagesFromSave->stepCount);
+				params[SWITCH_GATE_MODE_PARAM].setValue(messagesFromSave->triggerMode ? 1.f : 0.f);
 			}
-			*messagesFromSwitch = cleanInterface;
+			*messagesFromSave = cleanInterface;
 	}
 	// end
 
 	void process(const ProcessArgs& args) override {
-		sequelSwitchPresent = (rightExpander.module && rightExpander.module->model == modelSequelSwitchModule);
-		if(sequelSwitchPresent) {
-			handleSequelSwitch();
+		sequelSavePresent = (rightExpander.module && rightExpander.module->model == modelSequelSaveModule);
+		if(sequelSavePresent) {
+			handleSequelSave();
 		}
 
 		clockTracker.divideR0 = clockDivideDisplayValueR0 = mapClockDivideValues(round(params[KNOB_TIME_DIVIDE_R0_PARAM].getValue()));
