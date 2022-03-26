@@ -265,9 +265,9 @@ struct SequelSave : Module {
 			loadKnobsFromJson(knobVals, sequelSaveStates[rowNumber]);
 			loadSwitchesFromJson(switchVals, sequelSaveStates[rowNumber]);
 			loadClockDivideValsFromJson(clockDivideVals, sequelSaveStates[rowNumber]);
-			sequelSaveStates[rowNumber].speed = json_real_value(json_object_get(rootJ, "speedVal"));
-			sequelSaveStates[rowNumber].stepCount = json_integer_value(json_object_get(rootJ, "stepCountVal"));
-			sequelSaveStates[rowNumber].triggerMode = json_boolean_value(json_object_get(rootJ, "triggerModeVal"));
+			sequelSaveStates[rowNumber].speed = json_real_value(json_object_get(row, "speedVal"));
+			sequelSaveStates[rowNumber].stepCount = json_integer_value(json_object_get(row, "stepCountVal"));
+			sequelSaveStates[rowNumber].triggerMode = json_boolean_value(json_object_get(row, "triggerModeVal"));
 		}
 	}
 
