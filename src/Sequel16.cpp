@@ -406,6 +406,8 @@ struct Sequel16 : Module {
 
 	bool gateTriggerModeEnabled = true;
 
+	bool sampleAndHoldEnabled = false;
+
 	bool shouldPulseThisStep(short row) {
 		return params[getButtonId(row, clockTracker.getCurrentStepForRow(row))].getValue() > 0.5 && clockTracker.getHasPulsedThisStepForRow(row) == false;
 	}
@@ -547,6 +549,11 @@ struct Sequel16 : Module {
 	}
 	// end
 
+	// used for sample and hold
+	bool hasPulsedR0 = false;
+	bool hasPulsedR1 = false;
+	bool hasPulsedR2 = false;
+
 	void process(const ProcessArgs& args) override {
 		sequelSavePresent = (rightExpander.module && rightExpander.module->model == modelSequelSave);
 		if(sequelSavePresent) {
@@ -590,16 +597,19 @@ struct Sequel16 : Module {
 
 		if (lastclockVoltage == 0 && clockVoltage != 0 && !ignoreClockAfterResetTimer.shouldIgnore) {
 			clockTracker.nextClock();
-			if(shouldPulseThisStep(0) && outputs[OUT_GATE_R0_OUTPUT].isConnected()) {
+			if(shouldPulseThisStep(0)) {
 				gatePulseR0.trigger(1e-3f);
+				hasPulsedR0 = true;
 				clockTracker.setHasPulsedThisStepForRow(0, true);
 			}
-			if(shouldPulseThisStep(1) && outputs[OUT_GATE_R1_OUTPUT].isConnected()) {
+			if(shouldPulseThisStep(1)) {
 				gatePulseR1.trigger(1e-3f);
+				hasPulsedR1 = true;
 				clockTracker.setHasPulsedThisStepForRow(1, true);
 			}
-			if(shouldPulseThisStep(2) && outputs[OUT_GATE_R2_OUTPUT].isConnected()) {
+			if(shouldPulseThisStep(2)) {
 				gatePulseR2.trigger(1e-3f);
+				hasPulsedR2 = true;
 				clockTracker.setHasPulsedThisStepForRow(2, true);
 			}
 		}
@@ -658,21 +668,37 @@ struct Sequel16 : Module {
 		// End
 
 		// Handle CV outputs
-		if(outputs[OUT_CV_R0_OUTPUT].isConnected()) {
+		if(outputs[OUT_CV_R0_OUTPUT].isConnected() && (!sampleAndHoldEnabled || (sampleAndHoldEnabled && hasPulsedR0))) {
 			const float voltageOutputR0 = params[getKnobId(0, clockTracker.getCurrentStepForRow(0))].getValue();
 			outputs[OUT_CV_R0_OUTPUT].setVoltage(voltageOutputR0);
 		}
-		if(outputs[OUT_CV_R1_OUTPUT].isConnected()) {
+		if(outputs[OUT_CV_R1_OUTPUT].isConnected() && (!sampleAndHoldEnabled || (sampleAndHoldEnabled && hasPulsedR1))) {
 			const float voltageOutputR1 = params[getKnobId(1, clockTracker.getCurrentStepForRow(1))].getValue();
 			outputs[OUT_CV_R1_OUTPUT].setVoltage(voltageOutputR1);
 		}
-		if(outputs[OUT_CV_R2_OUTPUT].isConnected()) {
+		if(outputs[OUT_CV_R2_OUTPUT].isConnected() && (!sampleAndHoldEnabled || (sampleAndHoldEnabled && hasPulsedR2))) {
 			const float voltageOutputR2 = params[getKnobId(2, clockTracker.getCurrentStepForRow(2))].getValue();
 			outputs[OUT_CV_R2_OUTPUT].setVoltage(voltageOutputR2);
 		}
 		// End
 		lastclockVoltage = clockVoltage;
 		lastResetInput = resetInput;
+		hasPulsedR0 = false;
+		hasPulsedR1 = false;
+		hasPulsedR2 = false;
+	}
+
+	json_t *dataToJson() override {
+		json_t *rootJ = json_object();
+		json_object_set_new(rootJ, "sampleAndHoldEnabled", json_boolean(sampleAndHoldEnabled));
+		return rootJ;
+	}
+
+	void dataFromJson(json_t *rootJ) override {
+		json_t *sampleAndHoldEnabledJ = json_object_get(rootJ, "sampleAndHoldEnabled");
+		if(sampleAndHoldEnabledJ) {
+			sampleAndHoldEnabled = json_boolean_value(sampleAndHoldEnabledJ);
+		}
 	}
 };
 
@@ -964,6 +990,13 @@ struct Sequel16Widget : ModuleWidget {
 			}
 		};
 
+		struct ToggleSampleAndHold : MenuItem {
+			Sequel16* module;
+			void onAction(const event::Action &e) override {
+				module->sampleAndHoldEnabled = !module->sampleAndHoldEnabled;
+			}
+		};
+
 		RandomizeAllGates* randomizeAllGates = createMenuItem<RandomizeAllGates>("Randomize all gates");
 		randomizeAllGates->module = module;
 		RandomizeAllCVKnobs* randomizeAllCVKnobs = createMenuItem<RandomizeAllCVKnobs>("Randomize all CV knobs");
@@ -986,6 +1019,12 @@ struct Sequel16Widget : ModuleWidget {
 			menu->addChild(randomizeCVKnobsForRow);
 			menu->addChild(randomizeGatesForRow);
 		}
+		menu->addChild(new MenuSeparator());
+		menu->addChild(createMenuLabel("Settings"));
+		ToggleSampleAndHold* sampleAndHoldToggle = createMenuItem<ToggleSampleAndHold>("Sample and hold");
+		sampleAndHoldToggle->rightText = CHECKMARK(module->sampleAndHoldEnabled);
+		sampleAndHoldToggle->module = module;
+		menu->addChild(sampleAndHoldToggle);
 	}
 };
 
