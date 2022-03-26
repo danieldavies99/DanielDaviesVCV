@@ -226,7 +226,13 @@ struct Sequel16 : Module {
 		LIGHTS_LEN
 	};
 
+    // Expander
+	SequelSaveInterface rightMessages[2];
+
 	Sequel16() {
+		rightExpander.producerMessage = &rightMessages[0];
+		rightExpander.consumerMessage = &rightMessages[1];
+
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
 		// Inputs
@@ -400,6 +406,8 @@ struct Sequel16 : Module {
 
 	bool gateTriggerModeEnabled = true;
 
+	bool sampleAndHoldEnabled = false;
+
 	bool shouldPulseThisStep(short row) {
 		return params[getButtonId(row, clockTracker.getCurrentStepForRow(row))].getValue() > 0.5 && clockTracker.getHasPulsedThisStepForRow(row) == false;
 	}
@@ -497,8 +505,61 @@ struct Sequel16 : Module {
 				return 1;
 		}
 	}
+	
+	// Sequel Save Expander handling
+	const SequelSaveInterface cleanInterface;
+	bool sequelSavePresent = false;
+	
+	void handleSequelSave() {
+		SequelSaveInterface *messagesToSave= (SequelSaveInterface*)rightExpander.module->leftExpander.producerMessage;
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 16; j++) {
+				messagesToSave->knobVals[i][j] = params[getKnobId(i, j)].getValue();
+				messagesToSave->switchVals[i][j] = params[getButtonId(i, j)].getValue() > 0 ? true : false;
+			}
+		}
+		messagesToSave->clockDivideVals[0] = params[KNOB_TIME_DIVIDE_R0_PARAM].getValue();
+		messagesToSave->clockDivideVals[1] = params[KNOB_TIME_DIVIDE_R1_PARAM].getValue();
+		messagesToSave->clockDivideVals[2] = params[KNOB_TIME_DIVIDE_R2_PARAM].getValue();
+		messagesToSave->speed = params[KNOB_CLOCK_SPEED_PARAM].getValue();
+		messagesToSave->stepCount = params[KNOB_STEP_COUNT_PARAM].getValue();
+		messagesToSave->triggerMode = params[SWITCH_GATE_MODE_PARAM].getValue() > 0;
+		messagesToSave->isDirty = true;
+		
+
+		SequelSaveInterface *messagesFromSave = (SequelSaveInterface*)rightExpander.consumerMessage;
+		if(messagesFromSave->isDirty) {
+			for(int i = 0; i < 3; i++) {
+				for(int j = 0; j < 16; j++) {
+					params[getKnobId(i, j)].setValue(messagesFromSave->knobVals[i][j]);
+					paramQuantities[getKnobId(i, j)]->setValue(messagesFromSave->knobVals[i][j]);
+					params[getButtonId(i, j)].setValue(messagesFromSave->switchVals[i][j] ? 10.f : 0.f);
+				}
+			}
+			params[KNOB_TIME_DIVIDE_R0_PARAM].setValue(messagesFromSave->clockDivideVals[0]);
+			params[KNOB_TIME_DIVIDE_R1_PARAM].setValue(messagesFromSave->clockDivideVals[1]);
+			params[KNOB_TIME_DIVIDE_R2_PARAM].setValue(messagesFromSave->clockDivideVals[2]);
+			params[KNOB_CLOCK_SPEED_PARAM].setValue(messagesFromSave->speed);
+			paramQuantities[KNOB_CLOCK_SPEED_PARAM]->setValue(messagesFromSave->speed);
+			params[KNOB_STEP_COUNT_PARAM].setValue(messagesFromSave->stepCount);
+			paramQuantities[KNOB_STEP_COUNT_PARAM]->setValue(messagesFromSave->stepCount);
+			params[SWITCH_GATE_MODE_PARAM].setValue(messagesFromSave->triggerMode ? 1.f : 0.f);
+		}
+		*messagesFromSave = cleanInterface;
+	}
+	// end
+
+	// used for sample and hold
+	bool hasPulsedR0 = false;
+	bool hasPulsedR1 = false;
+	bool hasPulsedR2 = false;
 
 	void process(const ProcessArgs& args) override {
+		sequelSavePresent = (rightExpander.module && rightExpander.module->model == modelSequelSave);
+		if(sequelSavePresent) {
+			handleSequelSave();
+		}
+
 		clockTracker.divideR0 = clockDivideDisplayValueR0 = mapClockDivideValues(round(params[KNOB_TIME_DIVIDE_R0_PARAM].getValue()));
 		clockTracker.divideR1 = clockDivideDisplayValueR1 = mapClockDivideValues(round(params[KNOB_TIME_DIVIDE_R1_PARAM].getValue()));
 		clockTracker.divideR2 = clockDivideDisplayValueR2 = mapClockDivideValues(round(params[KNOB_TIME_DIVIDE_R2_PARAM].getValue()));
@@ -524,6 +585,8 @@ struct Sequel16 : Module {
 
 		if(clockTracker.numSteps == 0) { // don't output anything if steps = 0;
 			turnOffAllStepIndicatorLights();
+			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(0);
+			lights[LIGHT_GATE_MODE_CONTINUOUS_LIGHT].setBrightness(0);
 			return;
 		}
 
@@ -534,16 +597,19 @@ struct Sequel16 : Module {
 
 		if (lastclockVoltage == 0 && clockVoltage != 0 && !ignoreClockAfterResetTimer.shouldIgnore) {
 			clockTracker.nextClock();
-			if(shouldPulseThisStep(0) && outputs[OUT_GATE_R0_OUTPUT].isConnected()) {
+			if(shouldPulseThisStep(0)) {
 				gatePulseR0.trigger(1e-3f);
+				hasPulsedR0 = true;
 				clockTracker.setHasPulsedThisStepForRow(0, true);
 			}
-			if(shouldPulseThisStep(1) && outputs[OUT_GATE_R1_OUTPUT].isConnected()) {
+			if(shouldPulseThisStep(1)) {
 				gatePulseR1.trigger(1e-3f);
+				hasPulsedR1 = true;
 				clockTracker.setHasPulsedThisStepForRow(1, true);
 			}
-			if(shouldPulseThisStep(2) && outputs[OUT_GATE_R2_OUTPUT].isConnected()) {
+			if(shouldPulseThisStep(2)) {
 				gatePulseR2.trigger(1e-3f);
+				hasPulsedR2 = true;
 				clockTracker.setHasPulsedThisStepForRow(2, true);
 			}
 		}
@@ -602,21 +668,37 @@ struct Sequel16 : Module {
 		// End
 
 		// Handle CV outputs
-		if(outputs[OUT_CV_R0_OUTPUT].isConnected()) {
+		if(outputs[OUT_CV_R0_OUTPUT].isConnected() && (!sampleAndHoldEnabled || (sampleAndHoldEnabled && hasPulsedR0))) {
 			const float voltageOutputR0 = params[getKnobId(0, clockTracker.getCurrentStepForRow(0))].getValue();
 			outputs[OUT_CV_R0_OUTPUT].setVoltage(voltageOutputR0);
 		}
-		if(outputs[OUT_CV_R1_OUTPUT].isConnected()) {
+		if(outputs[OUT_CV_R1_OUTPUT].isConnected() && (!sampleAndHoldEnabled || (sampleAndHoldEnabled && hasPulsedR1))) {
 			const float voltageOutputR1 = params[getKnobId(1, clockTracker.getCurrentStepForRow(1))].getValue();
 			outputs[OUT_CV_R1_OUTPUT].setVoltage(voltageOutputR1);
 		}
-		if(outputs[OUT_CV_R2_OUTPUT].isConnected()) {
+		if(outputs[OUT_CV_R2_OUTPUT].isConnected() && (!sampleAndHoldEnabled || (sampleAndHoldEnabled && hasPulsedR2))) {
 			const float voltageOutputR2 = params[getKnobId(2, clockTracker.getCurrentStepForRow(2))].getValue();
 			outputs[OUT_CV_R2_OUTPUT].setVoltage(voltageOutputR2);
 		}
 		// End
 		lastclockVoltage = clockVoltage;
 		lastResetInput = resetInput;
+		hasPulsedR0 = false;
+		hasPulsedR1 = false;
+		hasPulsedR2 = false;
+	}
+
+	json_t *dataToJson() override {
+		json_t *rootJ = json_object();
+		json_object_set_new(rootJ, "sampleAndHoldEnabled", json_boolean(sampleAndHoldEnabled));
+		return rootJ;
+	}
+
+	void dataFromJson(json_t *rootJ) override {
+		json_t *sampleAndHoldEnabledJ = json_object_get(rootJ, "sampleAndHoldEnabled");
+		if(sampleAndHoldEnabledJ) {
+			sampleAndHoldEnabled = json_boolean_value(sampleAndHoldEnabledJ);
+		}
 	}
 };
 
@@ -908,6 +990,13 @@ struct Sequel16Widget : ModuleWidget {
 			}
 		};
 
+		struct ToggleSampleAndHold : MenuItem {
+			Sequel16* module;
+			void onAction(const event::Action &e) override {
+				module->sampleAndHoldEnabled = !module->sampleAndHoldEnabled;
+			}
+		};
+
 		RandomizeAllGates* randomizeAllGates = createMenuItem<RandomizeAllGates>("Randomize all gates");
 		randomizeAllGates->module = module;
 		RandomizeAllCVKnobs* randomizeAllCVKnobs = createMenuItem<RandomizeAllCVKnobs>("Randomize all CV knobs");
@@ -930,6 +1019,12 @@ struct Sequel16Widget : ModuleWidget {
 			menu->addChild(randomizeCVKnobsForRow);
 			menu->addChild(randomizeGatesForRow);
 		}
+		menu->addChild(new MenuSeparator());
+		menu->addChild(createMenuLabel("Settings"));
+		ToggleSampleAndHold* sampleAndHoldToggle = createMenuItem<ToggleSampleAndHold>("Sample and hold");
+		sampleAndHoldToggle->rightText = CHECKMARK(module->sampleAndHoldEnabled);
+		sampleAndHoldToggle->module = module;
+		menu->addChild(sampleAndHoldToggle);
 	}
 };
 

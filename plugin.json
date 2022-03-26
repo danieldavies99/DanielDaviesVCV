@@ -1,7 +1,7 @@
 {
   "slug": "SequelSequencers",
   "name": "Daniel Davies",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "license": "GPL-3.0-or-later",
   "brand": "Daniel Davies",
   "author": "Daniel Davies",
@@ -61,6 +61,14 @@
       "description": "5HP wide blank panel",
       "tags": [
         "Blank"
+      ]
+    },
+    {
+      "slug": "SequelSave",
+      "name": "Sequel Save",
+      "description": "Save state expander module for Sequel 8 & Sequel 16",
+      "tags": [
+        "expander"
       ]
     }
   ]

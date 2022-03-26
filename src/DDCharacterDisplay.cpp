@@ -4,7 +4,6 @@
 using namespace rack;
 
 void CharacterDisplay::drawLetter(char letter, int x, int y) {
-    // DEBUG("letter " + letter);
     switch (letter) {
         case '0':
             lightPixel(0, 1, x, y);
