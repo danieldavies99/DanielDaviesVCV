@@ -14,6 +14,7 @@ extern Model* modelQuantify;
 extern Model* modelSamuel;
 extern Model* modelBlank3;
 extern Model* modelBlank5;
+extern Model* modelTriMorph;
 
 /************************** KNOBS **************************/
 
