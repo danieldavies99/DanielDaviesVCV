@@ -118,10 +118,10 @@ struct TriMorphWidget : ModuleWidget {
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.026, 30.329)), module, TriMorph::KNOB_COARSE_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(18.002, 39.713)), module, TriMorph::KNOB_SHIFT_MODULATION_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(18.002, 39.713)), module, TriMorph::KNOB_SHIFT_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(47.895, 39.713)), module, TriMorph::KNOB_PORTAMENTO_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.026, 64.478)), module, TriMorph::KNOB_PULSE_WIDTH_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(13.709, 81.638)), module, TriMorph::KNOB_SHIFT_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(13.709, 81.638)), module, TriMorph::KNOB_SHIFT_MODULATION_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.02, 81.638)), module, TriMorph::KNOB_PULSE_WIDTH_MODULATION_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(52.331, 81.638)), module, TriMorph::KNOB_FREQUENCY_MODULATION_PARAM));
 
