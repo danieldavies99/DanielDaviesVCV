@@ -24,11 +24,11 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.2810466"
-     inkscape:cx="33.956611"
-     inkscape:cy="247.06362"
+     inkscape:cx="36.298446"
+     inkscape:cy="251.74729"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
-     inkscape:window-x="-8"
+     inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer2"
@@ -146,13 +146,13 @@
        cx="13.708802"
        cy="81.637642"
        r="2.8915157"
-       inkscape:label="knob_shift_modulation" />
+       inkscape:label="knob_pulse_width_modulation" />
     <ellipse
        style="display:inline;fill:#00ff00;fill-opacity:1;stroke-width:0.0698898"
        id="path1193-5-3-5-0"
        cx="13.708802"
        cy="93.148125"
-       inkscape:label="shift_in"
+       inkscape:label="pulse_width_modulation_in"
        rx="2.892"
        ry="2.8915157" />
     <ellipse
@@ -169,13 +169,13 @@
        cx="33.019997"
        cy="81.637642"
        r="2.8915157"
-       inkscape:label="knob_pulse_width_modulation" />
+       inkscape:label="knob_shift_modulation" />
     <ellipse
        style="display:inline;fill:#00ff00;fill-opacity:1;stroke-width:0.0698898"
        id="path1193-5-3-5-0-7"
        cx="33.019997"
        cy="93.148125"
-       inkscape:label="pulse_width_modulation_in"
+       inkscape:label="shift_in"
        rx="2.892"
        ry="2.8915157" />
     <circle
@@ -224,14 +224,14 @@
        cx="33.025997"
        cy="64.477737"
        r="2.8915157"
-       inkscape:label="knob_pulse_width" />
+       inkscape:label="knob_shift" />
     <circle
        style="display:inline;fill:#ff0000;fill-opacity:1;stroke-width:0.0698898"
        id="path1193-3-7-1"
        cx="18.001976"
        cy="39.712917"
        r="2.8915157"
-       inkscape:label="knob_shift" />
+       inkscape:label="knob_pulse_width" />
     <circle
        style="display:inline;fill:#ff0000;fill-opacity:1;stroke-width:0.0698898"
        id="path1193-3-7-1-5"
