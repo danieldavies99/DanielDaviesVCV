@@ -49,12 +49,37 @@ struct TriMorph : Module {
 	}
 
 	float phase = 0.f;
-
+	float lastPitch = 0.f;
 	void process(const ProcessArgs& args) override {
 		// Compute the frequency from the pitch parameter and input
-		float pitch = params[KNOB_COARSE_PARAM].getValue();
-		pitch += inputs[PITCH_IN_INPUT].getVoltage();
+		// float pitch = params[KNOB_COARSE_PARAM].getValue();
+		float pitch = lastPitch;
+		float targetPitch = params[KNOB_COARSE_PARAM].getValue() + inputs[PITCH_IN_INPUT].getVoltage();
+		float portamentoVal = params[KNOB_PORTAMENTO_PARAM].getValue();
+
+		// portamentalVal should vary from 0 to 0.0999999;
+		float glideRate = (0.1 - (0.099999*portamentoVal)) / 1000;
+		// DEBUG(std::to_string(glideRate).c_str());
+		if(portamentoVal == 0.00f) {
+			pitch = targetPitch;
+		} else {
+			if(pitch < targetPitch) {
+				// slowest should be 0.000001
+				// fastest should be 0.1
+				pitch += glideRate;
+				if (pitch > targetPitch) {
+					pitch = targetPitch;
+				}
+			} else if (pitch > targetPitch) {
+				pitch -= glideRate;
+				if (pitch < targetPitch) {
+					pitch = targetPitch;
+				}
+			}
+		}
+		// pitch += inputs[PITCH_IN_INPUT].getVoltage();
 		pitch = clamp(pitch, -4.f, 4.f);
+		lastPitch = pitch;
 		// The default pitch is C4 = 261.6256f
 		float freq = dsp::FREQ_C4 * std::pow(2.f, pitch);
 
