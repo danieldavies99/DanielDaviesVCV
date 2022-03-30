@@ -10,6 +10,8 @@ struct TriMorph : Module {
 		KNOB_PULSE_WIDTH_MODULATION_PARAM,
 		KNOB_SHIFT_MODULATION_PARAM,
 		KNOB_FREQUENCY_MODULATION_PARAM,
+		KNOB_AMPLITUDE_PARAM,
+		KNOB_AMPLITUDE_MODULATION_PARAM,
 		PARAMS_LEN
 	};
 	enum InputId {
@@ -17,12 +19,14 @@ struct TriMorph : Module {
 		SHIFT_IN_INPUT,
 		PULSE_WIDTH_MODULATION_IN_INPUT,
 		FREQUENCY_MODULATION_IN_INPUT,
+		AMPLITUDE_MODULATION_IN_INPUT,
 		INPUTS_LEN
 	};
 	enum OutputId {
 		SQUARE_OUT_OUTPUT,
 		SIN_OUT_OUTPUT,
 		TRIANGLE_OUT_OUTPUT,
+		NOISE_OUT_OUTPUT,
 		OUTPUTS_LEN
 	};
 	enum LightId {
@@ -39,6 +43,8 @@ struct TriMorph : Module {
 		configParam(KNOB_FREQUENCY_MODULATION_PARAM, -1.f, 1.f, 0.f, "Frequency modulation");
 		configParam(KNOB_SHIFT_MODULATION_PARAM, -1.f, 1.f, 0.f, "Bend modulation");
 		configParam(KNOB_PORTAMENTO_PARAM, 0.2f, 1.f, 0.f, "Portamento time");
+		configParam(KNOB_AMPLITUDE_PARAM, -1.f, 1.f, 0.f, "Amplitude");
+		configParam(KNOB_AMPLITUDE_MODULATION_PARAM, 0.2f, 1.f, 0.f, "Amplitude modulation");
 		configInput(PITCH_IN_INPUT, "Pitch v/oct");
 		configInput(SHIFT_IN_INPUT, "Bend modulation");
 		configInput(PULSE_WIDTH_MODULATION_IN_INPUT, "Pulse width modulation");
@@ -135,22 +141,26 @@ struct TriMorphWidget : ModuleWidget {
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.026, 30.329)), module, TriMorph::KNOB_COARSE_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(18.002, 39.713)), module, TriMorph::KNOB_PULSE_WIDTH_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(47.895, 39.713)), module, TriMorph::KNOB_PORTAMENTO_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.026, 64.478)), module, TriMorph::KNOB_SHIFT_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(13.709, 81.638)), module, TriMorph::KNOB_PULSE_WIDTH_MODULATION_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.02, 81.638)), module, TriMorph::KNOB_SHIFT_MODULATION_PARAM)); 
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(52.331, 81.638)), module, TriMorph::KNOB_FREQUENCY_MODULATION_PARAM));
+		addParam(createParamCentered<RedSliderMedium>(mm2px(Vec(47.895, 14.38)), module, TriMorph::KNOB_PORTAMENTO_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.026, 32.229)), module, TriMorph::KNOB_COARSE_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(47.895, 39.713)), module, TriMorph::KNOB_AMPLITUDE_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(18.002, 41.613)), module, TriMorph::KNOB_PULSE_WIDTH_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.026, 66.377)), module, TriMorph::KNOB_SHIFT_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(12.109, 83.537)), module, TriMorph::KNOB_PULSE_WIDTH_MODULATION_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(26.183, 83.537)), module, TriMorph::KNOB_SHIFT_MODULATION_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(40.257, 83.537)), module, TriMorph::KNOB_FREQUENCY_MODULATION_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(54.331, 83.537)), module, TriMorph::KNOB_AMPLITUDE_MODULATION_PARAM));
 
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(33.02, 47.518)), module, TriMorph::PITCH_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(13.709, 93.148)), module, TriMorph::PULSE_WIDTH_MODULATION_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(33.02, 93.148)), module, TriMorph::SHIFT_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(52.331, 93.148)), module, TriMorph::FREQUENCY_MODULATION_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(33.02, 49.418)), module, TriMorph::PITCH_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(12.109, 95.048)), module, TriMorph::PULSE_WIDTH_MODULATION_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(26.183, 95.048)), module, TriMorph::SHIFT_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(40.257, 95.048)), module, TriMorph::FREQUENCY_MODULATION_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(54.331, 95.048)), module, TriMorph::AMPLITUDE_MODULATION_IN_INPUT));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(13.709, 110.457)), module, TriMorph::SQUARE_OUT_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(33.02, 110.457)), module, TriMorph::SIN_OUT_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(52.331, 110.457)), module, TriMorph::TRIANGLE_OUT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(12.109, 110.457)), module, TriMorph::SQUARE_OUT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(26.183, 110.457)), module, TriMorph::SIN_OUT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(40.257, 110.457)), module, TriMorph::TRIANGLE_OUT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(54.331, 110.457)), module, TriMorph::NOISE_OUT_OUTPUT));
 	}
 }; 
 

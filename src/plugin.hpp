@@ -49,6 +49,16 @@ struct CKD6InvisibleLatch : app::SvgSwitch {
 	}
 };
 
+struct RedSliderMedium : app::SvgSlider {
+	RedSliderMedium() {
+		setBackgroundSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/SliderBackgroundMedium.svg")));
+		setHandleSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/RedSlideKnob.svg")));
+		minHandlePos = mm2px(Vec(-1.f, 0.f));
+		maxHandlePos = mm2px(Vec(20.5f, 0.f));
+		horizontal = true;
+	}
+};
+
 // Custom Widgets
 struct DigitDisplay : SvgWidget {
     std::shared_ptr<rack::Svg> digit0 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay0.svg"));
