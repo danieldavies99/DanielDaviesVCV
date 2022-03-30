@@ -152,10 +152,10 @@ struct TriMorphWidget : ModuleWidget {
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(54.331, 83.537)), module, TriMorph::KNOB_AMPLITUDE_MODULATION_PARAM));
 
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(33.02, 49.418)), module, TriMorph::PITCH_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(12.109, 95.048)), module, TriMorph::PULSE_WIDTH_MODULATION_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(26.183, 95.048)), module, TriMorph::SHIFT_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(40.257, 95.048)), module, TriMorph::FREQUENCY_MODULATION_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(54.331, 95.048)), module, TriMorph::AMPLITUDE_MODULATION_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(12.109, 94.148)), module, TriMorph::PULSE_WIDTH_MODULATION_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(26.183, 94.148)), module, TriMorph::SHIFT_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(40.257, 94.148)), module, TriMorph::FREQUENCY_MODULATION_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(54.331, 94.148)), module, TriMorph::AMPLITUDE_MODULATION_IN_INPUT));
 
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(12.109, 110.457)), module, TriMorph::SQUARE_OUT_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(26.183, 110.457)), module, TriMorph::SIN_OUT_OUTPUT));
