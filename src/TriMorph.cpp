@@ -42,20 +42,25 @@ struct TriMorph : Module {
 		configParam(KNOB_PULSE_WIDTH_MODULATION_PARAM, -1.f, 1.f, 0.f, "Pulse width modulation");
 		configParam(KNOB_FREQUENCY_MODULATION_PARAM, -1.f, 1.f, 0.f, "Frequency modulation");
 		configParam(KNOB_SHIFT_MODULATION_PARAM, -1.f, 1.f, 0.f, "Bend modulation");
-		configParam(KNOB_PORTAMENTO_PARAM, 0.2f, 1.f, 0.f, "Portamento time");
+		configParam(KNOB_PORTAMENTO_PARAM, 0.2f, 1.f, 0.f, "Bend time");
 		configParam(KNOB_AMPLITUDE_PARAM, 0.f, 5.f, 5.f, "Amplitude");
 		configParam(KNOB_AMPLITUDE_MODULATION_PARAM, -1.f, 1.f, 0.f, "Amplitude modulation");
 		configInput(PITCH_IN_INPUT, "Pitch v/oct");
 		configInput(SHIFT_IN_INPUT, "Bend modulation");
 		configInput(PULSE_WIDTH_MODULATION_IN_INPUT, "Pulse width modulation");
 		configInput(FREQUENCY_MODULATION_IN_INPUT, "Fequency modulation");
-		configOutput(SQUARE_OUT_OUTPUT, "Square out");
-		configOutput(SIN_OUT_OUTPUT, "Sine out");
-		configOutput(TRIANGLE_OUT_OUTPUT, "Tri out");
+		configInput(AMPLITUDE_MODULATION_IN_INPUT, "Amplitude modulation");
+		configOutput(SQUARE_OUT_OUTPUT, "Square");
+		configOutput(SIN_OUT_OUTPUT, "Sine");
+		configOutput(TRIANGLE_OUT_OUTPUT, "Tri");
+		configOutput(NOISE_OUT_OUTPUT, "Noise");
+
 	}
 
 	float phase = 0.f;
 	float lastPitch = 0.f;
+
+	int lastFrame = 0;
 	void process(const ProcessArgs& args) override {
 		// DEBUG(std::to_string(args.sampleTime).c_str());
 		// Compute the frequency from the pitch parameter and input
@@ -132,6 +137,23 @@ struct TriMorph : Module {
 		// Audio signals are typically +/-5V
 		// https://vcvrack.com/manual/VoltageStandards
 		outputs[SQUARE_OUT_OUTPUT].setVoltage(amplitude * square);
+
+		int frame = lastFrame + 1;
+		if(frame > 0) { // make number bigger here to decrease how many times this is called
+
+			// this is a random noise function I made up, idk if it's technically the best
+			// but it sounds basically indistinguishable to other white noise generators I've used
+			float random = random::uniform();
+			random -= 0.5;
+			if(random < 0) {
+				random = -(random*random);
+			} else {
+				random = random*random;
+			}
+			outputs[NOISE_OUT_OUTPUT].setVoltage(random * amplitude * 5.0f);
+			frame = 0;
+		}
+		lastFrame = frame;
 	}
 };
 
