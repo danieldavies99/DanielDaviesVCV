@@ -43,8 +43,8 @@ struct TriMorph : Module {
 		configParam(KNOB_FREQUENCY_MODULATION_PARAM, -1.f, 1.f, 0.f, "Frequency modulation");
 		configParam(KNOB_SHIFT_MODULATION_PARAM, -1.f, 1.f, 0.f, "Bend modulation");
 		configParam(KNOB_PORTAMENTO_PARAM, 0.2f, 1.f, 0.f, "Portamento time");
-		configParam(KNOB_AMPLITUDE_PARAM, -1.f, 1.f, 0.f, "Amplitude");
-		configParam(KNOB_AMPLITUDE_MODULATION_PARAM, 0.2f, 1.f, 0.f, "Amplitude modulation");
+		configParam(KNOB_AMPLITUDE_PARAM, 0.f, 5.f, 5.f, "Amplitude");
+		configParam(KNOB_AMPLITUDE_MODULATION_PARAM, -1.f, 1.f, 0.f, "Amplitude modulation");
 		configInput(PITCH_IN_INPUT, "Pitch v/oct");
 		configInput(SHIFT_IN_INPUT, "Bend modulation");
 		configInput(PULSE_WIDTH_MODULATION_IN_INPUT, "Pulse width modulation");
@@ -108,14 +108,19 @@ struct TriMorph : Module {
 
 		// Audio signals are typically +/-5V
 		// https://vcvrack.com/manual/VoltageStandards
-		outputs[TRIANGLE_OUT_OUTPUT].setVoltage(5.f * tri);
+
+		float amplitude = params[KNOB_AMPLITUDE_PARAM].getValue();
+		amplitude += (inputs[AMPLITUDE_MODULATION_IN_INPUT].getVoltage()) * params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
+		amplitude = clamp(amplitude, 0.f, 5.f);
+
+		outputs[TRIANGLE_OUT_OUTPUT].setVoltage(amplitude * tri);
 
 		// Compute the sine output
 		float sine = std::sin(M_PI * (tri / 2));
 		// sine /= tri;
 		// Audio signals are typically +/-5V
 		// https://vcvrack.com/manual/VoltageStandards
-		outputs[SIN_OUT_OUTPUT].setVoltage(5.f * sine);
+		outputs[SIN_OUT_OUTPUT].setVoltage(amplitude * sine);
 
 		// Compute the square output
 		float pulseWidth = params[KNOB_PULSE_WIDTH_PARAM].getValue();
@@ -126,7 +131,7 @@ struct TriMorph : Module {
 		// sine /= tri;
 		// Audio signals are typically +/-5V
 		// https://vcvrack.com/manual/VoltageStandards
-		outputs[SQUARE_OUT_OUTPUT].setVoltage(5.f * square);
+		outputs[SQUARE_OUT_OUTPUT].setVoltage(amplitude * square);
 	}
 };
 
