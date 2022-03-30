@@ -38,7 +38,7 @@ struct TriMorph : Module {
 		configParam(KNOB_PULSE_WIDTH_MODULATION_PARAM, -1.f, 1.f, 0.f, "Pulse width modulation");
 		configParam(KNOB_FREQUENCY_MODULATION_PARAM, -1.f, 1.f, 0.f, "Frequency modulation");
 		configParam(KNOB_SHIFT_MODULATION_PARAM, -1.f, 1.f, 0.f, "Bend modulation");
-		configParam(KNOB_PORTAMENTO_PARAM, 0.f, 1.f, 0.f, "Portamento time");
+		configParam(KNOB_PORTAMENTO_PARAM, 0.2f, 1.f, 0.f, "Portamento time");
 		configInput(PITCH_IN_INPUT, "Pitch v/oct");
 		configInput(SHIFT_IN_INPUT, "Bend modulation");
 		configInput(PULSE_WIDTH_MODULATION_IN_INPUT, "Pulse width modulation");
@@ -51,21 +51,17 @@ struct TriMorph : Module {
 	float phase = 0.f;
 	float lastPitch = 0.f;
 	void process(const ProcessArgs& args) override {
+		// DEBUG(std::to_string(args.sampleTime).c_str());
 		// Compute the frequency from the pitch parameter and input
 		// float pitch = params[KNOB_COARSE_PARAM].getValue();
 		float pitch = lastPitch;
 		float targetPitch = params[KNOB_COARSE_PARAM].getValue() + inputs[PITCH_IN_INPUT].getVoltage();
 		float portamentoVal = params[KNOB_PORTAMENTO_PARAM].getValue();
-
-		// portamentalVal should vary from 0 to 0.0999999;
-		float glideRate = (0.1 - (0.099999*portamentoVal)) / 1000;
-		// DEBUG(std::to_string(glideRate).c_str());
-		if(portamentoVal == 0.00f) {
+		float glideRate = (10.01 - (portamentoVal*10)) * args.sampleTime;
+		if(portamentoVal == 0.2f) {
 			pitch = targetPitch;
 		} else {
 			if(pitch < targetPitch) {
-				// slowest should be 0.000001
-				// fastest should be 0.1
 				pitch += glideRate;
 				if (pitch > targetPitch) {
 					pitch = targetPitch;
@@ -77,6 +73,7 @@ struct TriMorph : Module {
 				}
 			}
 		}
+
 		// pitch += inputs[PITCH_IN_INPUT].getVoltage();
 		pitch = clamp(pitch, -4.f, 4.f);
 		lastPitch = pitch;
