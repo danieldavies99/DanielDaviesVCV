@@ -42,7 +42,7 @@ struct TriMorph : Module {
 		configParam(KNOB_PULSE_WIDTH_MODULATION_PARAM, -1.f, 1.f, 0.f, "Pulse width modulation");
 		configParam(KNOB_FREQUENCY_MODULATION_PARAM, -1.f, 1.f, 0.f, "Frequency modulation");
 		configParam(KNOB_SHIFT_MODULATION_PARAM, -1.f, 1.f, 0.f, "Bend modulation");
-		configParam(KNOB_PORTAMENTO_PARAM, 0.2f, 1.f, 0.f, "Bend time");
+		configParam(KNOB_PORTAMENTO_PARAM, 0.2f, 1.f, 0.2f, "Bend time");
 		configParam(KNOB_AMPLITUDE_PARAM, 0.f, 5.f, 5.f, "Amplitude");
 		configParam(KNOB_AMPLITUDE_MODULATION_PARAM, -1.f, 1.f, 0.f, "Amplitude modulation");
 		configInput(PITCH_IN_INPUT, "Pitch v/oct");
