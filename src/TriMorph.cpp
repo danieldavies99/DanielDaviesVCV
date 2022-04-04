@@ -15,6 +15,7 @@ struct TriMorph : Module {
 		PARAMS_LEN
 	};
 	enum InputId {
+		SYNC_IN_INPUT,
 		PITCH_IN_INPUT,
 		SHIFT_IN_INPUT,
 		PULSE_WIDTH_MODULATION_IN_INPUT,
@@ -50,6 +51,7 @@ struct TriMorph : Module {
 		configInput(PULSE_WIDTH_MODULATION_IN_INPUT, "Pulse width modulation");
 		configInput(FREQUENCY_MODULATION_IN_INPUT, "Fequency modulation");
 		configInput(AMPLITUDE_MODULATION_IN_INPUT, "Amplitude modulation");
+		configInput(SYNC_IN_INPUT, "Sync");
 		configOutput(SQUARE_OUT_OUTPUT, "Square");
 		configOutput(SIN_OUT_OUTPUT, "Sine");
 		configOutput(TRIANGLE_OUT_OUTPUT, "Tri");
@@ -61,6 +63,7 @@ struct TriMorph : Module {
 	float lastPitch = 0.f;
 
 	int lastFrame = 0;
+	bool lastSyncInputWasNegative = false;
 	void process(const ProcessArgs& args) override {
 		// DEBUG(std::to_string(args.sampleTime).c_str());
 		// Compute the frequency from the pitch parameter and input
@@ -95,6 +98,11 @@ struct TriMorph : Module {
 		phase += freq * args.sampleTime;
 		if (phase >= 0.5f)
 			phase -= 1.f;
+
+		
+		if(inputs[SYNC_IN_INPUT].isConnected() && inputs[SYNC_IN_INPUT].getVoltage() > 0 && lastSyncInputWasNegative) {
+			phase = -0.5;
+		}
 
 		// phase oscilates between 0.5 and -0.5;
 		float tri;
@@ -154,6 +162,7 @@ struct TriMorph : Module {
 			frame = 0;
 		}
 		lastFrame = frame;
+		lastSyncInputWasNegative = inputs[SYNC_IN_INPUT].getVoltage() < 0;
 	}
 };
 
@@ -183,6 +192,7 @@ struct TriMorphWidget : ModuleWidget {
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(26.183, 94.148)), module, TriMorph::SHIFT_IN_INPUT));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(40.257, 94.148)), module, TriMorph::FREQUENCY_MODULATION_IN_INPUT));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(54.331, 94.148)), module, TriMorph::AMPLITUDE_MODULATION_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(8.103, 32.229)), module, TriMorph::SYNC_IN_INPUT));
 
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(12.109, 110.457)), module, TriMorph::SQUARE_OUT_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(26.183, 110.457)), module, TriMorph::SIN_OUT_OUTPUT));
