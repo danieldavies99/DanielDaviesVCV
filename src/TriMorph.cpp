@@ -65,7 +65,6 @@ struct TriMorph : Module {
 	int lastFrame = 0;
 	bool lastSyncInputWasNegative = false;
 	void process(const ProcessArgs& args) override {
-		// DEBUG(std::to_string(args.sampleTime).c_str());
 		// Compute the frequency from the pitch parameter and input
 		// float pitch = params[KNOB_COARSE_PARAM].getValue();
 		float pitch = lastPitch;
@@ -88,9 +87,13 @@ struct TriMorph : Module {
 			}
 		}
 
-		// pitch += inputs[PITCH_IN_INPUT].getVoltage();
+		// set last pitch before applying frequency modulation
+		lastPitch = clamp(pitch, -4.f, 4.f);
+		float frequencyModulation = inputs[FREQUENCY_MODULATION_IN_INPUT].getVoltage() * (4.f/5.f) * params[KNOB_FREQUENCY_MODULATION_PARAM].getValue();
+		// DEBUG(std::to_string(inputs[FREQUENCY_MODULATION_IN_INPUT].getVoltage()* (4.f/5.f) ).c_str());
+		pitch += frequencyModulation;
 		pitch = clamp(pitch, -4.f, 4.f);
-		lastPitch = pitch;
+		
 		// The default pitch is C4 = 261.6256f
 		float freq = dsp::FREQ_C4 * std::pow(2.f, pitch);
 
