@@ -72,10 +72,12 @@
       ]
     },
     {
-      "slug": "TriMorph",
-      "name": "TriMorph",
-      "description": "",
-      "tags": []
+      "slug": "Bend",
+      "name": "Bend",
+      "description": "Phaae modulation oscillator",
+      "tags": [
+        "Oscillator"
+      ]
     }
   ]
 }

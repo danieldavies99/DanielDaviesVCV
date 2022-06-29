@@ -1,7 +1,7 @@
 #include "plugin.hpp"
 
 
-struct TriMorph : Module {
+struct Bend : Module {
 	enum ParamId {
 		KNOB_COARSE_PARAM,
 		KNOB_PULSE_WIDTH_PARAM,
@@ -35,7 +35,7 @@ struct TriMorph : Module {
 	};
 
 
-	TriMorph() {
+	Bend() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(KNOB_SHIFT_PARAM, -0.5f, 0.5f, 0.f, "Bend");
 		configParam(KNOB_COARSE_PARAM, -4.f, 4.f, 0.f, "Pitch");
@@ -104,6 +104,7 @@ struct TriMorph : Module {
 
 		
 		if(inputs[SYNC_IN_INPUT].isConnected() && inputs[SYNC_IN_INPUT].getVoltage() > 0 && lastSyncInputWasNegative) {
+
 			phase = -0.5;
 		}
 
@@ -126,7 +127,7 @@ struct TriMorph : Module {
 		// https://vcvrack.com/manual/VoltageStandards
 
 		float amplitude = params[KNOB_AMPLITUDE_PARAM].getValue();
-		amplitude += (inputs[AMPLITUDE_MODULATION_IN_INPUT].getVoltage()) * params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
+		amplitude += (inputs[AMPLITUDE_MODULATION_IN_INPUT].getVoltage() / 2.f) * params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
 		amplitude = clamp(amplitude, 0.f, 5.f);
 
 		outputs[TRIANGLE_OUT_OUTPUT].setVoltage(amplitude * tri);
@@ -170,39 +171,39 @@ struct TriMorph : Module {
 };
 
 
-struct TriMorphWidget : ModuleWidget {
-	TriMorphWidget(TriMorph* module) {
+struct BendWidget : ModuleWidget {
+	BendWidget(Bend* module) {
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/TriMorph.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/Bend.svg")));
 
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addParam(createParamCentered<RedSliderMedium>(mm2px(Vec(47.895, 14.38)), module, TriMorph::KNOB_PORTAMENTO_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.026, 32.229)), module, TriMorph::KNOB_COARSE_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(47.895, 39.713)), module, TriMorph::KNOB_AMPLITUDE_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(18.002, 41.613)), module, TriMorph::KNOB_PULSE_WIDTH_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.026, 66.377)), module, TriMorph::KNOB_SHIFT_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(12.109, 83.537)), module, TriMorph::KNOB_PULSE_WIDTH_MODULATION_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(26.183, 83.537)), module, TriMorph::KNOB_SHIFT_MODULATION_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(40.257, 83.537)), module, TriMorph::KNOB_FREQUENCY_MODULATION_PARAM));
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(54.331, 83.537)), module, TriMorph::KNOB_AMPLITUDE_MODULATION_PARAM));
+		addParam(createParamCentered<RedSliderMedium>(mm2px(Vec(47.895, 14.38)), module, Bend::KNOB_PORTAMENTO_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.026, 32.229)), module, Bend::KNOB_COARSE_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(47.895, 39.713)), module, Bend::KNOB_AMPLITUDE_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(18.002, 41.613)), module, Bend::KNOB_PULSE_WIDTH_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.026, 66.377)), module, Bend::KNOB_SHIFT_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(12.109, 83.537)), module, Bend::KNOB_PULSE_WIDTH_MODULATION_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(26.183, 83.537)), module, Bend::KNOB_SHIFT_MODULATION_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(40.257, 83.537)), module, Bend::KNOB_FREQUENCY_MODULATION_PARAM));
+		addParam(createParamCentered<RedKnob>(mm2px(Vec(54.331, 83.537)), module, Bend::KNOB_AMPLITUDE_MODULATION_PARAM));
 
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(33.02, 49.418)), module, TriMorph::PITCH_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(12.109, 94.148)), module, TriMorph::PULSE_WIDTH_MODULATION_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(26.183, 94.148)), module, TriMorph::SHIFT_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(40.257, 94.148)), module, TriMorph::FREQUENCY_MODULATION_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(54.331, 94.148)), module, TriMorph::AMPLITUDE_MODULATION_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(8.103, 32.229)), module, TriMorph::SYNC_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(33.02, 49.418)), module, Bend::PITCH_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(12.109, 94.148)), module, Bend::PULSE_WIDTH_MODULATION_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(26.183, 94.148)), module, Bend::SHIFT_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(40.257, 94.148)), module, Bend::FREQUENCY_MODULATION_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(54.331, 94.148)), module, Bend::AMPLITUDE_MODULATION_IN_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(8.103, 32.229)), module, Bend::SYNC_IN_INPUT));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(12.109, 110.457)), module, TriMorph::SQUARE_OUT_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(26.183, 110.457)), module, TriMorph::SIN_OUT_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(40.257, 110.457)), module, TriMorph::TRIANGLE_OUT_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(54.331, 110.457)), module, TriMorph::NOISE_OUT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(12.109, 110.457)), module, Bend::SQUARE_OUT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(26.183, 110.457)), module, Bend::SIN_OUT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(40.257, 110.457)), module, Bend::TRIANGLE_OUT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(54.331, 110.457)), module, Bend::NOISE_OUT_OUTPUT));
 	}
 }; 
 
 
-Model* modelTriMorph = createModel<TriMorph, TriMorphWidget>("TriMorph");
+Model* modelBend = createModel<Bend, BendWidget>("Bend");
