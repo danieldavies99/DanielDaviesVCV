@@ -57,116 +57,89 @@ struct Bend : Module {
 		configOutput(TRIANGLE_OUT_OUTPUT, "Tri");
 		configOutput(NOISE_OUT_OUTPUT, "Noise");
 
+		for(int i = 0; i < 16; i++) {
+			oscillators[i].frequencyControl = &frequencyControl;
+			oscillators[i].portamentoVal = &portamentoVal;
+			oscillators[i].frequencyModulationIn = &frequencyModulationIn;
+			oscillators[i].frequencyModulationMod = &frequencyModulationMod;
+
+			oscillators[i].syncIn = &syncIn;
+
+			oscillators[i].shiftControl = &shiftControl;
+			oscillators[i].shiftIn = &shiftIn;
+			oscillators[i].shiftMod = &shiftMod;
+
+			oscillators[i].amplitudeControl = &amplitudeControl;
+			oscillators[i].amplitudeIn = &amplitudeIn;
+			oscillators[i].amplitudeMod = &amplitudeMod;
+
+			oscillators[i].pulseWidthControl = &pulseWidthControl;
+			oscillators[i].pulseWidthIn = &pulseWidthIn;
+			oscillators[i].pulseWidthMod = &pulseWidthMod;
+		}
 	}
 
-	float phase = 0.f;
-	float lastPitch = 0.f;
+	float frequencyControl = 0.f;
+	float portamentoVal = 0.f;
 
-	int lastFrame = 0;
-	bool lastSyncInputWasNegative = false;
+	float frequencyModulationIn = 0.f;
+	float frequencyModulationMod = 0.f;
+
+	float syncIn = 0.f;
+
+	float shiftControl = 0.f;
+	float shiftIn = 0.f;
+	float shiftMod = 0.f;
+
+	float amplitudeControl = 0.f;
+	float amplitudeIn = 0.f;
+	float amplitudeMod = 0.f;
+
+	float pulseWidthControl = 0.f;
+	float pulseWidthIn = 0.f;
+	float pulseWidthMod = 0.f;
+
+
+	int channels = 0;
+
+	BendOscillator oscillators[16];
+
 	void process(const ProcessArgs& args) override {
-		// Compute the frequency from the pitch parameter and input
-		// float pitch = params[KNOB_COARSE_PARAM].getValue();
-		float pitch = lastPitch;
-		float targetPitch = params[KNOB_COARSE_PARAM].getValue() + inputs[PITCH_IN_INPUT].getVoltage();
-		float portamentoVal = params[KNOB_PORTAMENTO_PARAM].getValue();
-		float glideRate = (10.01 - (portamentoVal*10)) * args.sampleTime;
-		if(portamentoVal == 0.2f) {
-			pitch = targetPitch;
-		} else {
-			if(pitch < targetPitch) {
-				pitch += glideRate;
-				if (pitch > targetPitch) {
-					pitch = targetPitch;
-				}
-			} else if (pitch > targetPitch) {
-				pitch -= glideRate;
-				if (pitch < targetPitch) {
-					pitch = targetPitch;
-				}
-			}
+		frequencyControl = params[KNOB_COARSE_PARAM].getValue();
+		portamentoVal = params[KNOB_PORTAMENTO_PARAM].getValue();
+
+		frequencyModulationIn = inputs[FREQUENCY_MODULATION_IN_INPUT].getVoltage();
+		frequencyModulationMod = params[KNOB_FREQUENCY_MODULATION_PARAM].getValue();
+
+		syncIn = inputs[SYNC_IN_INPUT].getVoltage();
+
+		shiftControl = params[KNOB_SHIFT_PARAM].getValue();
+		shiftIn = inputs[SHIFT_IN_INPUT].getVoltage();
+		shiftMod = params[KNOB_SHIFT_MODULATION_PARAM].getValue();
+
+		amplitudeControl = params[KNOB_AMPLITUDE_PARAM].getValue();;
+		amplitudeIn = inputs[AMPLITUDE_MODULATION_IN_INPUT].getVoltage();
+		amplitudeMod = params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
+
+		pulseWidthControl = params[KNOB_PULSE_WIDTH_PARAM].getValue();;
+		pulseWidthIn = inputs[PULSE_WIDTH_MODULATION_IN_INPUT].getVoltage();
+		pulseWidthMod = params[KNOB_PULSE_WIDTH_MODULATION_PARAM].getValue();
+
+		int channels = std::max(inputs[PITCH_IN_INPUT].getChannels(), 1);
+		for (int c = 0; c < channels; c++) {
+			oscillators[c].process(args.sampleTime, inputs[PITCH_IN_INPUT].getVoltage(c));
+
+
+			outputs[TRIANGLE_OUT_OUTPUT].setVoltage(oscillators[c].triOut, c);
+			outputs[SQUARE_OUT_OUTPUT].setVoltage(oscillators[c].squareOut, c);
+			outputs[SIN_OUT_OUTPUT].setVoltage(oscillators[c].sinOut, c);
+			outputs[NOISE_OUT_OUTPUT].setVoltage(oscillators[c].noiseOut, c);
 		}
 
-		// set last pitch before applying frequency modulation
-		lastPitch = clamp(pitch, -4.f, 4.f);
-		float frequencyModulation = inputs[FREQUENCY_MODULATION_IN_INPUT].getVoltage() * (4.f/5.f) * params[KNOB_FREQUENCY_MODULATION_PARAM].getValue();
-		// DEBUG(std::to_string(inputs[FREQUENCY_MODULATION_IN_INPUT].getVoltage()* (4.f/5.f) ).c_str());
-		pitch += frequencyModulation;
-		pitch = clamp(pitch, -4.f, 4.f);
-		
-		// The default pitch is C4 = 261.6256f
-		float freq = dsp::FREQ_C4 * std::pow(2.f, pitch);
-
-		// Accumulate the phase
-		phase += freq * args.sampleTime;
-		if (phase >= 0.5f)
-			phase -= 1.f;
-
-		
-		if(inputs[SYNC_IN_INPUT].isConnected() && inputs[SYNC_IN_INPUT].getVoltage() > 0 && lastSyncInputWasNegative) {
-
-			phase = -0.5;
-		}
-
-		// phase oscilates between 0.5 and -0.5;
-		float tri;
-		float shift = params[KNOB_SHIFT_PARAM].getValue();
-		shift += (inputs[SHIFT_IN_INPUT].getVoltage() / 20) * params[KNOB_SHIFT_MODULATION_PARAM].getValue();
-		shift = clamp(shift, -0.5, 0.5);
-
-		if(phase < shift) {
-			tri = 4.f * phase  - (4 * (shift * ((phase + 0.5) / abs(shift - -0.5 ))) );  // -2 -> 0
-		}  else {
-			tri = (4.f * phase) - ( 4 * ( (shift) * (1 - ((phase - shift) / abs(0.5 - shift))) )); // 0 -> -2
-			tri = -tri;
-		}
-		tri += 1;
-		// tri oscilates between -1 and 1;
-
-		// Audio signals are typically +/-5V
-		// https://vcvrack.com/manual/VoltageStandards
-
-		float amplitude = params[KNOB_AMPLITUDE_PARAM].getValue();
-		amplitude += (inputs[AMPLITUDE_MODULATION_IN_INPUT].getVoltage() / 2.f) * params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
-		amplitude = clamp(amplitude, 0.f, 5.f);
-
-		outputs[TRIANGLE_OUT_OUTPUT].setVoltage(amplitude * tri);
-
-		// Compute the sine output
-		float sine = std::sin(M_PI * (tri / 2));
-		// sine /= tri;
-		// Audio signals are typically +/-5V
-		// https://vcvrack.com/manual/VoltageStandards
-		outputs[SIN_OUT_OUTPUT].setVoltage(amplitude * sine);
-
-		// Compute the square output
-		float pulseWidth = params[KNOB_PULSE_WIDTH_PARAM].getValue();
-		pulseWidth += (inputs[PULSE_WIDTH_MODULATION_IN_INPUT].getVoltage() / 10) * params[KNOB_PULSE_WIDTH_MODULATION_PARAM].getValue();
-		pulseWidth = clamp(pulseWidth, -0.99f, 0.99f);
-
-		float square = tri > pulseWidth ? 1 : -1;
-		// sine /= tri;
-		// Audio signals are typically +/-5V
-		// https://vcvrack.com/manual/VoltageStandards
-		outputs[SQUARE_OUT_OUTPUT].setVoltage(amplitude * square);
-
-		int frame = lastFrame + 1;
-		if(frame > 0) { // make number bigger here to decrease how many times this is called
-
-			// this is a random noise function I made up, idk if it's technically the best
-			// but it sounds basically indistinguishable to other white noise generators I've used
-			float random = random::uniform();
-			random -= 0.5;
-			if(random < 0) {
-				random = -(random*random);
-			} else {
-				random = random*random;
-			}
-			outputs[NOISE_OUT_OUTPUT].setVoltage(random * amplitude * 5.0f);
-			frame = 0;
-		}
-		lastFrame = frame;
-		lastSyncInputWasNegative = inputs[SYNC_IN_INPUT].getVoltage() < 0;
+		outputs[TRIANGLE_OUT_OUTPUT].setChannels(channels);
+		outputs[SQUARE_OUT_OUTPUT].setChannels(channels);
+		outputs[SIN_OUT_OUTPUT].setChannels(channels);
+		outputs[NOISE_OUT_OUTPUT].setChannels(channels);
 	}
 };
 

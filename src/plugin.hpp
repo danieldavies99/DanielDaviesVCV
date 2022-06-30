@@ -255,3 +255,37 @@ struct SequelSaveInterface {
 
 	bool isDirty = false;
 };
+
+struct BendOscillator {
+	float phase = 0.f;
+	float lastPitch = 0.f;
+	int lastFrame = 0;
+	bool lastSyncInputWasNegative = false;
+
+	float sinOut = 0.0f;
+	float squareOut = 0.0f;
+	float triOut = 0.0f;
+	float noiseOut = 0.0f;
+
+	float *frequencyControl;
+	float *portamentoVal;
+
+	float *frequencyModulationIn;
+	float *frequencyModulationMod;
+
+	float *syncIn;
+
+	float *shiftControl;
+	float *shiftIn;
+	float *shiftMod;
+
+	float *amplitudeControl;
+	float *amplitudeIn;
+	float *amplitudeMod;
+
+	float *pulseWidthControl;
+	float *pulseWidthIn;
+	float *pulseWidthMod;
+
+	void process(float sampleTime, float pitchInput);
+};
