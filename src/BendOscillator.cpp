@@ -2,7 +2,15 @@
 
 using namespace rack;
 
-void BendOscillator::process(float sampleTime, float pitchInput) {
+void BendOscillator::process(
+	float sampleTime,
+	float pitchInput,
+	float syncIn,
+	float frequencyModulationIn,
+	float shiftIn,
+	float amplitudeIn,
+	float pulseWidthIn
+) {
     	// Compute the frequency from the pitch parameter and input
 		// float pitch = params[KNOB_COARSE_PARAM].getValue();
 		float pitch = lastPitch;
@@ -26,7 +34,7 @@ void BendOscillator::process(float sampleTime, float pitchInput) {
 
 		// set last pitch before applying frequency modulation
 		lastPitch = clamp(pitch, -4.f, 4.f);
-		float frequencyModulation = *frequencyModulationIn * (4.f/5.f) * *frequencyModulationMod;
+		float frequencyModulation = frequencyModulationIn * (4.f/5.f) * *frequencyModulationMod;
 		pitch += frequencyModulation;
 		pitch = clamp(pitch, -4.f, 4.f);
 		
@@ -39,14 +47,14 @@ void BendOscillator::process(float sampleTime, float pitchInput) {
 			phase -= 1.f;
 
 		
-		if(*syncIn && *syncIn > 0 && lastSyncInputWasNegative) {
+		if(syncIn && syncIn > 0 && lastSyncInputWasNegative) {
 			phase = -0.5;
 		}
 
 		// phase oscilates between 0.5 and -0.5;
 		float tri;
 		float shift = *shiftControl;
-		shift += (*shiftIn / 20) * *shiftMod;
+		shift += (shiftIn / 20) * *shiftMod;
 		shift = clamp(shift, -0.5, 0.5);
 
 		if(phase < shift) {
@@ -62,7 +70,7 @@ void BendOscillator::process(float sampleTime, float pitchInput) {
 		// https://vcvrack.com/manual/VoltageStandards
 
 		float amplitude = *amplitudeControl;
-		amplitude += (*amplitudeIn / 2.f) * *amplitudeMod;
+		amplitude += (amplitudeIn / 2.f) * *amplitudeMod;
 		amplitude = clamp(amplitude, 0.f, 5.f);
 
 		triOut = amplitude * tri;
@@ -76,7 +84,7 @@ void BendOscillator::process(float sampleTime, float pitchInput) {
 
 		// Compute the square output
 		float pulseWidth = *pulseWidthControl;
-		pulseWidth += (*pulseWidthIn / 10) * *pulseWidthMod;
+		pulseWidth += (pulseWidthIn / 10) * *pulseWidthMod;
 		pulseWidth = clamp(pulseWidth, -0.99f, 0.99f);
 
 		float square = tri > pulseWidth ? 1 : -1;
@@ -101,5 +109,5 @@ void BendOscillator::process(float sampleTime, float pitchInput) {
 			frame = 0;
 		}
 		lastFrame = frame;
-		lastSyncInputWasNegative = *syncIn < 0;
+		lastSyncInputWasNegative = syncIn < 0;
 };

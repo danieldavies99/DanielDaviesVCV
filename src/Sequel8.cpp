@@ -288,17 +288,10 @@ struct Sequel8 : Module {
 
 	void reset() {
 		ignoreClockAfterResetTimer.resetTriggered();
-		clockTracker.currentStepR0 = 0;
-		clockTracker.currentStepR1 = 0;
-		clockTracker.currentStepR2 = 0;
 
-		clockTracker.gatesSinceLastStepR0 = 0;
-		clockTracker.gatesSinceLastStepR1 = 0;
-		clockTracker.gatesSinceLastStepR2 = 0;
-
-		clockTracker.hasPulsedThisStepR0 = false;
-		clockTracker.hasPulsedThisStepR1 = false;
-		clockTracker.hasPulsedThisStepR2 = false;
+		clockTracker.resetStepTrackers();
+		clockTracker.resetGatesSinceLastStepTrackers();
+		clockTracker.resetHasPulsedThisStepTrackers();
 
 		if(shouldPulseThisStep(0)) {
 			gatePulseR0.trigger(1e-3f);
@@ -416,9 +409,9 @@ struct Sequel8 : Module {
 			handleSequelSave();
 		}
 
-		clockTracker.divideR0 = clockDivideDisplayValueR0 = mapClockDivideValues(round(params[KNOB_TIME_DIVIDE_R0_PARAM].getValue()));
-		clockTracker.divideR1 = clockDivideDisplayValueR1 = mapClockDivideValues(round(params[KNOB_TIME_DIVIDE_R1_PARAM].getValue()));
-		clockTracker.divideR2 = clockDivideDisplayValueR2 = mapClockDivideValues(round(params[KNOB_TIME_DIVIDE_R2_PARAM].getValue()));
+		clockTracker.divideTracker[0] = clockDivideDisplayValueR0 = mapClockDivideValues(round(params[KNOB_TIME_DIVIDE_R0_PARAM].getValue()));
+		clockTracker.divideTracker[1] = clockDivideDisplayValueR1 = mapClockDivideValues(round(params[KNOB_TIME_DIVIDE_R1_PARAM].getValue()));
+		clockTracker.divideTracker[2] = clockDivideDisplayValueR2 = mapClockDivideValues(round(params[KNOB_TIME_DIVIDE_R2_PARAM].getValue()));
 
 		ignoreClockAfterResetTimer.process(1.0 / args.sampleRate); // must be called every process to ensure timer progresses
 

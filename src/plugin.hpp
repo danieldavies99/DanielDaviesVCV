@@ -16,6 +16,8 @@ extern Model* modelSamuel;
 extern Model* modelBlank3;
 extern Model* modelBlank5;
 extern Model* modelBend;
+extern Model* modelJames;
+
 
 /************************** KNOBS **************************/
 
@@ -192,37 +194,40 @@ struct IgnoreClockAfterResetTimer {
 
 struct ClockTracker {
 
-    ClockTracker(short initializeNumSteps) {
+    ClockTracker(
+		short initializeNumSteps,
+		short numRows = 3
+	) {
         numSteps = initializeNumSteps;
+		numRows = numRows;
+
+		for(int i = 0; i < numRows; i++) {
+			currentStepTracker.push_back(0);
+			gatesSinceLastStepTracker.push_back(0);
+			divideTracker.push_back(1);
+			hasPulsedThisStepTracker.push_back(false);
+		}
     }
 
 	short numSteps;
+	short numRows;
 
-	short currentStepR0 = 0;
-	short currentStepR1 = 0;
-	short currentStepR2 = 0;
-
-	int gatesSinceLastStepR0 = 0;
-	int gatesSinceLastStepR1 = 0;
-	int gatesSinceLastStepR2 = 0;
-
-	bool hasPulsedThisStepR0 = false;
-	bool hasPulsedThisStepR1 = false;
-	bool hasPulsedThisStepR2 = false;
-
-	int divideR0 = 1;
-	int divideR1 = 1;
-	int divideR2 = 1;
+	std::vector<short> currentStepTracker;
+	std::vector<short> gatesSinceLastStepTracker;
+	std::vector<short> divideTracker;
+	std::vector<bool> hasPulsedThisStepTracker;
 
 	void nextClock();
 
-	void nextStepR0();
-
-	void nextStepR1();
-
-	void nextStepR2();
+	void nextStepForRow(short row);
 
 	int getCurrentStepForRow(short row);
+
+	void resetStepTrackers();
+
+	void resetGatesSinceLastStepTrackers();
+
+	void resetHasPulsedThisStepTrackers();
 
 	bool getHasPulsedThisStepForRow(short row);
 
@@ -270,22 +275,30 @@ struct BendOscillator {
 	float *frequencyControl;
 	float *portamentoVal;
 
-	float *frequencyModulationIn;
+	// float *frequencyModulationIn;
 	float *frequencyModulationMod;
 
-	float *syncIn;
+	// float *syncIn;
 
 	float *shiftControl;
-	float *shiftIn;
+	// float *shiftIn;
 	float *shiftMod;
 
 	float *amplitudeControl;
-	float *amplitudeIn;
+	// float *amplitudeIn;
 	float *amplitudeMod;
 
 	float *pulseWidthControl;
-	float *pulseWidthIn;
+	// float *pulseWidthIn;
 	float *pulseWidthMod;
 
-	void process(float sampleTime, float pitchInput);
+	void process(
+		float sampleTime,
+		float pitchInput,
+		float syncIn,
+		float frequencyModulationIn,
+		float shiftIn,
+		float amplitudeIn,
+		float pulseWidthIn
+	);
 };

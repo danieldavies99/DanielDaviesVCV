@@ -60,21 +60,21 @@ struct Bend : Module {
 		for(int i = 0; i < 16; i++) {
 			oscillators[i].frequencyControl = &frequencyControl;
 			oscillators[i].portamentoVal = &portamentoVal;
-			oscillators[i].frequencyModulationIn = &frequencyModulationIn;
+			// oscillators[i].frequencyModulationIn = &frequencyModulationIn;
 			oscillators[i].frequencyModulationMod = &frequencyModulationMod;
 
-			oscillators[i].syncIn = &syncIn;
+			// oscillators[i].syncIn = &syncIn;
 
 			oscillators[i].shiftControl = &shiftControl;
-			oscillators[i].shiftIn = &shiftIn;
+			// oscillators[i].shiftIn = &shiftIn;
 			oscillators[i].shiftMod = &shiftMod;
 
 			oscillators[i].amplitudeControl = &amplitudeControl;
-			oscillators[i].amplitudeIn = &amplitudeIn;
+			// oscillators[i].amplitudeIn = &amplitudeIn;
 			oscillators[i].amplitudeMod = &amplitudeMod;
 
 			oscillators[i].pulseWidthControl = &pulseWidthControl;
-			oscillators[i].pulseWidthIn = &pulseWidthIn;
+			// oscillators[i].pulseWidthIn = &pulseWidthIn;
 			oscillators[i].pulseWidthMod = &pulseWidthMod;
 		}
 	}
@@ -82,21 +82,21 @@ struct Bend : Module {
 	float frequencyControl = 0.f;
 	float portamentoVal = 0.f;
 
-	float frequencyModulationIn = 0.f;
+	// float frequencyModulationIn = 0.f;
 	float frequencyModulationMod = 0.f;
 
-	float syncIn = 0.f;
+	// float syncIn = 0.f;
 
 	float shiftControl = 0.f;
-	float shiftIn = 0.f;
+	// float shiftIn = 0.f;
 	float shiftMod = 0.f;
 
 	float amplitudeControl = 0.f;
-	float amplitudeIn = 0.f;
+	// float amplitudeIn = 0.f;
 	float amplitudeMod = 0.f;
 
 	float pulseWidthControl = 0.f;
-	float pulseWidthIn = 0.f;
+	// float pulseWidthIn = 0.f;
 	float pulseWidthMod = 0.f;
 
 
@@ -108,26 +108,34 @@ struct Bend : Module {
 		frequencyControl = params[KNOB_COARSE_PARAM].getValue();
 		portamentoVal = params[KNOB_PORTAMENTO_PARAM].getValue();
 
-		frequencyModulationIn = inputs[FREQUENCY_MODULATION_IN_INPUT].getVoltage();
+		// frequencyModulationIn = inputs[FREQUENCY_MODULATION_IN_INPUT].getVoltage();
 		frequencyModulationMod = params[KNOB_FREQUENCY_MODULATION_PARAM].getValue();
 
-		syncIn = inputs[SYNC_IN_INPUT].getVoltage();
+		// syncIn = inputs[SYNC_IN_INPUT].getVoltage();
 
 		shiftControl = params[KNOB_SHIFT_PARAM].getValue();
-		shiftIn = inputs[SHIFT_IN_INPUT].getVoltage();
+		// shiftIn = inputs[SHIFT_IN_INPUT].getVoltage();
 		shiftMod = params[KNOB_SHIFT_MODULATION_PARAM].getValue();
 
 		amplitudeControl = params[KNOB_AMPLITUDE_PARAM].getValue();;
-		amplitudeIn = inputs[AMPLITUDE_MODULATION_IN_INPUT].getVoltage();
+		// amplitudeIn = inputs[AMPLITUDE_MODULATION_IN_INPUT].getVoltage();
 		amplitudeMod = params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
 
 		pulseWidthControl = params[KNOB_PULSE_WIDTH_PARAM].getValue();;
-		pulseWidthIn = inputs[PULSE_WIDTH_MODULATION_IN_INPUT].getVoltage();
+		// pulseWidthIn = inputs[PULSE_WIDTH_MODULATION_IN_INPUT].getVoltage();
 		pulseWidthMod = params[KNOB_PULSE_WIDTH_MODULATION_PARAM].getValue();
 
 		int channels = std::max(inputs[PITCH_IN_INPUT].getChannels(), 1);
 		for (int c = 0; c < channels; c++) {
-			oscillators[c].process(args.sampleTime, inputs[PITCH_IN_INPUT].getVoltage(c));
+			oscillators[c].process(
+				args.sampleTime,
+				inputs[PITCH_IN_INPUT].getVoltage(c),
+				inputs[SYNC_IN_INPUT].getVoltage(c),
+				inputs[FREQUENCY_MODULATION_IN_INPUT].getVoltage(c),
+				inputs[SHIFT_IN_INPUT].getVoltage(c),
+				inputs[AMPLITUDE_MODULATION_IN_INPUT].getVoltage(c),
+				inputs[PULSE_WIDTH_MODULATION_IN_INPUT].getVoltage(c)
+			);
 
 
 			outputs[TRIANGLE_OUT_OUTPUT].setVoltage(oscillators[c].triOut, c);
