@@ -554,7 +554,7 @@ struct JamesWidget : ModuleWidget {
 
 		addParam(createParamCentered<CKD6InvisibleLatch>(mm2px(Vec(157.961, 16.145)), module, James::SWITCH_GATE_MODE_PARAM));
 
-		addParam(createParamCentered<RedKnob>(mm2px(Vec(13.135, 33.874)), module, James::KNOB_RUSH_R0_PARAM));
+		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.135, 33.874)), module, James::KNOB_RUSH_R0_PARAM));
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.135, 48.056)), module, James::KNOB_RUSH_R1_PARAM));
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.135, 62.238)), module, James::KNOB_RUSH_R2_PARAM));
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.135, 76.419)), module, James::KNOB_RUSH_R3_PARAM));
