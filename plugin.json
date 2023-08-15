@@ -85,7 +85,7 @@
       "name": "James",
       "description": "",
       "tags": [],
-      "hidden": true
+      "hidden": false
     }
   ]
 }

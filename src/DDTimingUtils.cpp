@@ -73,6 +73,10 @@ void JamesClockTracker::nextClock() {
 	}
 };
 
+void JamesClockTracker::setRushForRow(short row, short rush) {
+	rushTracker[row] = rush;
+};
+
 int JamesClockTracker::getCurrentStep() {
 	return floor(clocksSinceLastStart / globalClockDivide);
 };

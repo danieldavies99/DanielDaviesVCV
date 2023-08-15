@@ -206,7 +206,6 @@ struct JamesClockTracker {
 			hasPulsedThisClockTracker.push_back(false);
 			rushTracker.push_back(0);
 		}
-		rushTracker[1] = (4);
     }
 
 	short numRows;
@@ -225,6 +224,7 @@ struct JamesClockTracker {
 	int getRushForRow(short row);
 
 	void setHasPulsedThisStepForRow(int row, bool val);
+	void setRushForRow(short row, short rush);
 };
 
 struct SequelClockTracker {
