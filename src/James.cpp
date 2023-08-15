@@ -447,7 +447,7 @@ struct James : Module {
 	}
 
 	int getRushValForRow(short row) {
-		return static_cast<int>(params[NUM_GATE_SWITCHES + row].getValue());
+		return -static_cast<int>(params[NUM_GATE_SWITCHES + row].getValue());
 		// if(intval < 0) {
 		// 	return 16 - abs(intval);
 		// }
