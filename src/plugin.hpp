@@ -15,6 +15,9 @@ extern Model* modelQuantify;
 extern Model* modelSamuel;
 extern Model* modelBlank3;
 extern Model* modelBlank5;
+extern Model* modelBend;
+extern Model* modelJames;
+
 
 /************************** KNOBS **************************/
 
@@ -46,6 +49,16 @@ struct CKD6InvisibleLatch : app::SvgSwitch {
         latch = true; // this is WEIRD seems to be reversed (value is latched but animation frame is as if it's momentary)
 		addFrame(Svg::load(asset::system("res/ComponentLibrary/CKD6_0.svg")));
 		addFrame(Svg::load(asset::system("res/ComponentLibrary/CKD6_1.svg")));
+	}
+};
+
+struct RedSliderMedium : app::SvgSlider {
+	RedSliderMedium() {
+		setBackgroundSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/SliderBackgroundMedium.svg")));
+		setHandleSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/RedSlideKnob.svg")));
+		minHandlePos = mm2px(Vec(-1.f, 0.f));
+		maxHandlePos = mm2px(Vec(20.5f, 0.f));
+		horizontal = true;
 	}
 };
 
@@ -179,39 +192,77 @@ struct IgnoreClockAfterResetTimer {
 	void process(float deltaTime);
 };
 
-struct ClockTracker {
 
-    ClockTracker(short initializeNumSteps) {
+struct JamesClockTracker {
+	
+	JamesClockTracker(
+		short initializeNumSteps,
+		short numRows = 6
+	) {
         numSteps = initializeNumSteps;
+		numRows = numRows;
+
+		for(int i = 0; i < numRows; i++) {
+			hasPulsedThisClockTracker.push_back(false);
+			rushTracker.push_back(0);
+		}
+		rushTracker[1] = (4);
+    }
+
+	short numRows;
+	short numSteps;
+	short globalClockDivide = 16;
+
+	short clocksSinceLastStart = 0;
+
+	std::vector<bool> hasPulsedThisClockTracker;
+	std::vector<int> rushTracker;
+
+	void nextClock();
+	int getCurrentStep();
+	int getClocksSinceStart();
+	int getClocksSinceLastStep();
+	int getRushForRow(short row);
+
+	void setHasPulsedThisStepForRow(int row, bool val);
+};
+
+struct SequelClockTracker {
+
+    SequelClockTracker(
+		short initializeNumSteps,
+		short numRows = 3
+	) {
+        numSteps = initializeNumSteps;
+		numRows = numRows;
+
+		for(int i = 0; i < numRows; i++) {
+			currentStepTracker.push_back(0);
+			gatesSinceLastStepTracker.push_back(0);
+			divideTracker.push_back(1);
+			hasPulsedThisStepTracker.push_back(false);
+		}
     }
 
 	short numSteps;
+	short numRows;
 
-	short currentStepR0 = 0;
-	short currentStepR1 = 0;
-	short currentStepR2 = 0;
-
-	int gatesSinceLastStepR0 = 0;
-	int gatesSinceLastStepR1 = 0;
-	int gatesSinceLastStepR2 = 0;
-
-	bool hasPulsedThisStepR0 = false;
-	bool hasPulsedThisStepR1 = false;
-	bool hasPulsedThisStepR2 = false;
-
-	int divideR0 = 1;
-	int divideR1 = 1;
-	int divideR2 = 1;
+	std::vector<short> currentStepTracker;
+	std::vector<short> gatesSinceLastStepTracker;
+	std::vector<short> divideTracker;
+	std::vector<bool> hasPulsedThisStepTracker;
 
 	void nextClock();
 
-	void nextStepR0();
-
-	void nextStepR1();
-
-	void nextStepR2();
+	void nextStepForRow(short row);
 
 	int getCurrentStepForRow(short row);
+
+	void resetStepTrackers();
+
+	void resetGatesSinceLastStepTrackers();
+
+	void resetHasPulsedThisStepTrackers();
 
 	bool getHasPulsedThisStepForRow(short row);
 
@@ -243,4 +294,46 @@ struct SequelSaveInterface {
 	bool triggerMode = true;
 
 	bool isDirty = false;
+};
+
+struct BendOscillator {
+	float phase = 0.f;
+	float lastPitch = 0.f;
+	int lastFrame = 0;
+	bool lastSyncInputWasNegative = false;
+
+	float sinOut = 0.0f;
+	float squareOut = 0.0f;
+	float triOut = 0.0f;
+	float noiseOut = 0.0f;
+
+	float *frequencyControl;
+	float *portamentoVal;
+
+	// float *frequencyModulationIn;
+	float *frequencyModulationMod;
+
+	// float *syncIn;
+
+	float *shiftControl;
+	// float *shiftIn;
+	float *shiftMod;
+
+	float *amplitudeControl;
+	// float *amplitudeIn;
+	float *amplitudeMod;
+
+	float *pulseWidthControl;
+	// float *pulseWidthIn;
+	float *pulseWidthMod;
+
+	void process(
+		float sampleTime,
+		float pitchInput,
+		float syncIn,
+		float frequencyModulationIn,
+		float shiftIn,
+		float amplitudeIn,
+		float pulseWidthIn
+	);
 };

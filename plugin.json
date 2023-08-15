@@ -1,7 +1,7 @@
 {
-  "slug": "SequelSequencers",
+  "slug": "DanielDavies",
   "name": "Daniel Davies",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "license": "GPL-3.0-or-later",
   "brand": "Daniel Davies",
   "author": "Daniel Davies",
@@ -70,6 +70,22 @@
       "tags": [
         "expander"
       ]
+    },
+    {
+      "slug": "Bend",
+      "name": "Bend",
+      "description": "Phaae modulation oscillator",
+      "tags": [
+        "Oscillator"
+      ],
+      "hidden": true
+    },
+    {
+      "slug": "James",
+      "name": "James",
+      "description": "",
+      "tags": [],
+      "hidden": true
     }
   ]
 }

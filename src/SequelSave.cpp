@@ -28,6 +28,7 @@ struct SequelSave : Module {
 		OUTPUTS_LEN
 	};
 	enum LightId {
+		LIGHT_CONNECTED_LIGHT,
 		LIGHTS_LEN
 	};
 
@@ -108,7 +109,9 @@ struct SequelSave : Module {
 
 		SequelSaveInterface *messagesFromMother = (SequelSaveInterface*)leftExpander.consumerMessage;
 
+		lights[LIGHT_CONNECTED_LIGHT].setBrightness(0.f);
 		if(sequelPresent) {
+			lights[LIGHT_CONNECTED_LIGHT].setBrightness(1.f);
 			if((saveButton0Val > 0 && lastSaveButton0Val == 0) || (saveInput0Val > 0 && lastSaveInput0 == 0)) { // requesting mother
 				selectedSaveRow = 0;
 				leftExpander.messageFlipRequested = true;
@@ -306,6 +309,8 @@ struct SequelSaveWidget : ModuleWidget {
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(57.91, 81.31)), module, SequelSave::IN_LOAD_2_INPUT));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(24.723, 102.132)), module, SequelSave::IN_SAVE_3_INPUT));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(57.91, 102.132)), module, SequelSave::IN_LOAD_3_INPUT));
+
+		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(57.91, 13.551)), module, SequelSave::LIGHT_CONNECTED_LIGHT));
 	}
 };
 

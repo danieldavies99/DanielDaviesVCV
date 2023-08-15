@@ -1,6 +1,5 @@
 #include "plugin.hpp"
 
-
 struct Blank3 : Module {
 	enum ParamId {
 		PARAMS_LEN

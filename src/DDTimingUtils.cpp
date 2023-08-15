@@ -14,85 +14,81 @@ void IgnoreClockAfterResetTimer::process(float deltaTime) {
 	}
 };
 
-void ClockTracker::nextClock() {
-	gatesSinceLastStepR0++;
-	gatesSinceLastStepR1++;
-	gatesSinceLastStepR2++;
-	if(gatesSinceLastStepR0 >= divideR0) {
-		nextStepR0();
-		gatesSinceLastStepR0 = 0;
-		setHasPulsedThisStepForRow(0, false);
-	}
-	if(gatesSinceLastStepR1 >= divideR1) {
-		nextStepR1();
-		gatesSinceLastStepR1 = 0;
-		setHasPulsedThisStepForRow(1, false);
-	}
-	if(gatesSinceLastStepR2 >= divideR2) {
-		nextStepR2();
-		gatesSinceLastStepR2 = 0;
-		setHasPulsedThisStepForRow(2, false);
+void SequelClockTracker::nextClock() {
+	for(int i = 0; i < numSteps; i++) {
+		gatesSinceLastStepTracker[i]++;
+		if(gatesSinceLastStepTracker[i] >= divideTracker[i]) {
+			nextStepForRow(i);
+			gatesSinceLastStepTracker[i] = 0;
+			setHasPulsedThisStepForRow(i, false);
+		}
 	}
 };
 
-void ClockTracker::nextStepR0() {
-	currentStepR0 += 1;
-	if (currentStepR0 >= numSteps) {
-		currentStepR0 = 0;
+void SequelClockTracker::nextStepForRow(short row) {
+	currentStepTracker[row] += 1;
+	if(currentStepTracker[row] >= numSteps) {
+		currentStepTracker[row] = 0;
+	}
+}
+
+void SequelClockTracker::resetStepTrackers() {
+	for(int i = 0; i < numRows; i++){
+		currentStepTracker[i] = 0;
+	}
+}
+
+void SequelClockTracker::resetGatesSinceLastStepTrackers() {
+	for(int i = 0; i < numRows; i++){
+		gatesSinceLastStepTracker[i] = 0;
+	}
+}
+
+void SequelClockTracker::resetHasPulsedThisStepTrackers() {
+	for(int i = 0; i < numRows; i++) {
+		hasPulsedThisStepTracker[i] = 0;
+	}
+}
+
+int SequelClockTracker::getCurrentStepForRow(short row) {
+	return currentStepTracker[row];
+};
+
+bool SequelClockTracker::getHasPulsedThisStepForRow(short row) {
+	return hasPulsedThisStepTracker[row];
+};
+
+void SequelClockTracker::setHasPulsedThisStepForRow(short row, bool val) {
+	hasPulsedThisStepTracker[row] = val;
+};
+
+
+void JamesClockTracker::nextClock() {
+	for(int i = 0; i < numRows; i++) {
+		setHasPulsedThisStepForRow(i, false);
+	}
+	clocksSinceLastStart++;
+	if(clocksSinceLastStart >= globalClockDivide*numSteps) {
+		clocksSinceLastStart = 0;
 	}
 };
 
-void ClockTracker::nextStepR1() {
-	currentStepR1 += 1;
-	if (currentStepR1 >= numSteps) {
-		currentStepR1 = 0;
-	}
+int JamesClockTracker::getCurrentStep() {
+	return floor(clocksSinceLastStart / globalClockDivide);
 };
 
-void ClockTracker::nextStepR2() {
-	currentStepR2 += 1;
-	if (currentStepR2 >= numSteps) {
-		currentStepR2 = 0;
-	}
+int JamesClockTracker::getClocksSinceStart() {
+	return clocksSinceLastStart;
 };
 
-int ClockTracker::getCurrentStepForRow(short row) {
-	switch (row)
-	{
-		case 0:
-			return currentStepR0;
-		case 1:
-			return currentStepR1;
-		case 2:
-			return currentStepR2;
-	}
-	return 0;
+int JamesClockTracker::getRushForRow(short row) {
+	return rushTracker[row];
 };
 
-bool ClockTracker::getHasPulsedThisStepForRow(short row) {
-	switch (row)
-	{
-		case 0:
-			return hasPulsedThisStepR0;
-		case 1:
-			return hasPulsedThisStepR1;
-		case 2:
-			return hasPulsedThisStepR2;
-	}
-	return false;
+int JamesClockTracker::getClocksSinceLastStep() {
+	return getClocksSinceStart() % globalClockDivide;
 };
 
-void ClockTracker::setHasPulsedThisStepForRow(short row, bool val) {
-	switch (row)
-	{
-		case 0:
-			hasPulsedThisStepR0 = val;
-			break;
-		case 1:
-			hasPulsedThisStepR1 = val;
-			break;
-		case 2:
-			hasPulsedThisStepR2 = val;
-			break;
-	}
+void JamesClockTracker::setHasPulsedThisStepForRow(int row, bool val) {
+	hasPulsedThisClockTracker[row] = val;
 };
