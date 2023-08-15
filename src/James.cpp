@@ -358,12 +358,12 @@ struct James : Module {
 		configOutput(OUT_GATE_R4_OUTPUT, "");
 		configOutput(OUT_GATE_R5_OUTPUT, "");
 
-		configParam(KNOB_RUSH_R0_PARAM, 8.f, -8.f, 0.f, "Rush / Drag");
-		configParam(KNOB_RUSH_R1_PARAM, 8.f, -8.f, 0.f, "Rush / Drag");
-		configParam(KNOB_RUSH_R2_PARAM, 8.f, -8.f, 0.f, "Rush / Drag");
-		configParam(KNOB_RUSH_R3_PARAM, 8.f, -8.f, 0.f, "Rush / Drag");
-		configParam(KNOB_RUSH_R4_PARAM, 8.f, -8.f, 0.f, "Rush / Drag");
-		configParam(KNOB_RUSH_R5_PARAM, 8.f, -8.f, 0.f, "Rush / Drag");
+		configParam(KNOB_RUSH_R0_PARAM, 15.f, -15.f, 0.f, "Rush / Drag");
+		configParam(KNOB_RUSH_R1_PARAM, 15.f, -15.f, 0.f, "Rush / Drag");
+		configParam(KNOB_RUSH_R2_PARAM, 15.f, -15.f, 0.f, "Rush / Drag");
+		configParam(KNOB_RUSH_R3_PARAM, 15.f, -15.f, 0.f, "Rush / Drag");
+		configParam(KNOB_RUSH_R4_PARAM, 15.f, -15.f, 0.f, "Rush / Drag");
+		configParam(KNOB_RUSH_R5_PARAM, 15.f, -15.f, 0.f, "Rush / Drag");
 	}
 
 	short getStepLedId(short step) {
@@ -448,10 +448,6 @@ struct James : Module {
 
 	int getRushValForRow(short row) {
 		return -static_cast<int>(params[NUM_GATE_SWITCHES + row].getValue());
-		// if(intval < 0) {
-		// 	return 16 - abs(intval);
-		// }
-		// return intval;
 	}
 
 	void process(const ProcessArgs& args) override {
