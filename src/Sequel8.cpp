@@ -258,7 +258,7 @@ struct Sequel8 : Module {
 	dsp::PulseGenerator gatePulseR1;
 	dsp::PulseGenerator gatePulseR2;
 
-	SequelClockTracker clockTracker{8};
+	SequelClockTracker clockTracker {8,8};
 
 	bool gateTriggerModeEnabled = true;
 	

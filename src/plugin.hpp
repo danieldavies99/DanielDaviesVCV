@@ -234,7 +234,7 @@ struct SequelClockTracker {
 		short numRows = 3
 	) {
         numSteps = initializeNumSteps;
-		numRows = numRows;
+		this->numRows = numRows;
 
 		for(int i = 0; i < numRows; i++) {
 			currentStepTracker.push_back(0);
