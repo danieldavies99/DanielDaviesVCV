@@ -4,7 +4,7 @@
 using namespace rack;
 
 void KeyboardDisplay::draw(const DrawArgs &args)  {
-    if(!&args.vg) {
+    if(!args.vg) {
     	return;
     }
 
