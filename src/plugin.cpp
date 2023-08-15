@@ -13,6 +13,8 @@ void init(Plugin* p) {
 	p->addModel(modelSamuel);
 	p->addModel(modelBlank3);
 	p->addModel(modelBlank5);
+
+	// WIP:
 	p->addModel(modelBend);
 	p->addModel(modelJames);
 

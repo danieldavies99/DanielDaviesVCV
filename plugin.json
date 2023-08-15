@@ -77,13 +77,15 @@
       "description": "Phaae modulation oscillator",
       "tags": [
         "Oscillator"
-      ]
+      ],
+      "hidden": true
     },
     {
       "slug": "James",
       "name": "James",
       "description": "",
-      "tags": []
+      "tags": [],
+      "hidden": true
     }
   ]
 }
