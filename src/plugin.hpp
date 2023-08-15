@@ -219,6 +219,7 @@ struct JamesClockTracker {
 
 	void nextClock();
 	int getCurrentStep();
+	int getNextStep();
 	int getClocksSinceStart();
 	int getClocksSinceLastStep();
 	int getRushForRow(short row);

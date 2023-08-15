@@ -81,6 +81,14 @@ int JamesClockTracker::getCurrentStep() {
 	return floor(clocksSinceLastStart / globalClockDivide);
 };
 
+int JamesClockTracker::getNextStep() {
+	int nextStep = getCurrentStep() + 1;
+	if(nextStep > numSteps - 1) {
+		return 0;
+	}
+	return nextStep;
+};
+
 int JamesClockTracker::getClocksSinceStart() {
 	return clocksSinceLastStart;
 };

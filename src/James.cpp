@@ -417,10 +417,21 @@ struct James : Module {
 	bool gateTriggerModeEnabled = true;
 
 	bool shouldPulseThisClock(short row) {
-		return params[
-				getButtonId(row, clockTracker.getCurrentStep())
-			].getValue() > 0.5 && 
-			clockTracker.getRushForRow(row) == clockTracker.getClocksSinceLastStep();
+		// work out if should pulse based on current step - rush
+		if(params[
+			getButtonId(row, clockTracker.getCurrentStep())
+		].getValue() > 0.5 && 
+		clockTracker.getRushForRow(row) == clockTracker.getClocksSinceLastStep()) {
+			return true;
+		}
+
+		// work out if should pulse based on next step - drag 
+		if(params[
+			getButtonId(row, clockTracker.getNextStep())
+		].getValue() > 0.5 && clockTracker.getRushForRow(row) == -(clockTracker.globalClockDivide - clockTracker.getClocksSinceLastStep()) ) {
+			return true;
+		}
+		return false;
 	}
 
 	float getInternalClockVoltage(float sampleRate) {
@@ -436,11 +447,11 @@ struct James : Module {
 	}
 
 	int getRushValForRow(short row) {
-		int intval = static_cast<int>(params[NUM_GATE_SWITCHES + row].getValue());
-		if(intval < 0) {
-			return 16 - abs(intval);
-		}
-		return intval;
+		return static_cast<int>(params[NUM_GATE_SWITCHES + row].getValue());
+		// if(intval < 0) {
+		// 	return 16 - abs(intval);
+		// }
+		// return intval;
 	}
 
 	void process(const ProcessArgs& args) override {
