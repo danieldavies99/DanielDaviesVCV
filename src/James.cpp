@@ -358,12 +358,12 @@ struct James : Module {
 		configOutput(OUT_GATE_R4_OUTPUT, "");
 		configOutput(OUT_GATE_R5_OUTPUT, "");
 
-		configParam(KNOB_RUSH_R0_PARAM, -8.f, 8.f, 0.f, "Drag / Rush");
-		configParam(KNOB_RUSH_R1_PARAM, -8.f, 8.f, 0.f, "Drag / Rush");
-		configParam(KNOB_RUSH_R2_PARAM, -8.f, 8.f, 0.f, "Drag / Rush");
-		configParam(KNOB_RUSH_R3_PARAM, -8.f, 8.f, 0.f, "Drag / Rush");
-		configParam(KNOB_RUSH_R4_PARAM, -8.f, 8.f, 0.f, "Drag / Rush");
-		configParam(KNOB_RUSH_R5_PARAM, -8.f, 8.f, 0.f, "Drag / Rush");
+		configParam(KNOB_RUSH_R0_PARAM, 8.f, -8.f, 0.f, "Rush / Drag");
+		configParam(KNOB_RUSH_R1_PARAM, 8.f, -8.f, 0.f, "Rush / Drag");
+		configParam(KNOB_RUSH_R2_PARAM, 8.f, -8.f, 0.f, "Rush / Drag");
+		configParam(KNOB_RUSH_R3_PARAM, 8.f, -8.f, 0.f, "Rush / Drag");
+		configParam(KNOB_RUSH_R4_PARAM, 8.f, -8.f, 0.f, "Rush / Drag");
+		configParam(KNOB_RUSH_R5_PARAM, 8.f, -8.f, 0.f, "Rush / Drag");
 	}
 
 	short getStepLedId(short step) {
