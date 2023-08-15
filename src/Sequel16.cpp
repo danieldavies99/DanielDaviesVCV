@@ -402,7 +402,7 @@ struct Sequel16 : Module {
 	dsp::PulseGenerator gatePulseR1;
 	dsp::PulseGenerator gatePulseR2;
 
-	ClockTracker clockTracker{16};
+	SequelClockTracker clockTracker{16};
 
 	bool gateTriggerModeEnabled = true;
 

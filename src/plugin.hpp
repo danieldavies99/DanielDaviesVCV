@@ -192,9 +192,44 @@ struct IgnoreClockAfterResetTimer {
 	void process(float deltaTime);
 };
 
-struct ClockTracker {
 
-    ClockTracker(
+struct JamesClockTracker {
+	
+	JamesClockTracker(
+		short initializeNumSteps,
+		short numRows = 6
+	) {
+        numSteps = initializeNumSteps;
+		numRows = numRows;
+
+		for(int i = 0; i < numRows; i++) {
+			hasPulsedThisClockTracker.push_back(false);
+			rushTracker.push_back(0);
+		}
+		rushTracker[1] = (4);
+    }
+
+	short numRows;
+	short numSteps;
+	short globalClockDivide = 16;
+
+	short clocksSinceLastStart = 0;
+
+	std::vector<bool> hasPulsedThisClockTracker;
+	std::vector<int> rushTracker;
+
+	void nextClock();
+	int getCurrentStep();
+	int getClocksSinceStart();
+	int getClocksSinceLastStep();
+	int getRushForRow(short row);
+
+	void setHasPulsedThisStepForRow(int row, bool val);
+};
+
+struct SequelClockTracker {
+
+    SequelClockTracker(
 		short initializeNumSteps,
 		short numRows = 3
 	) {

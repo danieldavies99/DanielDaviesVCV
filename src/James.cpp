@@ -4,6 +4,8 @@ struct James : Module {
 	
 	const int NUM_GATE_SWITCHES = 48;
 	const int NUM_ROWS = 6;
+	const int NUM_STEPS = 8;
+
 
 	enum ParamId {
 		SWITCH_GATE_R0_C0_PARAM,
@@ -132,8 +134,6 @@ struct James : Module {
 		GATE_LIGHT_R5_C5_LIGHT,
 		GATE_LIGHT_R5_C6_LIGHT,
 		GATE_LIGHT_R5_C7_LIGHT,
-		LIGHT_GATE_MODE_CONTINUOUS_LIGHT,
-		LIGHT_GATE_MODE_TRIGGER_LIGHT,
 		LIGHT_R0_C0_LIGHT,
 		LIGHT_R0_C1_LIGHT,
 		LIGHT_R0_C2_LIGHT,
@@ -142,6 +142,8 @@ struct James : Module {
 		LIGHT_R0_C5_LIGHT,
 		LIGHT_R0_C6_LIGHT,
 		LIGHT_R0_C7_LIGHT,
+		LIGHT_GATE_MODE_CONTINUOUS_LIGHT,
+		LIGHT_GATE_MODE_TRIGGER_LIGHT,
 		LIGHTS_LEN
 	};
 
@@ -216,6 +218,16 @@ struct James : Module {
 		configOutput(OUT_GATE_R5_OUTPUT, "");
 	}
 
+	short getStepLedId(short step) {
+		return NUM_GATE_SWITCHES + step;
+	}
+
+	void turnOffAllStepIndicatorLights() {
+		for(int i = 0; i < NUM_STEPS; i++) {
+			lights[getStepLedId(i)].setBrightness(0.0);
+		}
+	}
+
 	short getButtonId(short row, short column) {
 		return column + (row*8);
 	}
@@ -252,21 +264,22 @@ struct James : Module {
 
 	dsp::PulseGenerator gatePulseGenerators [6] = { };
 
-	ClockTracker clockTracker{8, 6};
+	JamesClockTracker clockTracker{8, 6};
 
 	bool gateTriggerModeEnabled = true;
 
-	bool shouldPulseThisStep(short row) {
+	bool shouldPulseThisClock(short row) {
 		return params[
-			getButtonId(row, clockTracker.getCurrentStepForRow(row))
-		].getValue() > 0.5 
-		&& clockTracker.getHasPulsedThisStepForRow(row) == false;
+				getButtonId(row, clockTracker.getCurrentStep())
+			].getValue() > 0.5 && 
+			clockTracker.getRushForRow(row) == clockTracker.getClocksSinceLastStep();
 	}
 
 	float getInternalClockVoltage(float sampleRate) {
 		clockSpeed = params[KNOB_CLOCK_SPEED_PARAM].getValue();
+		const float clockInterval = 1.0f - (clockSpeed*0.95f);
 		const float timeSinceLastPulsed = timer.process(1.0 / sampleRate);
-		if(timeSinceLastPulsed > 1.0f - (clockSpeed*0.95f)) {
+		if(timeSinceLastPulsed > clockInterval / 3) {
 			clockOutPulse.trigger(1e-3f);
 			timer.reset();
 		}
@@ -295,7 +308,7 @@ struct James : Module {
 		handleGateButtonLeds();
 
 		if(clockTracker.numSteps == 0) { // don't output anything if steps = 0;
-			// turnOffAllStepIndicatorLights();
+			turnOffAllStepIndicatorLights();
 			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(0);
 			lights[LIGHT_GATE_MODE_CONTINUOUS_LIGHT].setBrightness(0);
 			return;
@@ -310,7 +323,7 @@ struct James : Module {
 		if (lastclockVoltage == 0 && clockVoltage != 0 && !ignoreClockAfterResetTimer.shouldIgnore) {
 			clockTracker.nextClock();
 			for(int i = 0; i < NUM_ROWS; i++) {
-				if(shouldPulseThisStep(i)) {
+				if(shouldPulseThisClock(i)) {
 					gatePulseGenerators[i].trigger(1e-3f);
 					clockTracker.setHasPulsedThisStepForRow(i, true);
 				}
@@ -318,10 +331,8 @@ struct James : Module {
 		}
 
 		// Handle step indicator lights
-		// turnOffAllStepIndicatorLights();
-		// lights[getLightId(0, clockTracker.getCurrentStepForRow(0))].setBrightness(1.0f);
-		// lights[getLightId(1, clockTracker.getCurrentStepForRow(1))].setBrightness(1.0f);
-		// lights[getLightId(2, clockTracker.getCurrentStepForRow(2))].setBrightness(1.0f);
+		turnOffAllStepIndicatorLights();
+		lights[getStepLedId(clockTracker.getCurrentStep())].setBrightness(1.0f);
 		// End
 
 		// handle gate trigger/continuous toggle
@@ -337,7 +348,6 @@ struct James : Module {
 		// end
 
 		// Handle pulse (trigger) gate outputs
-
 		if(gateTriggerModeEnabled) {
 			for(int i = 0; i < NUM_ROWS; i++) {
 				if(outputs[getGateOutputId(i)].isConnected()) {
@@ -346,56 +356,6 @@ struct James : Module {
 				}
 			}
 		}
-
-
-		// if(outputs[OUT_GATE_R0_OUTPUT].isConnected() && gateTriggerModeEnabled) {
-		// 	// const bool pulseR0 = gatePulseR0.process(1.0 / args.sampleRate);
-		// 	// outputs[OUT_GATE_R0_OUTPUT].setVoltage(pulseR0 ? 10.0 : 0.0);	
-		// 	const bool pulse = gatePulseGenerators[0].process(1.0 / args.sampleRate);
-		// 	outputs[OUT_GATE_R0_OUTPUT].setVoltage(pulse ? 10.0 : 0.0);
-		// }
-
-		// if(outputs[OUT_GATE_R1_OUTPUT].isConnected() && gateTriggerModeEnabled) {
-		// 	const bool pulseR1 = gatePulseR1.process(1.0 / args.sampleRate);
-		// 	outputs[OUT_GATE_R1_OUTPUT].setVoltage(pulseR1 ? 10.0 : 0.0);
-		// }
-
-		// if(outputs[OUT_GATE_R2_OUTPUT].isConnected() && gateTriggerModeEnabled) {
-		// 	const bool pulseR2 = gatePulseR2.process(1.0 / args.sampleRate);
-		// 	outputs[OUT_GATE_R2_OUTPUT].setVoltage(pulseR2 ? 10.0 : 0.0);
-		// }
-
-		// if(outputs[OUT_GATE_R3_OUTPUT].isConnected() && gateTriggerModeEnabled) {
-		// 	const bool pulseR3 = gatePulseR1.process(1.0 / args.sampleRate);
-		// 	outputs[OUT_GATE_R3_OUTPUT].setVoltage(pulseR3 ? 10.0 : 0.0);		
-		// }
-
-		// if(outputs[OUT_GATE_R1_OUTPUT].isConnected() && gateTriggerModeEnabled) {
-		// 	const bool pulseR1 = gatePulseR1.process(1.0 / args.sampleRate);
-		// 	outputs[OUT_GATE_R1_OUTPUT].setVoltage(pulseR1 ? 10.0 : 0.0);
-		// }
-
-		// if(outputs[OUT_GATE_R2_OUTPUT].isConnected() && gateTriggerModeEnabled) {
-		// 	const bool pulseR2 = gatePulseR2.process(1.0 / args.sampleRate);
-		// 	outputs[OUT_GATE_R2_OUTPUT].setVoltage(pulseR2 ? 10.0 : 0.0);
-		// }
-		// End
-
-		// Handle continuous gate outputs
-		// if(outputs[OUT_GATE_R0_OUTPUT].isConnected() && !gateTriggerModeEnabled) {
-		// 	const bool shouldGateR0 = params[getButtonId(0, clockTracker.getCurrentStepForRow(0))].getValue() > 0;
-		// 	outputs[OUT_GATE_R0_OUTPUT].setVoltage(shouldGateR0 ? 10.0 : 0.0);		
-		// }
- 
-		// if(outputs[OUT_GATE_R1_OUTPUT].isConnected() && !gateTriggerModeEnabled) {
-		// 	const bool shouldGateR1 = params[getButtonId(0, clockTracker.getCurrentStepForRow(0))].getValue() > 0;
-		// 	outputs[OUT_GATE_R1_OUTPUT].setVoltage(shouldGateR1 ? 10.0 : 0.0);		
-		// }
-
-		// if(outputs[OUT_GATE_R2_OUTPUT].isConnected() && !gateTriggerModeEnabled) {
-		// 	const bool shouldGateR2 = params[getButtonId(0, clockTracker.getCurrentStepForRow(0))].getValue() > 0;
-		// 	outputs[OUT_GATE_R2_OUTPUT].setVoltage(shouldGateR2 ? 10.0 : 0.0);		
-		// }
 		// End
 
 		lastclockVoltage = clockVoltage;
