@@ -9,7 +9,7 @@ https://github.com/danieldavies99/sequel/blob/master/manual/daniel_davies_modula
 The manual is released under the GPL3-or-later license.
 
 
-![All modules](https://i.imgur.com/aRMtW7k.png)
+![All modules](https://i.imgur.com/eLXMIcL.png)
 
 # Sequel 8
 Sequel 8 is a 3 row 8 step sequencer for VCV Rack 2.
