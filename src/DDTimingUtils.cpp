@@ -14,8 +14,17 @@ void IgnoreClockAfterResetTimer::process(float deltaTime) {
 	}
 };
 
+void SequelClockTracker::initializeRows() {
+	for(int i = 0; i < numRows; i++) {
+		currentStepTracker.push_back(0);
+		gatesSinceLastStepTracker.push_back(0);
+		divideTracker.push_back(1);
+		hasPulsedThisStepTracker.push_back(false);
+	}
+};
+
 void SequelClockTracker::nextClock() {
-	for(int i = 0; i < numSteps; i++) {
+	for(int i = 0; i < numRows; i++) {
 		gatesSinceLastStepTracker[i]++;
 		if(gatesSinceLastStepTracker[i] >= divideTracker[i]) {
 			nextStepForRow(i);

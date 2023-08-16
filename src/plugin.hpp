@@ -230,21 +230,6 @@ struct JamesClockTracker {
 
 struct SequelClockTracker {
 
-    SequelClockTracker(
-		short initializeNumSteps,
-		short numRows = 3
-	) {
-        numSteps = initializeNumSteps;
-		numRows = numRows;
-
-		for(int i = 0; i < numRows; i++) {
-			currentStepTracker.push_back(0);
-			gatesSinceLastStepTracker.push_back(0);
-			divideTracker.push_back(1);
-			hasPulsedThisStepTracker.push_back(false);
-		}
-    }
-
 	short numSteps;
 	short numRows;
 
@@ -252,6 +237,8 @@ struct SequelClockTracker {
 	std::vector<short> gatesSinceLastStepTracker;
 	std::vector<short> divideTracker;
 	std::vector<bool> hasPulsedThisStepTracker;
+
+	void initializeRows();
 
 	void nextClock();
 
@@ -269,6 +256,23 @@ struct SequelClockTracker {
 
 	void setHasPulsedThisStepForRow(short row, bool val);
 };
+
+struct Sequel8ClockTracker : SequelClockTracker {
+    Sequel8ClockTracker() {
+        numSteps = 8;
+        numRows = 3;
+		initializeRows();
+    }
+};
+
+struct Sequel16ClockTracker : SequelClockTracker {
+    Sequel16ClockTracker() {
+        numSteps = 16;
+		numRows = 3;
+		initializeRows();
+    }
+};
+
 
 struct SequenceGenerator {
 	int dotLength = 1;

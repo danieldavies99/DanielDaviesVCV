@@ -15,7 +15,7 @@ std::string DigitDisplay::formatDigitValue(int value) {
 };
 
 void DigitDisplay::draw(const DrawArgs &args)  {
-    if(!&args.vg) {
+    if(!args.vg) {
     	return;
     }
     nvgBeginPath(args.vg);
