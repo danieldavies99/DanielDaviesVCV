@@ -536,6 +536,21 @@ struct James : Module {
 		}
 		// End
 
+		// Handle continuous gate outputs
+		if(!gateTriggerModeEnabled) {
+			for(int i = 0; i < NUM_ROWS; i++) {
+				// if(outputs[getGateOutputId(i)].isConnected()) {
+				// 	const bool pulse = gatePulseGenerators[i].process(1.0 / args.sampleRate);
+				// 	outputs[getGateOutputId(i)].setVoltage(pulse ? 10.0 : 0.0);
+				// }
+				if(outputs[getGateOutputId(i)].isConnected()) {
+					const bool shouldGate = params[getButtonId(i, clockTracker.getCurrentStepAccountingForRush(i))].getValue() > 0;
+					outputs[getGateOutputId(i)].setVoltage(shouldGate ? 10.0 : 0.0);		
+				}
+			}
+		}
+		// End
+
 		lastclockVoltage = clockVoltage;
 		lastResetInput = resetInput;
 	}

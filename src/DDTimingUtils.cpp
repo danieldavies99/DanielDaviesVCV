@@ -111,6 +111,18 @@ int JamesClockTracker::getNextStep() {
 	return nextStep;
 };
 
+int JamesClockTracker::getCurrentStepAccountingForRush(short row) {
+	const int rush = getRushForRow(row);
+    const int clocksSinceStartWithRush = clocksSinceLastStart - rush;
+	if(clocksSinceStartWithRush < 0) {
+		return numSteps - 1;
+	}
+	if(clocksSinceStartWithRush > numSteps * globalClockDivide) {
+		return 0;
+	}
+	return floor(clocksSinceStartWithRush / globalClockDivide);
+};
+
 int JamesClockTracker::getClocksSinceStart() {
 	return clocksSinceLastStart;
 };
