@@ -412,7 +412,7 @@ struct James : Module {
 
 	dsp::PulseGenerator gatePulseGenerators [6] = { };
 
-	JamesClockTracker clockTracker{16, 6};
+	JamesClockTracker clockTracker;
 
 	bool gateTriggerModeEnabled = true;
 
@@ -436,7 +436,7 @@ struct James : Module {
 
 	float getInternalClockVoltage(float sampleRate) {
 		clockSpeed = params[KNOB_CLOCK_SPEED_PARAM].getValue();
-		const float clockInterval = 1.0f - (clockSpeed*0.95f);
+		const float clockInterval = 0.5f - (clockSpeed*0.48f);
 		const float timeSinceLastPulsed = timer.process(1.0 / sampleRate);
 		if(timeSinceLastPulsed > clockInterval / 3) {
 			clockOutPulse.trigger(1e-3f);
@@ -448,6 +448,10 @@ struct James : Module {
 
 	int getRushValForRow(short row) {
 		return -static_cast<int>(params[NUM_GATE_SWITCHES + row].getValue());
+	}
+
+	void reset() {
+		clockTracker.reset();
 	}
 
 	void process(const ProcessArgs& args) override {
@@ -477,18 +481,15 @@ struct James : Module {
 			return;
 		}
 
-
-
 		float resetInput = inputs[IN_RESET_INPUT].getVoltage();
 		if (lastResetInput == 0 && resetInput != 0) {
-			// reset();
+			reset();
 		}
 
 		// set rush/drag values
 		for(int i = 0; i < NUM_ROWS; i++) {
 			clockTracker.setRushForRow(i, getRushValForRow(i));
 		}
-
 
 		// calculate if row should pulse
 		if (lastclockVoltage == 0 && clockVoltage != 0 && !ignoreClockAfterResetTimer.shouldIgnore) {

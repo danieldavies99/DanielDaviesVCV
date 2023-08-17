@@ -71,6 +71,19 @@ void SequelClockTracker::setHasPulsedThisStepForRow(short row, bool val) {
 	hasPulsedThisStepTracker[row] = val;
 };
 
+void JamesClockTracker::initializeRows() {
+	for(int i = 0; i < numRows; i++) {
+		hasPulsedThisClockTracker.push_back(false);
+		rushTracker.push_back(0);
+	}
+};
+
+void JamesClockTracker::reset() {
+	clocksSinceLastStart = 0;
+	for(int i = 0; i < numRows; i++){
+		hasPulsedThisClockTracker[i] = false;
+	}
+};
 
 void JamesClockTracker::nextClock() {
 	for(int i = 0; i < numRows; i++) {
