@@ -403,7 +403,6 @@ struct James : Module {
 	}
 
 	dsp::Timer timer;
-	float clockSpeed = 0.5f;
 	dsp::PulseGenerator clockOutPulse;
 	IgnoreClockAfterResetTimer ignoreClockAfterResetTimer;
 
@@ -435,10 +434,13 @@ struct James : Module {
 	}
 
 	float getInternalClockVoltage(float sampleRate) {
-		clockSpeed = params[KNOB_CLOCK_SPEED_PARAM].getValue();
-		const float clockInterval = 0.5f - (clockSpeed*0.48f);
+		float clockSpeedInvert = 1 - params[KNOB_CLOCK_SPEED_PARAM].getValue();
+
+		const float minInterval = 0.005f;
+		const float maxInterval = 0.08f;
+		const float interval = minInterval + ((maxInterval - minInterval)*clockSpeedInvert);
 		const float timeSinceLastPulsed = timer.process(1.0 / sampleRate);
-		if(timeSinceLastPulsed > clockInterval / 3) {
+		if(timeSinceLastPulsed > interval) {
 			clockOutPulse.trigger(1e-3f);
 			timer.reset();
 		}
