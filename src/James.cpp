@@ -406,6 +406,20 @@ struct James : Module {
 		}
 	}
 
+	void randomizeGatesForRow(short row) {
+		for(int col = 0; col < NUM_STEPS; col++) {
+			params[getButtonId(row, col)].setValue(round(random::uniform()));
+		}
+	}
+
+	void randomizeGates() {
+		for(int row = 0; row < NUM_ROWS; row++) {
+			for(int col = 0; col < NUM_STEPS; col++) {
+				params[getButtonId(row, col)].setValue(round(random::uniform()));
+			}
+		}
+	}
+
 	dsp::Timer timer;
 	dsp::PulseGenerator clockOutPulse;
 	IgnoreClockAfterResetTimer ignoreClockAfterResetTimer;
@@ -814,6 +828,42 @@ struct JamesWidget : ModuleWidget {
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(157.961, 114.3)), module, James::LIGHT_STEP_INDICATOR_C13_LIGHT));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(168.035, 114.3)), module, James::LIGHT_STEP_INDICATOR_C14_LIGHT));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(178.11, 114.3)), module, James::LIGHT_STEP_INDICATOR_C15_LIGHT));
+	}
+
+
+	void appendContextMenu(Menu* menu) override {
+		James* module = dynamic_cast<James*>(this->module);
+
+		menu->addChild(new MenuEntry);
+		menu->addChild(createMenuLabel("Randomize"));
+
+		struct RandomizeAllGates : MenuItem {
+			James* module;
+			void onAction(const event::Action &e) override {
+				module->randomizeGates();
+			}
+		};
+
+		struct RandomizeGatesForRow : MenuItem {
+			short row;
+			James* module;
+			void onAction(const event::Action &e) override {
+				module->randomizeGatesForRow(row);
+			}
+		};
+
+		RandomizeAllGates* randomizeAllGates = createMenuItem<RandomizeAllGates>("Randomize all gates");
+		randomizeAllGates->module = module;
+
+		menu->addChild(randomizeAllGates);
+		menu->addChild(new MenuSeparator());
+
+		for(short row = 0; row < 6; row++) {
+			RandomizeGatesForRow* randomizeGatesForRow = createMenuItem<RandomizeGatesForRow>("Randomize Gates for row " + std::to_string(row + 1));
+			randomizeGatesForRow->row = row;
+			randomizeGatesForRow->module = module;
+			menu->addChild(randomizeGatesForRow);
+		}
 	}
 };
 
