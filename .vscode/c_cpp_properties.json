@@ -10,7 +10,8 @@
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
-            ]
+            ],
+            "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],
     "version": 4

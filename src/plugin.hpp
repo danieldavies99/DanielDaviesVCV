@@ -195,18 +195,10 @@ struct IgnoreClockAfterResetTimer {
 
 struct JamesClockTracker {
 	
-	JamesClockTracker(
-		short initializeNumSteps,
-		short numRows = 6
-	) {
-        numSteps = initializeNumSteps;
-		numRows = numRows;
-
-		for(int i = 0; i < numRows; i++) {
-			hasPulsedThisClockTracker.push_back(false);
-			rushTracker.push_back(0);
-		}
-		rushTracker[1] = (4);
+	JamesClockTracker() {
+        numSteps = 16;
+		numRows = 6;
+		initializeRows();
     }
 
 	short numRows;
@@ -215,16 +207,20 @@ struct JamesClockTracker {
 
 	short clocksSinceLastStart = 0;
 
-	std::vector<bool> hasPulsedThisClockTracker;
 	std::vector<int> rushTracker;
+
+	void initializeRows();
+	void reset();
 
 	void nextClock();
 	int getCurrentStep();
+	int getNextStep();
+	int getCurrentStepAccountingForRush(short row);
 	int getClocksSinceStart();
 	int getClocksSinceLastStep();
 	int getRushForRow(short row);
 
-	void setHasPulsedThisStepForRow(int row, bool val);
+	void setRushForRow(short row, short rush);
 };
 
 struct SequelClockTracker {
