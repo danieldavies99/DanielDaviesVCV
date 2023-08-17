@@ -207,7 +207,6 @@ struct JamesClockTracker {
 
 	short clocksSinceLastStart = 0;
 
-	std::vector<bool> hasPulsedThisClockTracker;
 	std::vector<int> rushTracker;
 
 	void initializeRows();
@@ -221,7 +220,6 @@ struct JamesClockTracker {
 	int getClocksSinceLastStep();
 	int getRushForRow(short row);
 
-	void setHasPulsedThisStepForRow(int row, bool val);
 	void setRushForRow(short row, short rush);
 };
 

@@ -73,22 +73,15 @@ void SequelClockTracker::setHasPulsedThisStepForRow(short row, bool val) {
 
 void JamesClockTracker::initializeRows() {
 	for(int i = 0; i < numRows; i++) {
-		hasPulsedThisClockTracker.push_back(false);
 		rushTracker.push_back(0);
 	}
 };
 
 void JamesClockTracker::reset() {
 	clocksSinceLastStart = 0;
-	for(int i = 0; i < numRows; i++){
-		hasPulsedThisClockTracker[i] = false;
-	}
 };
 
 void JamesClockTracker::nextClock() {
-	for(int i = 0; i < numRows; i++) {
-		setHasPulsedThisStepForRow(i, false);
-	}
 	clocksSinceLastStart++;
 	if(clocksSinceLastStart >= globalClockDivide*numSteps) {
 		clocksSinceLastStart = 0;
@@ -133,8 +126,4 @@ int JamesClockTracker::getRushForRow(short row) {
 
 int JamesClockTracker::getClocksSinceLastStep() {
 	return getClocksSinceStart() % globalClockDivide;
-};
-
-void JamesClockTracker::setHasPulsedThisStepForRow(int row, bool val) {
-	hasPulsedThisClockTracker[row] = val;
 };
