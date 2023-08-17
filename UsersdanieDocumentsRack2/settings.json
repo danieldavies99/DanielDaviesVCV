@@ -1,0 +1,50 @@
+{
+  "safeMode": false,
+  "token": "",
+  "windowMaximized": true,
+  "windowSize": [
+    1024.0,
+    720.0
+  ],
+  "windowPos": [
+    167.0,
+    12.0
+  ],
+  "invertZoom": false,
+  "pixelRatio": 0.0,
+  "uiTheme": "dark",
+  "cableOpacity": 0.5,
+  "cableTension": 1.0,
+  "rackBrightness": 1.0,
+  "haloBrightness": 0.25,
+  "allowCursorLock": true,
+  "knobMode": 0,
+  "knobScroll": false,
+  "knobLinearSensitivity": 0.0010000000474974513,
+  "knobScrollSensitivity": 0.0010000000474974513,
+  "sampleRate": 0.0,
+  "threadCount": 1,
+  "tooltips": true,
+  "cpuMeter": false,
+  "lockModules": false,
+  "squeezeModules": true,
+  "preferDarkPanels": false,
+  "frameRateLimit": 60.0,
+  "autosaveInterval": 15.0,
+  "recentPatchPaths": [],
+  "cableColors": [
+    "#f3374b",
+    "#ffb437",
+    "#00b56e",
+    "#3695ef",
+    "#8b4ade"
+  ],
+  "autoCheckUpdates": true,
+  "showTipsOnLaunch": true,
+  "tipIndex": 0,
+  "browserSort": 0,
+  "browserZoom": -1.0,
+  "pluginSettings": {},
+  "moduleInfos": {},
+  "moduleWhitelist": {}
+}

@@ -1,6 +1,6 @@
 #include "plugin.hpp"
 
-
+using namespace rack;
 struct Bend : Module {
 	enum ParamId {
 		KNOB_COARSE_PARAM,
@@ -37,7 +37,7 @@ struct Bend : Module {
 
 	Bend() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
-		configParam(KNOB_SHIFT_PARAM, -0.5f, 0.5f, 0.f, "Bend");
+		configParam(KNOB_SHIFT_PARAM, 0.f, 1.f, 0.5f, "Bend");
 		configParam(KNOB_COARSE_PARAM, -4.f, 4.f, 0.f, "Pitch");
 		configParam(KNOB_PULSE_WIDTH_PARAM, -1.f, 1.f, 0.0f, "Pulse width");
 		configParam(KNOB_PULSE_WIDTH_MODULATION_PARAM, -1.f, 1.f, 0.f, "Pulse width modulation");
@@ -57,26 +57,26 @@ struct Bend : Module {
 		configOutput(TRIANGLE_OUT_OUTPUT, "Tri");
 		configOutput(NOISE_OUT_OUTPUT, "Noise");
 
-		for(int i = 0; i < 16; i++) {
-			oscillators[i].frequencyControl = &frequencyControl;
-			oscillators[i].portamentoVal = &portamentoVal;
-			// oscillators[i].frequencyModulationIn = &frequencyModulationIn;
-			oscillators[i].frequencyModulationMod = &frequencyModulationMod;
+		// for(int i = 0; i < 16; i++) {
+		// 	oscillators[i].frequencyControl = &frequencyControl;
+		// 	oscillators[i].portamentoVal = &portamentoVal;
+		// 	// oscillators[i].frequencyModulationIn = &frequencyModulationIn;
+		// 	oscillators[i].frequencyModulationMod = &frequencyModulationMod;
 
-			// oscillators[i].syncIn = &syncIn;
+		// 	// oscillators[i].syncIn = &syncIn;
 
-			oscillators[i].shiftControl = &shiftControl;
-			// oscillators[i].shiftIn = &shiftIn;
-			oscillators[i].shiftMod = &shiftMod;
+		// 	oscillators[i].shiftControl = &shiftControl;
+		// 	// oscillators[i].shiftIn = &shiftIn;
+		// 	oscillators[i].shiftMod = &shiftMod;
 
-			oscillators[i].amplitudeControl = &amplitudeControl;
-			// oscillators[i].amplitudeIn = &amplitudeIn;
-			oscillators[i].amplitudeMod = &amplitudeMod;
+		// 	oscillators[i].amplitudeControl = &amplitudeControl;
+		// 	// oscillators[i].amplitudeIn = &amplitudeIn;
+		// 	oscillators[i].amplitudeMod = &amplitudeMod;
 
-			oscillators[i].pulseWidthControl = &pulseWidthControl;
-			// oscillators[i].pulseWidthIn = &pulseWidthIn;
-			oscillators[i].pulseWidthMod = &pulseWidthMod;
-		}
+		// 	oscillators[i].pulseWidthControl = &pulseWidthControl;
+		// 	// oscillators[i].pulseWidthIn = &pulseWidthIn;
+		// 	oscillators[i].pulseWidthMod = &pulseWidthMod;
+		// }
 	}
 
 	float frequencyControl = 0.f;
@@ -102,46 +102,45 @@ struct Bend : Module {
 
 	int channels = 0;
 
-	BendOscillator oscillators[16];
+	BendOscillatorSimd oscillators[4];
 
 	void process(const ProcessArgs& args) override {
 		frequencyControl = params[KNOB_COARSE_PARAM].getValue();
 		portamentoVal = params[KNOB_PORTAMENTO_PARAM].getValue();
 
-		// frequencyModulationIn = inputs[FREQUENCY_MODULATION_IN_INPUT].getVoltage();
 		frequencyModulationMod = params[KNOB_FREQUENCY_MODULATION_PARAM].getValue();
 
-		// syncIn = inputs[SYNC_IN_INPUT].getVoltage();
-
 		shiftControl = params[KNOB_SHIFT_PARAM].getValue();
-		// shiftIn = inputs[SHIFT_IN_INPUT].getVoltage();
 		shiftMod = params[KNOB_SHIFT_MODULATION_PARAM].getValue();
 
 		amplitudeControl = params[KNOB_AMPLITUDE_PARAM].getValue();;
-		// amplitudeIn = inputs[AMPLITUDE_MODULATION_IN_INPUT].getVoltage();
 		amplitudeMod = params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
 
 		pulseWidthControl = params[KNOB_PULSE_WIDTH_PARAM].getValue();;
-		// pulseWidthIn = inputs[PULSE_WIDTH_MODULATION_IN_INPUT].getVoltage();
 		pulseWidthMod = params[KNOB_PULSE_WIDTH_MODULATION_PARAM].getValue();
 
 		int channels = std::max(inputs[PITCH_IN_INPUT].getChannels(), 1);
-		for (int c = 0; c < channels; c++) {
-			oscillators[c].process(
-				args.sampleTime,
-				inputs[PITCH_IN_INPUT].getVoltage(c),
-				inputs[SYNC_IN_INPUT].getVoltage(c),
-				inputs[FREQUENCY_MODULATION_IN_INPUT].getVoltage(c),
-				inputs[SHIFT_IN_INPUT].getVoltage(c),
-				inputs[AMPLITUDE_MODULATION_IN_INPUT].getVoltage(c),
-				inputs[PULSE_WIDTH_MODULATION_IN_INPUT].getVoltage(c)
-			);
+		for (int c = 0; c < channels; c += 4) {
+			auto& oscillator = oscillators[c / 4];
+			oscillator.bendParam = shiftControl;
+			oscillator.channels = std::min(channels - c, 4);
 
+			simd::float_4 pitch = frequencyControl + inputs[PITCH_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c);
+			simd::float_4 freq = dsp::FREQ_C4 * dsp::exp2_taylor5(pitch);
 
-			outputs[TRIANGLE_OUT_OUTPUT].setVoltage(oscillators[c].triOut, c);
-			outputs[SQUARE_OUT_OUTPUT].setVoltage(oscillators[c].squareOut, c);
-			outputs[SIN_OUT_OUTPUT].setVoltage(oscillators[c].sinOut, c);
-			outputs[NOISE_OUT_OUTPUT].setVoltage(oscillators[c].noiseOut, c);
+			freq = clamp(freq, 0.f, args.sampleRate / 2.f);
+			oscillator.freq = freq;
+
+			oscillator.process(args.sampleTime);
+
+			if (outputs[SIN_OUT_OUTPUT].isConnected())
+				outputs[SIN_OUT_OUTPUT].setVoltageSimd(5.f * oscillator.sinOut, c);
+			if (outputs[TRIANGLE_OUT_OUTPUT].isConnected())
+				outputs[TRIANGLE_OUT_OUTPUT].setVoltageSimd(5.f * oscillator.triOut, c);
+			if (outputs[SQUARE_OUT_OUTPUT].isConnected())
+				outputs[SQUARE_OUT_OUTPUT].setVoltageSimd(5.f * oscillator.squareOut, c);
+			if (outputs[NOISE_OUT_OUTPUT].isConnected())
+				outputs[NOISE_OUT_OUTPUT].setVoltageSimd(5.f * oscillator.noiseOut, c);
 		}
 
 		outputs[TRIANGLE_OUT_OUTPUT].setChannels(channels);

@@ -57,6 +57,7 @@ void BendOscillator::process(
 		shift += (shiftIn / 20) * *shiftMod;
 		shift = clamp(shift, -0.5, 0.5);
 
+
 		if(phase < shift) {
 			tri = 4.f * phase  - (4 * (shift * ((phase + 0.5) / abs(shift - -0.5 ))) );  // -2 -> 0
 		}  else {

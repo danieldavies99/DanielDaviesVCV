@@ -1,0 +1,728 @@
+{
+  "version": "2.beta.1",
+  "path": "/home/vortico/src/vcv/Rack-v2/template.vcv",
+  "zoom": 1.0,
+  "gridOffset": [
+    -5.9389324188232422,
+    -0.094335936009883881
+  ],
+  "modules": [
+    {
+      "id": 2,
+      "plugin": "Fundamental",
+      "model": "VCMixer",
+      "version": "2.0.0",
+      "params": [
+        {
+          "value": 0.70794576406478882,
+          "id": 0
+        },
+        {
+          "value": 1.0,
+          "id": 1
+        },
+        {
+          "value": 1.0,
+          "id": 2
+        },
+        {
+          "value": 0.79918169975280762,
+          "id": 3
+        },
+        {
+          "value": 0.34506827592849731,
+          "id": 4
+        }
+      ],
+      "leftModuleId": 6,
+      "pos": [
+        52,
+        1
+      ]
+    },
+    {
+      "id": 4,
+      "plugin": "Fundamental",
+      "model": "VCF",
+      "version": "2.0.0",
+      "params": [
+        {
+          "value": 0.18491023778915405,
+          "id": 0
+        },
+        {
+          "value": 0.5,
+          "id": 1
+        },
+        {
+          "value": 0.23132529854774475,
+          "id": 2
+        },
+        {
+          "value": 1.0,
+          "id": 3
+        },
+        {
+          "value": 0.0,
+          "id": 4
+        },
+        {
+          "value": 0.0,
+          "id": 5
+        },
+        {
+          "value": 0.0,
+          "id": 6
+        }
+      ],
+      "leftModuleId": 23,
+      "rightModuleId": 7,
+      "pos": [
+        36,
+        0
+      ]
+    },
+    {
+      "id": 5,
+      "plugin": "Core",
+      "model": "MIDIToCVInterface",
+      "version": "2.0.0",
+      "params": [],
+      "leftModuleId": 8,
+      "rightModuleId": 22,
+      "data": {
+        "smooth": true,
+        "channels": 1,
+        "polyMode": 0,
+        "clockDivision": 24,
+        "lastPitch": 8192,
+        "lastMod": 0,
+        "midi": {
+          "driver": -11,
+          "deviceName": "QWERTY keyboard (US)",
+          "channel": -1
+        }
+      },
+      "pos": [
+        16,
+        0
+      ]
+    },
+    {
+      "id": 6,
+      "plugin": "Fundamental",
+      "model": "ADSR",
+      "version": "2.0.0",
+      "params": [
+        {
+          "value": 0.38800004124641418,
+          "id": 0
+        },
+        {
+          "value": 0.61700046062469482,
+          "id": 1
+        },
+        {
+          "value": 0.5,
+          "id": 2
+        },
+        {
+          "value": 0.5765000581741333,
+          "id": 3
+        },
+        {
+          "value": 0.0,
+          "id": 4
+        },
+        {
+          "value": 0.0,
+          "id": 5
+        },
+        {
+          "value": 0.0,
+          "id": 6
+        },
+        {
+          "value": 0.0,
+          "id": 7
+        },
+        {
+          "value": 0.0,
+          "id": 8
+        }
+      ],
+      "leftModuleId": 9,
+      "rightModuleId": 2,
+      "pos": [
+        43,
+        1
+      ]
+    },
+    {
+      "id": 7,
+      "plugin": "Fundamental",
+      "model": "Scope",
+      "version": "2.0.0",
+      "params": [
+        {
+          "value": 0.0,
+          "id": 0
+        },
+        {
+          "value": 0.0,
+          "id": 1
+        },
+        {
+          "value": 0.0,
+          "id": 2
+        },
+        {
+          "value": 0.0,
+          "id": 3
+        },
+        {
+          "value": 7.6438560485839844,
+          "id": 4
+        },
+        {
+          "value": 0.0,
+          "id": 5
+        },
+        {
+          "value": 0.0,
+          "id": 6
+        },
+        {
+          "value": 1.0,
+          "id": 7
+        }
+      ],
+      "leftModuleId": 4,
+      "rightModuleId": 8518972980240757,
+      "pos": [
+        43,
+        0
+      ]
+    },
+    {
+      "id": 8,
+      "plugin": "Core",
+      "model": "Notes",
+      "version": "2.0.0",
+      "params": [],
+      "rightModuleId": 5,
+      "data": {
+        "text": "Tutorial patch instructions:\n\n1. Choose an audio driver and device in the AUDIO module.\n\n2. Use the QWERTY and ZXCVB rows of your keyboard to generate MIDI notes, which are converted to 1V/oct and GATE signals.\n\n3. Drag knobs up/down to rotate. Hold Ctrl (Cmd on Mac) while dragging to fine-tune. Right-click knobs to edit, and double-click to initialize.\n\n4. Drag ports to create and move cables. Stack multiple cables on outputs by holding Ctrl (Cmd on Mac) and dragging from an output.\n\n5. Right-click on an empty rack space to add new modules."
+      },
+      "pos": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": 9,
+      "plugin": "Fundamental",
+      "model": "ADSR",
+      "version": "2.0.0",
+      "params": [
+        {
+          "value": 0.25800004601478577,
+          "id": 0
+        },
+        {
+          "value": 0.74300044775009155,
+          "id": 1
+        },
+        {
+          "value": 0.5,
+          "id": 2
+        },
+        {
+          "value": 0.5765000581741333,
+          "id": 3
+        },
+        {
+          "value": 0.0,
+          "id": 4
+        },
+        {
+          "value": 0.0,
+          "id": 5
+        },
+        {
+          "value": 0.0,
+          "id": 6
+        },
+        {
+          "value": 0.0,
+          "id": 7
+        },
+        {
+          "value": 0.0,
+          "id": 8
+        }
+      ],
+      "leftModuleId": 19,
+      "rightModuleId": 6,
+      "pos": [
+        34,
+        1
+      ]
+    },
+    {
+      "id": 14,
+      "plugin": "Fundamental",
+      "model": "VCO",
+      "version": "2.0.0",
+      "params": [
+        {
+          "value": 1.0,
+          "id": 0
+        },
+        {
+          "value": 1.0,
+          "id": 1
+        },
+        {
+          "value": 0.0,
+          "id": 2
+        },
+        {
+          "value": 0.0,
+          "id": 3
+        },
+        {
+          "value": 0.05000000074505806,
+          "id": 4
+        },
+        {
+          "value": 0.5,
+          "id": 5
+        },
+        {
+          "value": 1.0,
+          "id": 6
+        },
+        {
+          "value": 0.0,
+          "id": 7
+        }
+      ],
+      "rightModuleId": 18,
+      "pos": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": 15,
+      "plugin": "Fundamental",
+      "model": "VCO",
+      "version": "2.0.0",
+      "params": [
+        {
+          "value": 1.0,
+          "id": 0
+        },
+        {
+          "value": 1.0,
+          "id": 1
+        },
+        {
+          "value": -0.040337353944778442,
+          "id": 2
+        },
+        {
+          "value": 0.0,
+          "id": 3
+        },
+        {
+          "value": 0.05000000074505806,
+          "id": 4
+        },
+        {
+          "value": 0.26267465949058533,
+          "id": 5
+        },
+        {
+          "value": 0.15733326971530914,
+          "id": 6
+        },
+        {
+          "value": 0.0,
+          "id": 7
+        }
+      ],
+      "leftModuleId": 18,
+      "rightModuleId": 17,
+      "pos": [
+        12,
+        1
+      ]
+    },
+    {
+      "id": 17,
+      "plugin": "Fundamental",
+      "model": "Octave",
+      "version": "2.0.0",
+      "params": [
+        {
+          "value": -2.0,
+          "id": 0
+        }
+      ],
+      "leftModuleId": 15,
+      "rightModuleId": 1878679374588749,
+      "pos": [
+        21,
+        1
+      ]
+    },
+    {
+      "id": 18,
+      "plugin": "Fundamental",
+      "model": "Octave",
+      "version": "2.0.0",
+      "params": [
+        {
+          "value": -1.0,
+          "id": 0
+        }
+      ],
+      "leftModuleId": 14,
+      "rightModuleId": 15,
+      "pos": [
+        9,
+        1
+      ]
+    },
+    {
+      "id": 19,
+      "plugin": "Fundamental",
+      "model": "Noise",
+      "version": "2.0.0",
+      "params": [],
+      "leftModuleId": 1878679374588749,
+      "rightModuleId": 9,
+      "pos": [
+        31,
+        1
+      ]
+    },
+    {
+      "id": 22,
+      "plugin": "Fundamental",
+      "model": "LFO",
+      "version": "2.0.0",
+      "params": [
+        {
+          "value": 0.0,
+          "id": 0
+        },
+        {
+          "value": 0.0,
+          "id": 1
+        },
+        {
+          "value": 2.6500232219696045,
+          "id": 2
+        },
+        {
+          "value": 0.0,
+          "id": 3
+        },
+        {
+          "value": 0.0,
+          "id": 4
+        },
+        {
+          "value": 0.5,
+          "id": 5
+        },
+        {
+          "value": 0.0,
+          "id": 6
+        }
+      ],
+      "leftModuleId": 5,
+      "rightModuleId": 23,
+      "pos": [
+        24,
+        0
+      ]
+    },
+    {
+      "id": 23,
+      "plugin": "Fundamental",
+      "model": "VCA-1",
+      "version": "2.0.0",
+      "params": [
+        {
+          "value": 1.0,
+          "id": 0
+        },
+        {
+          "value": 1.0,
+          "id": 1
+        }
+      ],
+      "leftModuleId": 22,
+      "rightModuleId": 4,
+      "pos": [
+        33,
+        0
+      ]
+    },
+    {
+      "id": 8518972980240757,
+      "plugin": "Core",
+      "model": "AudioInterface2",
+      "version": "2.0.0",
+      "params": [
+        {
+          "value": 1.0,
+          "id": 0
+        }
+      ],
+      "leftModuleId": 7,
+      "data": {
+        "audio": {
+          "driver": 1,
+          "sampleRate": 0.0,
+          "blockSize": 0,
+          "inputOffset": 21854,
+          "outputOffset": 0
+        },
+        "dcFilter": true
+      },
+      "pos": [
+        56,
+        0
+      ]
+    },
+    {
+      "id": 1878679374588749,
+      "plugin": "Fundamental",
+      "model": "VCO2",
+      "version": "2.0.0",
+      "params": [
+        {
+          "value": 0.0,
+          "id": 0
+        },
+        {
+          "value": 0.0,
+          "id": 1
+        },
+        {
+          "value": 0.046987950801849365,
+          "id": 2
+        },
+        {
+          "value": 0.33333331346511841,
+          "id": 3
+        },
+        {
+          "value": 0.05000000074505806,
+          "id": 4
+        },
+        {
+          "value": 0.0,
+          "id": 5
+        },
+        {
+          "value": 0.0,
+          "id": 6
+        }
+      ],
+      "leftModuleId": 17,
+      "rightModuleId": 19,
+      "data": {
+        "waveLen": 256,
+        "filename": "Basic.wav"
+      },
+      "pos": [
+        24,
+        1
+      ]
+    }
+  ],
+  "cables": [
+    {
+      "id": 6591565361845603,
+      "outputModuleId": 5,
+      "outputId": 0,
+      "inputModuleId": 14,
+      "inputId": 0,
+      "color": "#ffb437"
+    },
+    {
+      "id": 8368181968782066,
+      "outputModuleId": 5,
+      "outputId": 0,
+      "inputModuleId": 18,
+      "inputId": 0,
+      "color": "#ffb437"
+    },
+    {
+      "id": 4489114164474261,
+      "outputModuleId": 5,
+      "outputId": 0,
+      "inputModuleId": 17,
+      "inputId": 0,
+      "color": "#ffb437"
+    },
+    {
+      "id": 3511120060774331,
+      "outputModuleId": 5,
+      "outputId": 1,
+      "inputModuleId": 9,
+      "inputId": 4,
+      "color": "#f3374b"
+    },
+    {
+      "id": 7310840206812112,
+      "outputModuleId": 5,
+      "outputId": 1,
+      "inputModuleId": 6,
+      "inputId": 4,
+      "color": "#f3374b"
+    },
+    {
+      "id": 491744137059546,
+      "outputModuleId": 22,
+      "outputId": 0,
+      "inputModuleId": 23,
+      "inputId": 1,
+      "color": "#00b56e"
+    },
+    {
+      "id": 7793975009114850,
+      "outputModuleId": 23,
+      "outputId": 0,
+      "inputModuleId": 14,
+      "inputId": 1,
+      "color": "#00b56e"
+    },
+    {
+      "id": 8598999782246369,
+      "outputModuleId": 23,
+      "outputId": 0,
+      "inputModuleId": 15,
+      "inputId": 1,
+      "color": "#00b56e"
+    },
+    {
+      "id": 1230438160555978,
+      "outputModuleId": 18,
+      "outputId": 0,
+      "inputModuleId": 15,
+      "inputId": 0,
+      "color": "#ffb437"
+    },
+    {
+      "id": 1809693668078769,
+      "outputModuleId": 14,
+      "outputId": 2,
+      "inputModuleId": 2,
+      "inputId": 1,
+      "color": "#3695ef"
+    },
+    {
+      "id": 3767119450331362,
+      "outputModuleId": 1878679374588749,
+      "outputId": 0,
+      "inputModuleId": 2,
+      "inputId": 3,
+      "color": "#3695ef"
+    },
+    {
+      "id": 2456602276655679,
+      "outputModuleId": 17,
+      "outputId": 0,
+      "inputModuleId": 1878679374588749,
+      "inputId": 3,
+      "color": "#ffb437"
+    },
+    {
+      "id": 6796627675630006,
+      "outputModuleId": 23,
+      "outputId": 0,
+      "inputModuleId": 1878679374588749,
+      "inputId": 0,
+      "color": "#00b56e"
+    },
+    {
+      "id": 4814920824396717,
+      "outputModuleId": 9,
+      "outputId": 0,
+      "inputModuleId": 2,
+      "inputId": 0,
+      "color": "#00b56e"
+    },
+    {
+      "id": 4094974170360441,
+      "outputModuleId": 2,
+      "outputId": 0,
+      "inputModuleId": 4,
+      "inputId": 3,
+      "color": "#3695ef"
+    },
+    {
+      "id": 5758637209831836,
+      "outputModuleId": 4,
+      "outputId": 0,
+      "inputModuleId": 7,
+      "inputId": 0,
+      "color": "#3695ef"
+    },
+    {
+      "id": 9002625670743844,
+      "outputModuleId": 4,
+      "outputId": 0,
+      "inputModuleId": 8518972980240757,
+      "inputId": 0,
+      "color": "#3695ef"
+    },
+    {
+      "id": 1235420946655858,
+      "outputModuleId": 6,
+      "outputId": 0,
+      "inputModuleId": 4,
+      "inputId": 0,
+      "color": "#00b56e"
+    },
+    {
+      "id": 574618748274082,
+      "outputModuleId": 15,
+      "outputId": 3,
+      "inputModuleId": 2,
+      "inputId": 2,
+      "color": "#3695ef"
+    },
+    {
+      "id": 7671177565814762,
+      "outputModuleId": 19,
+      "outputId": 0,
+      "inputModuleId": 2,
+      "inputId": 4,
+      "color": "#3695ef"
+    },
+    {
+      "id": 3258983967888820,
+      "outputModuleId": 22,
+      "outputId": 1,
+      "inputModuleId": 15,
+      "inputId": 3,
+      "color": "#00b56e"
+    },
+    {
+      "id": 4134460899833296,
+      "outputModuleId": 5,
+      "outputId": 5,
+      "inputModuleId": 23,
+      "inputId": 0,
+      "color": "#00b56e"
+    }
+  ]
+}

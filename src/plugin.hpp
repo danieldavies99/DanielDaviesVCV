@@ -306,29 +306,26 @@ struct BendOscillator {
 	int lastFrame = 0;
 	bool lastSyncInputWasNegative = false;
 
+	int channels = 0;
+
 	float sinOut = 0.0f;
 	float squareOut = 0.0f;
 	float triOut = 0.0f;
 	float noiseOut = 0.0f;
 
-	float *frequencyControl;
+	
 	float *portamentoVal;
 
-	// float *frequencyModulationIn;
 	float *frequencyModulationMod;
-
-	// float *syncIn;
+	float *frequencyControl;
 
 	float *shiftControl;
-	// float *shiftIn;
 	float *shiftMod;
 
 	float *amplitudeControl;
-	// float *amplitudeIn;
 	float *amplitudeMod;
 
 	float *pulseWidthControl;
-	// float *pulseWidthIn;
 	float *pulseWidthMod;
 
 	void process(
@@ -340,4 +337,30 @@ struct BendOscillator {
 		float amplitudeIn,
 		float pulseWidthIn
 	);
+};
+
+
+struct BendOscillatorSimd {
+
+	BendOscillatorSimd() {
+		generateSinTable();
+	}
+
+	float bendParam = 0.5;
+
+	simd::float_4 phase = 0.f;
+	simd::float_4 freq = 0.f;
+
+	int channels = 0;
+
+	simd::float_4 sinOut = 0.0f;
+	simd::float_4 squareOut = 0.0f;
+	simd::float_4 triOut = 0.0f;
+	simd::float_4 noiseOut = 0.0f;
+
+	void process(float deltaTime);
+
+	float sinTable[2048];
+	
+	void generateSinTable();
 };
