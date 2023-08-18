@@ -39,7 +39,7 @@ struct Bend : Module {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(KNOB_SHIFT_PARAM, 0.f, 1.f, 0.5f, "Bend");
 		configParam(KNOB_COARSE_PARAM, -4.f, 4.f, 0.f, "Pitch");
-		configParam(KNOB_PULSE_WIDTH_PARAM, -1.f, 1.f, 0.0f, "Pulse width");
+		configParam(KNOB_PULSE_WIDTH_PARAM, -0.f, 1.f, 0.5f, "Pulse width");
 		configParam(KNOB_PULSE_WIDTH_MODULATION_PARAM, -1.f, 1.f, 0.f, "Pulse width modulation");
 		configParam(KNOB_FREQUENCY_MODULATION_PARAM, -1.f, 1.f, 0.f, "Frequency modulation");
 		configParam(KNOB_SHIFT_MODULATION_PARAM, -1.f, 1.f, 0.f, "Bend modulation");
@@ -78,8 +78,8 @@ struct Bend : Module {
 		float amplitudeControl = params[KNOB_AMPLITUDE_PARAM].getValue();;
 		float amMod = params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
 
-		float pulseWidthControl = params[KNOB_PULSE_WIDTH_PARAM].getValue();;
-		float pulseWidthMod = params[KNOB_PULSE_WIDTH_MODULATION_PARAM].getValue();
+		float pwmControl = params[KNOB_PULSE_WIDTH_PARAM].getValue();;
+		float pwmMod = params[KNOB_PULSE_WIDTH_MODULATION_PARAM].getValue();
 
 		int channels = std::max(inputs[PITCH_IN_INPUT].getChannels(), 1);
 		for (int c = 0; c < channels; c += 4) {
@@ -90,7 +90,10 @@ struct Bend : Module {
 
 			oscillator.bend = bendControl + ((inputs[SHIFT_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) / 5) * bendMod);
 			oscillator.bend = simd::clamp(oscillator.bend, 0.f, 1.f);
-	
+
+			oscillator.pwm = pwmControl + ((inputs[PULSE_WIDTH_MODULATION_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) / 5) * pwmMod);
+			oscillator.pwm = simd::clamp(oscillator.pwm, 0.02f, 0.98f);
+
 			oscillator.channels = std::min(channels - c, 4);
 
 			simd::float_4 pitch = frequencyControl + inputs[PITCH_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c);

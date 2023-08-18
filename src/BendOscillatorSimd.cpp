@@ -12,6 +12,7 @@ void BendOscillatorSimd::process(float deltaTime) {
     // phase modulation (bend)
     // given input 0 -> 1
     // will output a skewed 0 -> 1
+    // can this be done better with simd maths? probably
     simd::float_4 bentPhase = phase;
     const float constant025 = 0.25f;
     const float constant05 = 0.5f;
@@ -39,8 +40,7 @@ void BendOscillatorSimd::process(float deltaTime) {
             }
         }
     }
-
-    bentPhase = simd::clamp(bentPhase, 0.f, 1.f);
+    bentPhase = simd::clamp(bentPhase, 0.f, 1.f); // defensive programming or something
     simd::float_4 bentFrames = simd::floor(bentPhase*2048);
 
     // sin out
@@ -57,9 +57,23 @@ void BendOscillatorSimd::process(float deltaTime) {
 
 
     // square out
-    simd::float_4 frames = simd::floor(phase*2048);
+    simd::float_4 pwmPhase = phase;
+    for(int i = 0; i < 4; i++) {   
+        float currentPhase = phase[i];
+        float pwmAmount = pwm[i];
+        if(currentPhase < pwmAmount) {
+            float percentageThrough = currentPhase / pwmAmount;
+            pwmPhase[i] = percentageThrough * 0.5;
+        } else {
+            float percentageThrough = (currentPhase - pwmAmount) / (1 - pwmAmount);
+            pwmPhase[i] = 0.5 + (percentageThrough * 0.5);
+        }
+    }
+
+    pwmPhase = simd::clamp(pwmPhase, 0.f, 1.f);
+    simd::float_4 pwmFrames = simd::floor(pwmPhase*2048);
     for(int i = 0; i < channels; i++) {
-        squareOut[i] = squareTable[(int)frames[i]];
+        squareOut[i] = squareTable[(int)pwmFrames[i]];
     }
     squareOut = squareOut * amplitude;
 
