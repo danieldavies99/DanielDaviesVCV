@@ -44,21 +44,34 @@ void BendOscillatorSimd::process(float deltaTime) {
     bentPhase = simd::clamp(bentPhase, 0.f, 1.f);
     simd::float_4 bentFrames = simd::floor(bentPhase*2048);
 
+    // sin out
     sinOut[0] = sinTable[(int)bentFrames[0]];
     sinOut[1] = sinTable[(int)bentFrames[1]];
     sinOut[2] = sinTable[(int)bentFrames[2]];
     sinOut[3] = sinTable[(int)bentFrames[3]];
 
+    // tri out
     triOut[0] = triTable[(int)bentFrames[0]];
     triOut[1] = triTable[(int)bentFrames[1]];
     triOut[2] = triTable[(int)bentFrames[2]];
     triOut[3] = triTable[(int)bentFrames[3]];
 
+    // square out
     simd::float_4 frames = simd::floor(phase*2048);
     squareOut[0] = squareTable[(int)frames[0]];
     squareOut[1] = squareTable[(int)frames[1]];
     squareOut[2] = squareTable[(int)frames[2]];
     squareOut[3] = squareTable[(int)frames[3]];
+
+    noiseOut[0] = generateNoise();
+    noiseOut[1] = generateNoise();
+    noiseOut[2] = generateNoise();
+    noiseOut[3] = generateNoise();
+}
+
+float BendOscillatorSimd::generateNoise() {
+    float random = random::uniform();
+    return random*2.f - 1.f;
 }
 
 void BendOscillatorSimd::generateSinTable() {

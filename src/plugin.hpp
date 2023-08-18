@@ -369,4 +369,6 @@ struct BendOscillatorSimd {
 	void generateSinTable();
 	void generateTriTable();
 	void generateSquareTable();
+
+	float generateNoise();
 };
