@@ -63,6 +63,7 @@ void BendOscillatorSimd::process(float deltaTime) {
     squareOut[2] = squareTable[(int)frames[2]];
     squareOut[3] = squareTable[(int)frames[3]];
 
+    // noise out
     noiseOut[0] = generateNoise();
     noiseOut[1] = generateNoise();
     noiseOut[2] = generateNoise();
