@@ -9,7 +9,7 @@ https://github.com/danieldavies99/sequel/blob/master/manual/daniel_davies_modula
 The manual is released under the GPL3-or-later license.
 
 
-![All modules](https://i.imgur.com/aRMtW7k.png)
+![All modules](https://i.imgur.com/eLXMIcL.png)
 
 # Sequel 8
 Sequel 8 is a 3 row 8 step sequencer for VCV Rack 2.
@@ -20,6 +20,11 @@ Sequel 8 is a 3 row 8 step sequencer for VCV Rack 2.
 Sequel 16 is a 3 row 16 step sequencer for VCV Rack 2.
 
 ![Sequel 16](https://i.imgur.com/ny7gton.png)
+
+# Sequel Save
+Sequel save is a save state expander module for Sequel 8 & Sequel 16.
+
+![Sequel Save](https://i.imgur.com/VmRsBHC.png)
 
 # Quantify
 Quantify is a 3 row quantizer with attenuverted inputs + nudge and transpose controls for VCV Rack 2.
