@@ -344,6 +344,8 @@ struct BendOscillatorSimd {
 
 	BendOscillatorSimd() {
 		generateSinTable();
+		generateTriTable();
+		generateSquareTable();
 	}
 
 	float bendParam = 0.5;
@@ -361,6 +363,10 @@ struct BendOscillatorSimd {
 	void process(float deltaTime);
 
 	float sinTable[2048];
+	float triTable[2048];
+	float squareTable[2048];
 	
 	void generateSinTable();
+	void generateTriTable();
+	void generateSquareTable();
 };
