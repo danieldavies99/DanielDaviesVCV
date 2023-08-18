@@ -9,8 +9,6 @@ void BendOscillatorSimd::process(float deltaTime) {
     // wrap phase
     phase -= simd::floor(phase);
 
-    float bendAmount = bendParam / 2;
-
     // phase modulation (bend)
     // given input 0 -> 1
     // will output a skewed 0 -> 1
@@ -21,6 +19,7 @@ void BendOscillatorSimd::process(float deltaTime) {
     const float constant1 = 1.f;
     for(int i = 0; i < 4; i++) {   
         float currentPhase = phase[i];
+        float bendAmount = bend[i] / 2;
         
         if(currentPhase <= constant05) {
             if(currentPhase <= bendAmount) {
@@ -45,29 +44,30 @@ void BendOscillatorSimd::process(float deltaTime) {
     simd::float_4 bentFrames = simd::floor(bentPhase*2048);
 
     // sin out
-    sinOut[0] = sinTable[(int)bentFrames[0]];
-    sinOut[1] = sinTable[(int)bentFrames[1]];
-    sinOut[2] = sinTable[(int)bentFrames[2]];
-    sinOut[3] = sinTable[(int)bentFrames[3]];
+    for(int i = 0; i < channels; i++) {
+        sinOut[i] = sinTable[(int)bentFrames[i]];
+    }
+    sinOut = sinOut * amplitude;
 
     // tri out
-    triOut[0] = triTable[(int)bentFrames[0]];
-    triOut[1] = triTable[(int)bentFrames[1]];
-    triOut[2] = triTable[(int)bentFrames[2]];
-    triOut[3] = triTable[(int)bentFrames[3]];
+    for(int i = 0; i < channels; i++) {
+        triOut[i] = triTable[(int)bentFrames[i]];
+    }
+    triOut = triOut * amplitude;
+
 
     // square out
     simd::float_4 frames = simd::floor(phase*2048);
-    squareOut[0] = squareTable[(int)frames[0]];
-    squareOut[1] = squareTable[(int)frames[1]];
-    squareOut[2] = squareTable[(int)frames[2]];
-    squareOut[3] = squareTable[(int)frames[3]];
+    for(int i = 0; i < channels; i++) {
+        squareOut[i] = squareTable[(int)frames[i]];
+    }
+    squareOut = squareOut * amplitude;
 
     // noise out
-    noiseOut[0] = generateNoise();
-    noiseOut[1] = generateNoise();
-    noiseOut[2] = generateNoise();
-    noiseOut[3] = generateNoise();
+    for(int i = 0; i < channels; i++) {
+        noiseOut[i] = generateNoise();
+    }
+    noiseOut = noiseOut * amplitude;
 }
 
 float BendOscillatorSimd::generateNoise() {

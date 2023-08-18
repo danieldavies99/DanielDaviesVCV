@@ -44,7 +44,7 @@ struct Bend : Module {
 		configParam(KNOB_FREQUENCY_MODULATION_PARAM, -1.f, 1.f, 0.f, "Frequency modulation");
 		configParam(KNOB_SHIFT_MODULATION_PARAM, -1.f, 1.f, 0.f, "Bend modulation");
 		configParam(KNOB_PORTAMENTO_PARAM, 0.2f, 1.f, 0.2f, "Bend time");
-		configParam(KNOB_AMPLITUDE_PARAM, 0.f, 5.f, 5.f, "Amplitude");
+		configParam(KNOB_AMPLITUDE_PARAM, 0.f, 1.f, 1.f, "Amplitude");
 		configParam(KNOB_AMPLITUDE_MODULATION_PARAM, -1.f, 1.f, 0.f, "Amplitude modulation");
 		configInput(PITCH_IN_INPUT, "Pitch v/oct");
 		configInput(SHIFT_IN_INPUT, "Bend modulation");
@@ -56,48 +56,10 @@ struct Bend : Module {
 		configOutput(SIN_OUT_OUTPUT, "Sine");
 		configOutput(TRIANGLE_OUT_OUTPUT, "Tri");
 		configOutput(NOISE_OUT_OUTPUT, "Noise");
-
-		// for(int i = 0; i < 16; i++) {
-		// 	oscillators[i].frequencyControl = &frequencyControl;
-		// 	oscillators[i].portamentoVal = &portamentoVal;
-		// 	// oscillators[i].frequencyModulationIn = &frequencyModulationIn;
-		// 	oscillators[i].frequencyModulationMod = &frequencyModulationMod;
-
-		// 	// oscillators[i].syncIn = &syncIn;
-
-		// 	oscillators[i].shiftControl = &shiftControl;
-		// 	// oscillators[i].shiftIn = &shiftIn;
-		// 	oscillators[i].shiftMod = &shiftMod;
-
-		// 	oscillators[i].amplitudeControl = &amplitudeControl;
-		// 	// oscillators[i].amplitudeIn = &amplitudeIn;
-		// 	oscillators[i].amplitudeMod = &amplitudeMod;
-
-		// 	oscillators[i].pulseWidthControl = &pulseWidthControl;
-		// 	// oscillators[i].pulseWidthIn = &pulseWidthIn;
-		// 	oscillators[i].pulseWidthMod = &pulseWidthMod;
-		// }
 	}
 
 	float frequencyControl = 0.f;
 	float portamentoVal = 0.f;
-
-	// float frequencyModulationIn = 0.f;
-	float frequencyModulationMod = 0.f;
-
-	// float syncIn = 0.f;
-
-	float shiftControl = 0.f;
-	// float shiftIn = 0.f;
-	float shiftMod = 0.f;
-
-	float amplitudeControl = 0.f;
-	// float amplitudeIn = 0.f;
-	float amplitudeMod = 0.f;
-
-	float pulseWidthControl = 0.f;
-	// float pulseWidthIn = 0.f;
-	float pulseWidthMod = 0.f;
 
 
 	int channels = 0;
@@ -105,29 +67,36 @@ struct Bend : Module {
 	BendOscillatorSimd oscillators[4];
 
 	void process(const ProcessArgs& args) override {
-		frequencyControl = params[KNOB_COARSE_PARAM].getValue();
-		portamentoVal = params[KNOB_PORTAMENTO_PARAM].getValue();
+		float frequencyControl = params[KNOB_COARSE_PARAM].getValue();
+		float portamentoVal = params[KNOB_PORTAMENTO_PARAM].getValue();
 
-		frequencyModulationMod = params[KNOB_FREQUENCY_MODULATION_PARAM].getValue();
+		float fmMod = params[KNOB_FREQUENCY_MODULATION_PARAM].getValue();
 
-		shiftControl = params[KNOB_SHIFT_PARAM].getValue();
-		shiftMod = params[KNOB_SHIFT_MODULATION_PARAM].getValue();
+		float bendControl = params[KNOB_SHIFT_PARAM].getValue();
+		float bendMod = params[KNOB_SHIFT_MODULATION_PARAM].getValue();
 
-		amplitudeControl = params[KNOB_AMPLITUDE_PARAM].getValue();;
-		amplitudeMod = params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
+		float amplitudeControl = params[KNOB_AMPLITUDE_PARAM].getValue();;
+		float amMod = params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
 
-		pulseWidthControl = params[KNOB_PULSE_WIDTH_PARAM].getValue();;
-		pulseWidthMod = params[KNOB_PULSE_WIDTH_MODULATION_PARAM].getValue();
+		float pulseWidthControl = params[KNOB_PULSE_WIDTH_PARAM].getValue();;
+		float pulseWidthMod = params[KNOB_PULSE_WIDTH_MODULATION_PARAM].getValue();
 
 		int channels = std::max(inputs[PITCH_IN_INPUT].getChannels(), 1);
 		for (int c = 0; c < channels; c += 4) {
 			auto& oscillator = oscillators[c / 4];
-			oscillator.bendParam = shiftControl;
+
+			oscillator.amplitude = amplitudeControl + ((inputs[AMPLITUDE_MODULATION_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) / 5) * amMod);
+			oscillator.amplitude = simd::clamp(oscillator.amplitude, 0.f, 1.f);
+
+			oscillator.bend = bendControl + ((inputs[SHIFT_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) / 5) * bendMod);
+			oscillator.bend = simd::clamp(oscillator.bend, 0.f, 1.f);
+	
 			oscillator.channels = std::min(channels - c, 4);
 
 			simd::float_4 pitch = frequencyControl + inputs[PITCH_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c);
 			simd::float_4 freq = dsp::FREQ_C4 * dsp::exp2_taylor5(pitch);
-
+			freq += dsp::FREQ_C4 * inputs[FREQUENCY_MODULATION_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) * fmMod;
+		
 			freq = clamp(freq, 0.f, args.sampleRate / 2.f);
 			oscillator.freq = freq;
 

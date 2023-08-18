@@ -348,7 +348,8 @@ struct BendOscillatorSimd {
 		generateSquareTable();
 	}
 
-	float bendParam = 0.5;
+	simd::float_4 bend = 0.5;
+	simd::float_4 amplitude = 1.f;
 
 	simd::float_4 phase = 0.f;
 	simd::float_4 freq = 0.f;
