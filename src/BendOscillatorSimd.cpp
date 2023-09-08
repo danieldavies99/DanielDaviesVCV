@@ -14,30 +14,15 @@ void BendOscillatorSimd::process(float deltaTime) {
     // will output a skewed 0 -> 1
     // can this be done better with simd maths? probably
     simd::float_4 bentPhase = phase;
-    const float constant025 = 0.25f;
-    const float constant05 = 0.5f;
-    const float constant075 = 0.75f;
-    const float constant1 = 1.f;
     for(int i = 0; i < 4; i++) {   
         float currentPhase = phase[i];
-        float bendAmount = bend[i] / 2;
-        
-        if(currentPhase <= constant05) {
-            if(currentPhase <= bendAmount) {
-                float percentageToBend = currentPhase / bendAmount;
-                bentPhase[i] = constant025 * percentageToBend;
-            } else { 
-                float percentageToHalfWayFromBend = (currentPhase - bendAmount) / (constant05 - bendAmount);
-                bentPhase[i] = constant025+(constant025*percentageToHalfWayFromBend);
-            }
-        }  else {
-            if(currentPhase >= constant1 - bendAmount) {
-                float percentageToEnd = (currentPhase - (1-bendAmount)) / bendAmount;
-                bentPhase[i] = constant075 + constant025 * percentageToEnd;
-            } else {
-                float percentageToPeak = (currentPhase - constant05) / (constant1 - bendAmount - constant05);
-                bentPhase[i] = constant05+(constant025*percentageToPeak);
-            }
+        float bendAmount = bend[i];
+        if(currentPhase < bendAmount) {
+            float percentageThrough = currentPhase / bendAmount;
+            bentPhase[i] = percentageThrough * 0.5;
+        } else {
+            float percentageThrough = (currentPhase - bendAmount) / (1 - bendAmount);
+            bentPhase[i] = 0.5 + (percentageThrough * 0.5);
         }
     }
     bentPhase = simd::clamp(bentPhase, 0.f, 1.f); // defensive programming or something
@@ -57,23 +42,8 @@ void BendOscillatorSimd::process(float deltaTime) {
 
 
     // square out
-    simd::float_4 pwmPhase = phase;
-    for(int i = 0; i < 4; i++) {   
-        float currentPhase = phase[i];
-        float pwmAmount = pwm[i];
-        if(currentPhase < pwmAmount) {
-            float percentageThrough = currentPhase / pwmAmount;
-            pwmPhase[i] = percentageThrough * 0.5;
-        } else {
-            float percentageThrough = (currentPhase - pwmAmount) / (1 - pwmAmount);
-            pwmPhase[i] = 0.5 + (percentageThrough * 0.5);
-        }
-    }
-
-    pwmPhase = simd::clamp(pwmPhase, 0.f, 1.f);
-    simd::float_4 pwmFrames = simd::floor(pwmPhase*2048);
     for(int i = 0; i < channels; i++) {
-        squareOut[i] = squareTable[(int)pwmFrames[i]];
+        squareOut[i] = squareTable[(int)bentFrames[i]];
     }
     squareOut = squareOut * amplitude;
 
@@ -91,16 +61,18 @@ float BendOscillatorSimd::generateNoise() {
 
 void BendOscillatorSimd::generateSinTable() {
     const int resolution = 2048;
+    const float phaseShift = -0.25;
+
     // M_PI
     float stepSize = (2*M_PI) / resolution;
     for (int i = 0; i < resolution; i++) {
-        sinTable[i] = std::sin(i*stepSize);
+        sinTable[i] = std::sin(i*stepSize + (2*M_PI*phaseShift));
     }
 }
 
 void BendOscillatorSimd::generateTriTable() {
     const int resolution = 2048;
-    const float phaseShift = 0.25;
+    const float phaseShift = 0.0;
 
     for (int i = 0; i < resolution; i++) {
         float normalizedIndex = static_cast<float>(i) / (resolution - 1);

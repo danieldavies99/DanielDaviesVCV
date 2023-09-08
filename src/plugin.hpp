@@ -300,46 +300,6 @@ struct SequelSaveInterface {
 	bool isDirty = false;
 };
 
-struct BendOscillator {
-	float phase = 0.f;
-	float lastPitch = 0.f;
-	int lastFrame = 0;
-	bool lastSyncInputWasNegative = false;
-
-	int channels = 0;
-
-	float sinOut = 0.0f;
-	float squareOut = 0.0f;
-	float triOut = 0.0f;
-	float noiseOut = 0.0f;
-
-	
-	float *portamentoVal;
-
-	float *frequencyModulationMod;
-	float *frequencyControl;
-
-	float *shiftControl;
-	float *shiftMod;
-
-	float *amplitudeControl;
-	float *amplitudeMod;
-
-	float *pulseWidthControl;
-	float *pulseWidthMod;
-
-	void process(
-		float sampleTime,
-		float pitchInput,
-		float syncIn,
-		float frequencyModulationIn,
-		float shiftIn,
-		float amplitudeIn,
-		float pulseWidthIn
-	);
-};
-
-
 struct BendOscillatorSimd {
 
 	BendOscillatorSimd() {
@@ -350,7 +310,6 @@ struct BendOscillatorSimd {
 
 	simd::float_4 bend = 0.5f;
 	simd::float_4 amplitude = 1.f;
-	simd::float_4 pwm = 0.5f;
 	simd::float_4 phase = 0.f;
 	simd::float_4 freq = 0.f;
 
