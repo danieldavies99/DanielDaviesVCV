@@ -336,3 +336,14 @@ struct BendOscillatorSimd {
 
 	float generateNoise();
 };
+
+struct GlideCalculator {
+	bool initialized = false;
+
+	simd::float_4 targetFreq = 0.f;
+	simd::float_4 currentFreq = 0.f;
+	
+	float glideAmount = 0.f; // should range from 0 - 1
+
+	void process(float deltaTime);
+};

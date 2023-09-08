@@ -4,7 +4,7 @@ using namespace rack;
 struct Bend : Module {
 	enum ParamId {
 		KNOB_COARSE_PARAM,
-		KNOB_PORTAMENTO_PARAM,
+		KNOB_GLIDE_PARAM,
 		KNOB_BEND_PARAM,
 		KNOB_BEND_MODULATION_PARAM,
 		KNOB_FREQUENCY_MODULATION_PARAM,
@@ -41,7 +41,7 @@ struct Bend : Module {
 		configParam(KNOB_COARSE_PARAM, -4.f, 4.f, 0.f, "Pitch");
 		configParam(KNOB_FREQUENCY_MODULATION_PARAM, -1.f, 1.f, 0.f, "Frequency modulation");
 		configParam(KNOB_BEND_MODULATION_PARAM, -1.f, 1.f, 0.f, "Bend modulation");
-		configParam(KNOB_PORTAMENTO_PARAM, 0.2f, 1.f, 0.2f, "Bend time");
+		configParam(KNOB_GLIDE_PARAM, 0.0f, 1.f, 0.2f, "Bend time");
 		configParam(KNOB_AMPLITUDE_PARAM, 0.f, 1.f, 1.f, "Amplitude");
 		configParam(KNOB_AMPLITUDE_MODULATION_PARAM, -1.f, 1.f, 0.f, "Amplitude modulation");
 		configInput(PITCH_IN_INPUT, "Pitch v/oct");
@@ -56,10 +56,11 @@ struct Bend : Module {
 	}
 
 	BendOscillatorSimd oscillators[4];
+	GlideCalculator GlideCalculators[4];
 
 	void process(const ProcessArgs& args) override {
 		float frequencyControl = params[KNOB_COARSE_PARAM].getValue();
-		float portamentoVal = params[KNOB_PORTAMENTO_PARAM].getValue();
+		float glideControl = params[KNOB_GLIDE_PARAM].getValue();
 
 		float fmMod = params[KNOB_FREQUENCY_MODULATION_PARAM].getValue();
 
@@ -71,10 +72,10 @@ struct Bend : Module {
 
 		bool syncEnabled = inputs[SYNC_IN_INPUT].isConnected();
 
-
 		int channels = std::max(inputs[PITCH_IN_INPUT].getChannels(), 1);
 		for (int c = 0; c < channels; c += 4) {
 			auto& oscillator = oscillators[c / 4];
+			auto& glideCalculator = GlideCalculators[c / 4];
 
 			oscillator.amplitude = amplitudeControl + ((inputs[AMPLITUDE_MODULATION_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) / 5) * amMod);
 			oscillator.amplitude = simd::clamp(oscillator.amplitude, 0.f, 1.f);
@@ -89,8 +90,16 @@ struct Bend : Module {
 
 			simd::float_4 pitch = frequencyControl + inputs[PITCH_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c);
 			simd::float_4 freq = dsp::FREQ_C4 * dsp::exp2_taylor5(pitch);
+			if(!glideCalculator.initialized) {
+				glideCalculator.currentFreq = freq;
+				glideCalculator.initialized = true;
+			}
+			glideCalculator.targetFreq = freq;
+			glideCalculator.glideAmount = glideControl;
+			glideCalculator.process(args.sampleTime);
+			freq = glideCalculator.currentFreq;
+
 			freq += dsp::FREQ_C4 * inputs[FREQUENCY_MODULATION_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) * fmMod;
-		
 			freq = clamp(freq, 0.f, args.sampleRate / 2.f);
 			oscillator.freq = freq;
 			oscillator.process(args.sampleTime);
@@ -123,7 +132,7 @@ struct BendWidget : ModuleWidget {
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addParam(createParamCentered<RedSliderMedium>(mm2px(Vec(47.895, 14.38)), module, Bend::KNOB_PORTAMENTO_PARAM));
+		addParam(createParamCentered<RedSliderMedium>(mm2px(Vec(47.895, 14.38)), module, Bend::KNOB_GLIDE_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.026, 32.229)), module, Bend::KNOB_COARSE_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(47.895, 39.713)), module, Bend::KNOB_AMPLITUDE_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(18.002, 41.613)), module, Bend::KNOB_BEND_PARAM));
