@@ -6,6 +6,7 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/../**"
             ],
+            "configurationProvider": "ms-vscode.cpptools-tools",
             "defines": [
                 "_DEBUG",
                 "UNICODE",
