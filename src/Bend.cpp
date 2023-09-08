@@ -69,6 +69,9 @@ struct Bend : Module {
 		float amplitudeControl = params[KNOB_AMPLITUDE_PARAM].getValue();;
 		float amMod = params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
 
+		bool syncEnabled = inputs[SYNC_IN_INPUT].isConnected();
+
+
 		int channels = std::max(inputs[PITCH_IN_INPUT].getChannels(), 1);
 		for (int c = 0; c < channels; c += 4) {
 			auto& oscillator = oscillators[c / 4];
@@ -80,6 +83,9 @@ struct Bend : Module {
 			oscillator.bend = simd::clamp(oscillator.bend, 0.02f, 0.98f);
 
 			oscillator.channels = std::min(channels - c, 4);
+
+			oscillator.syncEnabled = syncEnabled;
+			oscillator.sync = inputs[SYNC_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c);
 
 			simd::float_4 pitch = frequencyControl + inputs[PITCH_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c);
 			simd::float_4 freq = dsp::FREQ_C4 * dsp::exp2_taylor5(pitch);

@@ -313,6 +313,10 @@ struct BendOscillatorSimd {
 	simd::float_4 phase = 0.f;
 	simd::float_4 freq = 0.f;
 
+	bool syncEnabled = false;
+	simd::float_4 sync = 0.f;
+	simd::float_4 lastSync = 0.f;
+
 	int channels = 0;
 
 	simd::float_4 sinOut = 0.f;
