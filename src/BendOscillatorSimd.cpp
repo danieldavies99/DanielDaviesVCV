@@ -9,12 +9,8 @@ void BendOscillatorSimd::process(float deltaTime) {
 
     // sync
     if(syncEnabled) {
-        simd::float_4 crossingZero = 0.f;
-        for(int i = 0; i < 4; i++) {
-            if(sync[i] > 0.f && lastSync[i] < 0.f) {
-                crossingZero[i] = 1.f;
-            }
-        }
+        simd::float_4 crossingZero = (sync > 0.f);
+        crossingZero &= (lastSync < 0.f);
         phase = simd::ifelse(crossingZero, 0.f, phase);
         lastSync = sync;    
     }
