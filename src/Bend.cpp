@@ -91,8 +91,7 @@ struct Bend : Module {
 			simd::float_4 pitch = frequencyControl + inputs[PITCH_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c);
 			simd::float_4 freq = dsp::FREQ_C4 * dsp::exp2_taylor5(pitch);
 			if(!glideCalculator.initialized) {
-				glideCalculator.currentFreq = freq;
-				glideCalculator.initialized = true;
+				glideCalculator.initialize(freq);
 			}
 			glideCalculator.targetFreq = freq;
 			glideCalculator.glideAmount = glideControl;

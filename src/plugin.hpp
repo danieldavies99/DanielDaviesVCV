@@ -345,5 +345,6 @@ struct GlideCalculator {
 	
 	float glideAmount = 0.f; // should range from 0 - 1
 
+	void initialize(simd::float_4 initialFreq);
 	void process(float deltaTime);
 };
