@@ -33,7 +33,6 @@ struct Bend : Module {
 		LIGHTS_LEN
 	};
 
-
 	Bend() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(KNOB_BEND_PARAM, 0.f, 1.f, 0.5f, "Bend");
@@ -56,7 +55,7 @@ struct Bend : Module {
 	}
 
 	BendOscillatorSimd oscillators[4];
-	GlideCalculator GlideCalculators[4];
+	GlideCalculator glideCalculators[4];
 
 	void process(const ProcessArgs& args) override {
 		float frequencyControl = params[KNOB_COARSE_PARAM].getValue();
@@ -71,11 +70,20 @@ struct Bend : Module {
 		float amMod = params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
 
 		bool syncEnabled = inputs[SYNC_IN_INPUT].isConnected();
+		bool lfoEnabled = params[SWITCH_LFO_PARAM].getValue() > 0.f;
 
 		int channels = std::max(inputs[PITCH_IN_INPUT].getChannels(), 1);
+
+		// handle LFO indicator light
+		if(lfoEnabled) {
+			lights[LIGHT_LFO_LIGHT].setBrightness(1.f);
+		} else {
+			lights[LIGHT_LFO_LIGHT].setBrightness(0.f);
+		}
+
 		for (int c = 0; c < channels; c += 4) {
 			auto& oscillator = oscillators[c / 4];
-			auto& glideCalculator = GlideCalculators[c / 4];
+			auto& glideCalculator = glideCalculators[c / 4];
 
 			oscillator.amplitude = amplitudeControl + ((inputs[AMPLITUDE_MODULATION_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) / 5) * amMod);
 			oscillator.amplitude = simd::clamp(oscillator.amplitude, 0.f, 1.f);
@@ -88,17 +96,32 @@ struct Bend : Module {
 			oscillator.syncEnabled = syncEnabled;
 			oscillator.sync = inputs[SYNC_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c);
 
-			simd::float_4 pitch = frequencyControl + inputs[PITCH_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c);
-			simd::float_4 freq = dsp::FREQ_C4 * dsp::exp2_taylor5(pitch);
-			if(!glideCalculator.initialized) {
-				glideCalculator.initialize(freq);
-			}
-			glideCalculator.targetFreq = freq;
-			glideCalculator.glideAmount = glideControl;
-			glideCalculator.process(args.sampleTime);
-			freq = glideCalculator.currentFreq;
+			oscillator.lfoModeEnabled = lfoEnabled;
 
-			freq += dsp::FREQ_C4 * inputs[FREQUENCY_MODULATION_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) * fmMod;
+			simd::float_4 pitch = 0.f;
+			simd::float_4 freq = 0.f;
+			if(!lfoEnabled) {
+				pitch = frequencyControl + inputs[PITCH_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c);
+				freq = dsp::FREQ_C4 * dsp::exp2_taylor5(pitch);
+			} else {
+				pitch = frequencyControl + (inputs[FREQUENCY_MODULATION_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) * fmMod);
+				freq = dsp::exp2_taylor5(pitch) * 2.f;
+			}
+
+			// apply glide
+			// should glide exist on lfo ??
+			if(!lfoEnabled) {
+				if(!glideCalculator.initialized) {
+					glideCalculator.initialize(freq);
+				}
+				glideCalculator.targetFreq = freq;
+				glideCalculator.glideAmount = glideControl;
+				glideCalculator.process(args.sampleTime);
+				freq = glideCalculator.currentFreq;
+			}
+			if(!lfoEnabled) {
+				freq += dsp::FREQ_C4 * inputs[FREQUENCY_MODULATION_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) * fmMod;
+			}
 			freq = clamp(freq, 0.f, args.sampleRate / 2.f);
 			oscillator.freq = freq;
 			oscillator.process(args.sampleTime);
