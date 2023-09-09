@@ -41,20 +41,31 @@ void BendOscillatorSimd::process(float deltaTime) {
     for(int i = 0; i < channels; i++) {
         sinOut[i] = sinTable[(int)bentFrames[i]];
     }
-    sinOut = sinOut * amplitude;
+    if(lfoModeEnabled) {
+        sinOut = (sinOut + 1) * amplitude;
+    } else {
+        sinOut = sinOut * amplitude;
+    }
 
     // tri out
     for(int i = 0; i < channels; i++) {
         triOut[i] = triTable[(int)bentFrames[i]];
     }
-    triOut = triOut * amplitude;
-
+    if(lfoModeEnabled) {
+        triOut = (triOut + 1) * amplitude;
+    } else {
+        triOut = triOut * amplitude;
+    }
 
     // square out
     for(int i = 0; i < channels; i++) {
         squareOut[i] = squareTable[(int)bentFrames[i]];
     }
-    squareOut = squareOut * amplitude;
+        if(lfoModeEnabled) {
+        squareOut = (squareOut + 1) * amplitude;
+    } else {
+        squareOut = squareOut * amplitude;
+    }
 
     // noise out
     for(int i = 0; i < channels; i++) {
