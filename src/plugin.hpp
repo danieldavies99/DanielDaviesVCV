@@ -296,14 +296,47 @@ struct SequelSaveInterface {
 	bool isDirty = false;
 };
 
-struct BendOscillatorSimd {
+struct BendWavetable {
+	int resolution = 2048;
+	float phaseShift = 0.f;
+	float table[2048];
 
-	BendOscillatorSimd() {
-		generateSinTable();
-		generateTriTable();
-		generateSquareTable();
+	float getFrame(int frameNum);
+	virtual void generate() {};
+};
+
+struct BendTriTable : BendWavetable {
+	BendTriTable() {
+		generate();
 	}
+	void generate() override;
+};
 
+struct BendSinTable : BendWavetable {
+	BendSinTable() {
+		phaseShift = -0.25;
+		generate();
+	}
+	void generate() override;
+};
+
+struct BendAnalogSquareTable : BendWavetable {
+	float envelopeFactor;
+	BendAnalogSquareTable() {
+		envelopeFactor = 0.75;
+		generate();
+	}
+	void generate() override;
+};
+
+struct BendPerfectSquareTable : BendWavetable {
+	BendPerfectSquareTable() {
+		generate();
+	}
+	void generate() override;
+};
+
+struct BendOscillatorSimd {
 	simd::float_4 bend = 0.5f;
 	simd::float_4 amplitude = 1.f;
 	simd::float_4 phase = 0.f;
@@ -315,6 +348,10 @@ struct BendOscillatorSimd {
 
 	bool unipolar = false;
 
+	// in LFO mode, we should use a perfect square
+	// instead of the "analog" version
+	bool usePerfectSquare = false;
+
 	int channels = 0;
 
 	simd::float_4 sinOut = 0.f;
@@ -324,13 +361,10 @@ struct BendOscillatorSimd {
 
 	void process(float deltaTime);
 
-	float sinTable[2048];
-	float triTable[2048];
-	float squareTable[2048];
-	
-	void generateSinTable();
-	void generateTriTable();
-	void generateSquareTable();
+	BendSinTable sinTable;
+	BendTriTable triTable;
+	BendAnalogSquareTable analogSquareTable;
+	BendPerfectSquareTable perfectSquareTable;
 
 	float generateNoise();
 };
