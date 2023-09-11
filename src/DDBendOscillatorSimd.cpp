@@ -39,7 +39,7 @@ void BendOscillatorSimd::process(float deltaTime) {
 
     // sin out
     for(int i = 0; i < channels; i++) {
-        sinOut[i] = sinTable[(int)bentFrames[i]];
+        sinOut[i] = sinTable.getFrame((int)bentFrames[i]);
     }
     if(unipolar) {
         sinOut = (sinOut + 1) * amplitude;
@@ -49,7 +49,7 @@ void BendOscillatorSimd::process(float deltaTime) {
 
     // tri out
     for(int i = 0; i < channels; i++) {
-        triOut[i] = triTable[(int)bentFrames[i]];
+        triOut[i] = triTable.getFrame((int)bentFrames[i]);
     }
     if(unipolar) {
         triOut = (triOut + 1) * amplitude;
@@ -58,10 +58,17 @@ void BendOscillatorSimd::process(float deltaTime) {
     }
 
     // square out
-    for(int i = 0; i < channels; i++) {
-        squareOut[i] = squareTable[(int)bentFrames[i]];
+    if(!usePerfectSquare) {
+        for(int i = 0; i < channels; i++) {
+            squareOut[i] = analogSquareTable.getFrame((int)bentFrames[i]);
+        }
+    } else {
+        for(int i = 0; i < channels; i++) {
+            squareOut[i] = perfectSquareTable.getFrame((int)bentFrames[i]);
+        } 
     }
-        if(unipolar) {
+
+    if(unipolar) {
         squareOut = (squareOut + 1) * amplitude;
     } else {
         squareOut = squareOut * amplitude;
@@ -77,66 +84,4 @@ void BendOscillatorSimd::process(float deltaTime) {
 float BendOscillatorSimd::generateNoise() {
     float random = random::uniform();
     return random*2.f - 1.f;
-}
-
-void BendOscillatorSimd::generateSinTable() {
-    const int resolution = 2048;
-    const float phaseShift = -0.25;
-
-    // M_PI
-    float stepSize = (2*M_PI) / resolution;
-    for (int i = 0; i < resolution; i++) {
-        sinTable[i] = std::sin(i*stepSize + (2*M_PI*phaseShift));
-    }
-}
-
-void BendOscillatorSimd::generateTriTable() {
-    const int resolution = 2048;
-    const float phaseShift = 0.0;
-
-    for (int i = 0; i < resolution; i++) {
-        float normalizedIndex = static_cast<float>(i) / (resolution - 1);
-        normalizedIndex = std::fmod(normalizedIndex + phaseShift, 1.0); // Apply phase shift
-        float triangleValue = 2.0 * (0.5 - std::abs(normalizedIndex - 0.5));
-
-        triTable[i] = 2 * (triangleValue - 0.5); // Scale to -1 to 1 range and start at 0
-    }
-}
-
-void BendOscillatorSimd::generateSquareTable() {
-    const int resolution = 2048;
-    const float phaseShift = 0.0;
-    const float envelopeFactor = 0.75;
-
-    // perfect square
-    // for (int i = 0; i < resolution; i++) {
-    //     float normalizedIndex = static_cast<float>(i) / (resolution - 1);
-    //     float phaseAdjustedIndex = normalizedIndex + phaseShift;
-    //     float squareValue = (std::sin(2.0 * M_PI * phaseAdjustedIndex) >= 0.0) ? 1.0 : -1.0;
-
-    //     squareTable[i] = squareValue;
-    // }
-
-    // "analog" square
-    // Pre-calculate the envelope values with reversed effect on the troughs
-    float envelope[resolution];
-    for (int i = 0; i < resolution; i++) {
-        float normalizedIndex = static_cast<float>(i) / (resolution - 1);
-        float envelopeValue = (std::sin(2.0 * M_PI * normalizedIndex) < 0.0) ?
-            std::pow(envelopeFactor, std::cos(2.0 * M_PI * normalizedIndex))
-            : std::pow(envelopeFactor, -std::cos(2.0 * M_PI * normalizedIndex));
-        envelope[i] = envelopeValue;
-    }
-
-    // Generate the square wave using the mixed envelope values
-    for (int i = 0; i < resolution; i++) {
-        float normalizedIndex = static_cast<float>(i) / (resolution - 1);
-        float phaseAdjustedIndex = normalizedIndex + phaseShift;
-        int indexInEnvelope = static_cast<int>(normalizedIndex * (resolution - 1));
-
-        float envelopeValue = envelope[indexInEnvelope];
-        float squareValue = (std::sin(2.0 * M_PI * phaseAdjustedIndex) >= 0.0) ? 1.0 : -1.0;
-
-        squareTable[i] = envelopeValue * squareValue * envelopeFactor;
-    }
 }

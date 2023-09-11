@@ -123,6 +123,7 @@ struct Bend : Module {
 			oscillator.sync = inputs[SYNC_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c);
 
 			oscillator.unipolar = lfoEnabled;
+			oscillator.usePerfectSquare = lfoEnabled;
 
 			simd::float_4 pitch = 0.f;
 			simd::float_4 freq = 0.f;
