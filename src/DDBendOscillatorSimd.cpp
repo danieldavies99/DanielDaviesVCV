@@ -41,7 +41,7 @@ void BendOscillatorSimd::process(float deltaTime) {
     for(int i = 0; i < channels; i++) {
         sinOut[i] = sinTable[(int)bentFrames[i]];
     }
-    if(lfoModeEnabled) {
+    if(unipolar) {
         sinOut = (sinOut + 1) * amplitude;
     } else {
         sinOut = sinOut * amplitude;
@@ -51,7 +51,7 @@ void BendOscillatorSimd::process(float deltaTime) {
     for(int i = 0; i < channels; i++) {
         triOut[i] = triTable[(int)bentFrames[i]];
     }
-    if(lfoModeEnabled) {
+    if(unipolar) {
         triOut = (triOut + 1) * amplitude;
     } else {
         triOut = triOut * amplitude;
@@ -61,7 +61,7 @@ void BendOscillatorSimd::process(float deltaTime) {
     for(int i = 0; i < channels; i++) {
         squareOut[i] = squareTable[(int)bentFrames[i]];
     }
-        if(lfoModeEnabled) {
+        if(unipolar) {
         squareOut = (squareOut + 1) * amplitude;
     } else {
         squareOut = squareOut * amplitude;

@@ -36,8 +36,29 @@ struct Bend : Module {
 	Bend() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(KNOB_BEND_PARAM, 0.f, 1.f, 0.5f, "Bend");
-		configParam(SWITCH_LFO_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(KNOB_COARSE_PARAM, -4.f, 4.f, 0.f, "Pitch");
+		configSwitch(SWITCH_LFO_PARAM, 0.f, 1.f, 0.f, "LFO mode", {"Off", "On"});
+
+		struct FrequencyQuantity : ParamQuantity {
+			float getDisplayValue() override {
+				Bend* module = reinterpret_cast<Bend*>(this->module);
+				if (module->lfoEnabled) {
+					displayBase = 2.f;
+					displayMultiplier = 1.f;
+					minValue = -8.f;
+					maxValue = 10.f;
+					defaultValue = 1.f;
+				}
+				else {
+					displayBase = dsp::FREQ_SEMITONE;
+					displayMultiplier = dsp::FREQ_C4;
+					minValue = -54.f;
+					maxValue = 54.f;
+					defaultValue = 0.f;
+				}
+				return ParamQuantity::getDisplayValue();
+			}
+		};
+		configParam<FrequencyQuantity>(KNOB_COARSE_PARAM, -54.f, 54.f, 0.f, "Frequency", " Hz", dsp::FREQ_SEMITONE, dsp::FREQ_C4);
 		configParam(KNOB_FREQUENCY_MODULATION_PARAM, -1.f, 1.f, 0.f, "Frequency modulation");
 		configParam(KNOB_BEND_MODULATION_PARAM, -1.f, 1.f, 0.f, "Bend modulation");
 		configParam(KNOB_GLIDE_PARAM, 0.0f, 1.f, 0.2f, "Bend time");
@@ -57,8 +78,13 @@ struct Bend : Module {
 	BendOscillatorSimd oscillators[4];
 	GlideCalculator glideCalculators[4];
 
+	bool lfoEnabled = false;
+
 	void process(const ProcessArgs& args) override {
-		float frequencyControl = params[KNOB_COARSE_PARAM].getValue();
+		float frequencyControl = params[KNOB_COARSE_PARAM].getValue() / 12.f;
+		if(lfoEnabled) {
+			frequencyControl = params[KNOB_COARSE_PARAM].getValue() - 1;
+		}
 		float glideControl = params[KNOB_GLIDE_PARAM].getValue();
 
 		float fmMod = params[KNOB_FREQUENCY_MODULATION_PARAM].getValue();
@@ -70,7 +96,7 @@ struct Bend : Module {
 		float amMod = params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
 
 		bool syncEnabled = inputs[SYNC_IN_INPUT].isConnected();
-		bool lfoEnabled = params[SWITCH_LFO_PARAM].getValue() > 0.f;
+		lfoEnabled = params[SWITCH_LFO_PARAM].getValue() > 0.f;
 
 		int channels = std::max(inputs[PITCH_IN_INPUT].getChannels(), 1);
 
@@ -96,7 +122,7 @@ struct Bend : Module {
 			oscillator.syncEnabled = syncEnabled;
 			oscillator.sync = inputs[SYNC_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c);
 
-			oscillator.lfoModeEnabled = lfoEnabled;
+			oscillator.unipolar = lfoEnabled;
 
 			simd::float_4 pitch = 0.f;
 			simd::float_4 freq = 0.f;
@@ -108,9 +134,8 @@ struct Bend : Module {
 				freq = dsp::exp2_taylor5(pitch) * 2.f;
 			}
 
-			// apply glide
-			// should glide exist on lfo ??
 			if(!lfoEnabled) {
+				// apply glide
 				if(!glideCalculator.initialized) {
 					glideCalculator.initialize(freq);
 				}
@@ -118,10 +143,11 @@ struct Bend : Module {
 				glideCalculator.glideAmount = glideControl;
 				glideCalculator.process(args.sampleTime);
 				freq = glideCalculator.currentFreq;
-			}
-			if(!lfoEnabled) {
+
+				// apply FM
 				freq += dsp::FREQ_C4 * inputs[FREQUENCY_MODULATION_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) * fmMod;
 			}
+
 			freq = clamp(freq, 0.f, args.sampleRate / 2.f);
 			oscillator.freq = freq;
 			oscillator.process(args.sampleTime);
