@@ -317,7 +317,7 @@ struct BendOscillatorSimd {
 	simd::float_4 sync = 0.f;
 	simd::float_4 lastSync = 0.f;
 
-	bool lfoModeEnabled = false;
+	bool unipolar = false;
 
 	int channels = 0;
 
