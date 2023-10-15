@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
-   sodipodi:docname="Manual_cover.svg"
+   sodipodi:docname="000_Manual_cover.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -28,13 +28,13 @@
      inkscape:guide-bbox="true"
      inkscape:zoom="0.70710678"
      inkscape:cx="368.40263"
-     inkscape:cy="601.74787"
+     inkscape:cy="488.61079"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
-     inkscape:window-x="-8"
+     inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g526125"
+     inkscape:current-layer="layer3"
      inkscape:snap-global="false">
     <sodipodi:guide
        position="15.025556,294.23757"
@@ -301,7 +301,7 @@
          id="tspan520863-5"
          style="font-weight:normal;font-size:6.35px;fill:#f9fafb;fill-opacity:1;stroke-width:0.264583"
          x="14.981385"
-         y="290.87271">v1.0: Licensed under GPLv3-or-later</tspan><tspan
+         y="290.87271">v2.0: Licensed under GPLv3-or-later</tspan><tspan
          sodipodi:role="line"
          style="font-weight:normal;font-size:6.35px;fill:#f9fafb;fill-opacity:1;stroke-width:0.264583"
          x="14.981385"
