@@ -26,8 +26,8 @@
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:zoom="0.70710678"
-     inkscape:cx="499.21739"
-     inkscape:cy="529.62298"
+     inkscape:cx="499.9245"
+     inkscape:cy="642.76007"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
      inkscape:window-x="1912"
@@ -822,25 +822,25 @@
          transform="translate(-0.15879917)"><tspan
            x="13.032981"
            y="86.661186"
-           id="tspan45990"><tspan
+           id="tspan16005"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan45988">James is a unique step sequencer that allows each of it's 6 rows to be rushed or </tspan></tspan><tspan
+             id="tspan16003">James is a unique step sequencer that allows each of its 6 rows to be rushed or </tspan></tspan><tspan
            x="13.032981"
            y="92.834797"
-           id="tspan45994"><tspan
+           id="tspan16009"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan45992">dragged independently of the other rows. See the below diagram for an </tspan></tspan><tspan
+             id="tspan16007">dragged independently of the other rows. See the below diagram for an </tspan></tspan><tspan
            x="13.032981"
            y="99.008412"
-           id="tspan45998"><tspan
+           id="tspan16013"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan45996">explanation of how the rush/drag feature of James works.
+             id="tspan16011">explanation of how the rush/drag feature of James works.
 </tspan></tspan><tspan
            x="13.032981"
            y="105.18203"
-           id="tspan46002"><tspan
+           id="tspan16017"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan46000">
+             id="tspan16015">
 </tspan></tspan></text>
       <text
          xml:space="preserve"
@@ -851,64 +851,66 @@
          transform="translate(-0.03135011,110.59752)"><tspan
            x="13.032981"
            y="86.661186"
-           id="tspan46006"><tspan
+           id="tspan16021"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan46004">By introducing rush/drag for specific elements of a beat, you can create conflict </tspan></tspan><tspan
+             id="tspan16019">By introducing rush/drag for specific elements of a beat, you can create conflict </tspan></tspan><tspan
            x="13.032981"
            y="92.834797"
-           id="tspan46010"><tspan
+           id="tspan16025"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan46008">with the straight beat.
+             id="tspan16023">with the straight beat.
 </tspan></tspan><tspan
            x="13.032981"
            y="99.008412"
-           id="tspan46014"><tspan
+           id="tspan16029"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan46012">
+             id="tspan16027">
 </tspan></tspan><tspan
            x="13.032981"
            y="105.18203"
-           id="tspan46018"><tspan
+           id="tspan16033"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan46016">
+             id="tspan16031">
 </tspan></tspan><tspan
            x="13.032981"
            y="111.35564"
-           id="tspan46022"><tspan
+           id="tspan16037"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan46020">
+             id="tspan16035">
 </tspan></tspan><tspan
            x="13.032981"
            y="117.52926"
-           id="tspan46030"><tspan
+           id="tspan16045"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan46024">James works by dividing it's clock input </tspan><tspan
+             id="tspan16039">James works by dividing its clock input </tspan><tspan
              style="font-weight:bold;fill:#ed6a5a"
-             id="tspan46026">(A)</tspan><tspan
+             id="tspan16041">(A)</tspan><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan46028"> by 16, and then using the rush/drag </tspan></tspan><tspan
+             id="tspan16043"> by 16, and then using the rush/drag </tspan></tspan><tspan
            x="13.032981"
            y="123.70287"
-           id="tspan46038"><tspan
+           id="tspan16057"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan46032">knobs </tspan><tspan
+             id="tspan16047">knobs </tspan><tspan
              style="font-weight:bold;fill:#ed6a5a"
-             id="tspan46034">(G)</tspan><tspan
+             id="tspan16049">(G)</tspan><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan46036"> to rush/drag each element by up to 15 clocks forward or backwards. For </tspan></tspan><tspan
+             id="tspan16051"> to rush/drag each element by up to 15 clocks. For </tspan><tspan
+             style="-inkscape-font-specification:'Arial Bold';fill:#272932"
+             id="tspan16053">every 16 </tspan><tspan
+             style="-inkscape-font-specification:'Arial Bold';fill:#272932"
+             id="tspan16055">clock inputs </tspan></tspan><tspan
            x="13.032981"
            y="129.87648"
-           id="tspan46044"><tspan
+           id="tspan16061"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan46040">every 16 </tspan><tspan
-             style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan46042">clock inputs sent to James, the currently active step will advance by 1. 
+             id="tspan16059">sent to James, the currently active step will advance by 1. 
 </tspan></tspan><tspan
            x="13.032981"
            y="136.05009"
-           id="tspan46048"><tspan
+           id="tspan16065"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan46046">
+             id="tspan16063">
 </tspan></tspan></text>
       <g
          id="g47152"
