@@ -26,14 +26,14 @@
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:zoom="0.70710678"
-     inkscape:cx="499.9245"
-     inkscape:cy="642.76007"
+     inkscape:cx="120.20815"
+     inkscape:cy="427.7996"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
      inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g181378-1-6"
+     inkscape:current-layer="layer1"
      inkscape:snap-global="false">
     <sodipodi:guide
        position="15.025556,294.23757"
@@ -111,8 +111,8 @@
        id="rect10864"
        width="210"
        height="297"
-       x="0"
-       y="0" />
+       x="0.131807"
+       y="0.131807" />
     <text
        xml:space="preserve"
        style="font-size:4.93889px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;display:inline;fill:#9bc1bc;fill-opacity:1;stroke-width:0.264583"
@@ -822,25 +822,25 @@
          transform="translate(-0.15879917)"><tspan
            x="13.032981"
            y="86.661186"
-           id="tspan16005"><tspan
+           id="tspan1578"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16003">James is a unique step sequencer that allows each of its 6 rows to be rushed or </tspan></tspan><tspan
+             id="tspan1576">James is a unique step sequencer that allows each of its 6 rows to be rushed or </tspan></tspan><tspan
            x="13.032981"
            y="92.834797"
-           id="tspan16009"><tspan
+           id="tspan1582"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16007">dragged independently of the other rows. See the below diagram for an </tspan></tspan><tspan
+             id="tspan1580">dragged independently of the other rows. See the below diagram for an </tspan></tspan><tspan
            x="13.032981"
            y="99.008412"
-           id="tspan16013"><tspan
+           id="tspan1586"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16011">explanation of how the rush/drag feature of James works.
+             id="tspan1584">explanation of how the rush/drag feature of James works.
 </tspan></tspan><tspan
            x="13.032981"
            y="105.18203"
-           id="tspan16017"><tspan
+           id="tspan1590"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16015">
+             id="tspan1588">
 </tspan></tspan></text>
       <text
          xml:space="preserve"
@@ -851,66 +851,66 @@
          transform="translate(-0.03135011,110.59752)"><tspan
            x="13.032981"
            y="86.661186"
-           id="tspan16021"><tspan
+           id="tspan1594"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16019">By introducing rush/drag for specific elements of a beat, you can create conflict </tspan></tspan><tspan
+             id="tspan1592">By introducing rush/drag for specific elements of a beat, you can create conflict </tspan></tspan><tspan
            x="13.032981"
            y="92.834797"
-           id="tspan16025"><tspan
+           id="tspan1598"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16023">with the straight beat.
+             id="tspan1596">with the straight beat.
 </tspan></tspan><tspan
            x="13.032981"
            y="99.008412"
-           id="tspan16029"><tspan
+           id="tspan1602"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16027">
+             id="tspan1600">
 </tspan></tspan><tspan
            x="13.032981"
            y="105.18203"
-           id="tspan16033"><tspan
+           id="tspan1606"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16031">
+             id="tspan1604">
 </tspan></tspan><tspan
            x="13.032981"
            y="111.35564"
-           id="tspan16037"><tspan
+           id="tspan1610"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16035">
+             id="tspan1608">
 </tspan></tspan><tspan
            x="13.032981"
            y="117.52926"
-           id="tspan16045"><tspan
+           id="tspan1618"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16039">James works by dividing its clock input </tspan><tspan
+             id="tspan1612">James works by dividing its clock input </tspan><tspan
              style="font-weight:bold;fill:#ed6a5a"
-             id="tspan16041">(A)</tspan><tspan
+             id="tspan1614">(A)</tspan><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16043"> by 16, and then using the rush/drag </tspan></tspan><tspan
+             id="tspan1616"> by 16, and then using the rush/drag </tspan></tspan><tspan
            x="13.032981"
            y="123.70287"
-           id="tspan16057"><tspan
+           id="tspan1630"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16047">knobs </tspan><tspan
+             id="tspan1620">knobs </tspan><tspan
              style="font-weight:bold;fill:#ed6a5a"
-             id="tspan16049">(G)</tspan><tspan
+             id="tspan1622">(G)</tspan><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16051"> to rush/drag each element by up to 15 clocks. For </tspan><tspan
+             id="tspan1624"> to rush/drag each element by up to 15 clocks. For </tspan><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16053">every 16 </tspan><tspan
+             id="tspan1626">every 16 </tspan><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16055">clock inputs </tspan></tspan><tspan
+             id="tspan1628">clock inputs </tspan></tspan><tspan
            x="13.032981"
            y="129.87648"
-           id="tspan16061"><tspan
+           id="tspan1634"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16059">sent to James, the currently active step will advance by 1. 
+             id="tspan1632">sent to James, the currently active step will advance by 1. 
 </tspan></tspan><tspan
            x="13.032981"
            y="136.05009"
-           id="tspan16065"><tspan
+           id="tspan1638"><tspan
              style="-inkscape-font-specification:'Arial Bold';fill:#272932"
-             id="tspan16063">
+             id="tspan1636">
 </tspan></tspan></text>
       <g
          id="g47152"
