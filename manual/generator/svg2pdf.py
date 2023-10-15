@@ -8,7 +8,7 @@
     --export-area-drawing
     For more inkscape options see: http://inkscape.org/doc/inkscape-man.html
     
-    I've only used this on windows and I wrote it very badly. I'm basically
+    I've only used this on windows. I'm basically
     certain this won't work on other OS's due to file path stuff that I've
     done lazily
 ==============================================================================
