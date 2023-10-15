@@ -76,15 +76,19 @@
       "name": "Bend",
       "description": "Phase modulation oscillator",
       "tags": [
-        "Oscillator"
+        "Oscillator",
+        "“Low-frequency oscillator”"
       ],
       "hidden": false
     },
     {
       "slug": "James",
       "name": "James",
-      "description": "",
-      "tags": [],
+      "description": "6 row drum sequencer with per-row rush/drag controls",
+      "tags": [
+        "Clock modulator",
+        "Sequencer"
+      ],
       "hidden": false
     }
   ]
