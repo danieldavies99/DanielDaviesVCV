@@ -36,11 +36,6 @@ Morse code based rhythm generator.
 
 ![Samuel](https://i.imgur.com/jdzElMP.png)
 
-# Blank 3 & Blank 5
-3HP and 5HP blank panels.
-
-![Blank 3 & blank 5](https://i.imgur.com/J0giltq.png)
-
 # James
 6 row drum sequencer with per-row rush/drag controls.
 
@@ -50,6 +45,11 @@ Morse code based rhythm generator.
 Phase modulation oscillator.
 
 ![Bend](https://i.imgur.com/LMEtzcI.png)
+
+# Blank 3 & Blank 5
+3HP and 5HP blank panels.
+
+![Blank 3 & blank 5](https://i.imgur.com/J0giltq.png)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
