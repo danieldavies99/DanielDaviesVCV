@@ -27,14 +27,14 @@
      showguides="false"
      inkscape:guide-bbox="true"
      inkscape:zoom="0.70710678"
-     inkscape:cx="318.19805"
+     inkscape:cx="318.90516"
      inkscape:cy="529.62298"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
      inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer3"
      inkscape:snap-global="false">
     <sodipodi:guide
        position="15.025556,294.23757"
@@ -1092,31 +1092,31 @@
        transform="translate(0,-1.5875)"><tspan
          x="14.871119"
          y="41.253422"
-         id="tspan150920"><tspan
+         id="tspan3074"><tspan
            style="font-weight:bold;fill:#ed6a5a"
-           id="tspan150918">
+           id="tspan3072">
 </tspan></tspan><tspan
          x="14.871119"
          y="47.427037"
-         id="tspan150924"><tspan
+         id="tspan3078"><tspan
            style="fill:#272932"
-           id="tspan150922">
+           id="tspan3076">
 </tspan></tspan><tspan
          x="14.871119"
          y="53.600651"
-         id="tspan150928"><tspan
+         id="tspan3082"><tspan
            style="fill:#272932"
-           id="tspan150926">Wavetable oscilator with a twist. Bend is a polyphonic VCO and LFO, featuring </tspan></tspan><tspan
+           id="tspan3080">Bend takes the classic wavetable oscillator and adds a unique twist. It's a </tspan></tspan><tspan
          x="14.871119"
          y="59.774266"
-         id="tspan150932"><tspan
+         id="tspan3086"><tspan
            style="fill:#272932"
-           id="tspan150930">phase modulation, and glide controls. A labour of love, this is my first sound </tspan></tspan><tspan
+           id="tspan3084">polyphonic VCO and LFO with phase modulation and glide controls. This module </tspan></tspan><tspan
          x="14.871119"
          y="65.94788"
-         id="tspan150936"><tspan
+         id="tspan3090"><tspan
            style="fill:#272932"
-           id="tspan150934">generating module.</tspan></tspan></text>
+           id="tspan3088">is a labor of love and represents my debut in sound generation.</tspan></tspan></text>
     <text
        xml:space="preserve"
        style="font-size:4.93889px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;white-space:pre;inline-size:180.167;fill:#9bc1bc;fill-opacity:1;stroke-width:0.264583"
@@ -1125,15 +1125,15 @@
        id="text24647"><tspan
          x="14.871119"
          y="41.253422"
-         id="tspan150940"><tspan
+         id="tspan3094"><tspan
            style="fill:#272932"
-           id="tspan150938">
+           id="tspan3092">
 </tspan></tspan><tspan
          x="14.871119"
          y="47.427037"
-         id="tspan150944"><tspan
+         id="tspan3098"><tspan
            style="font-style:italic;font-weight:bold;fill:#272932"
-           id="tspan150942">
+           id="tspan3096">
 </tspan></tspan></text>
     <text
        xml:space="preserve"

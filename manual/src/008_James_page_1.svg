@@ -27,7 +27,7 @@
      showguides="false"
      inkscape:guide-bbox="true"
      inkscape:zoom="0.70710678"
-     inkscape:cx="214.96046"
+     inkscape:cx="215.66757"
      inkscape:cy="600.33366"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
@@ -189,41 +189,47 @@
        style="font-size:4.93889px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;white-space:pre;inline-size:180.167;fill:#9bc1bc;fill-opacity:1;stroke-width:0.264583"
        x="14.871119"
        y="41.253422"
-       id="text13198-0"><tspan
+       id="text13198-0"
+       transform="translate(0,-4.2333335)"><tspan
          x="14.871119"
          y="41.253422"
-         id="tspan108930"><tspan
+         id="tspan15373"><tspan
            style="font-weight:bold;fill:#ed6a5a"
-           id="tspan108928">
+           id="tspan15371">
 </tspan></tspan><tspan
          x="14.871119"
          y="47.427037"
-         id="tspan108934"><tspan
+         id="tspan15377"><tspan
            style="fill:#272932"
-           id="tspan108932">
+           id="tspan15375">
 </tspan></tspan><tspan
          x="14.871119"
          y="53.600651"
-         id="tspan108938"><tspan
+         id="tspan15381"><tspan
            style="fill:#272932"
-           id="tspan108936">Inspired by the ryhtmic techniques of legendary producer and songwriter James </tspan></tspan><tspan
+           id="tspan15379">Drawing inspiration from the rhythmic innovations of the renowned music producer </tspan></tspan><tspan
          x="14.871119"
          y="59.774266"
-         id="tspan108942"><tspan
+         id="tspan15385"><tspan
            style="fill:#272932"
-           id="tspan108940">Dilla (J Dilla). James is a 6 row drum sequencer with per-row rush/drag controls.
-</tspan></tspan><tspan
+           id="tspan15383">and songwriter, J Dilla, James, presents a dynamic 6-row drum sequencer, </tspan></tspan><tspan
          x="14.871119"
          y="65.94788"
-         id="tspan108946"><tspan
+         id="tspan15389"><tspan
            style="fill:#272932"
-           id="tspan108944">
+           id="tspan15387">featuring individual rush/drag controls for each row.
 </tspan></tspan><tspan
          x="14.871119"
          y="72.121495"
-         id="tspan108950"><tspan
+         id="tspan15393"><tspan
+           style="fill:#272932"
+           id="tspan15391">
+</tspan></tspan><tspan
+         x="14.871119"
+         y="78.295109"
+         id="tspan15397"><tspan
            style="font-style:italic;font-weight:bold;fill:#272932"
-           id="tspan108948">Special thanks to Paul Gatt, for both the initial idea, and testing of James</tspan></tspan></text>
+           id="tspan15395">Special thanks to Paul Gatt, for both the initial idea, and testing of James</tspan></tspan></text>
     <text
        xml:space="preserve"
        style="font-size:4.93889px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;white-space:pre;inline-size:180.167;fill:#9bc1bc;fill-opacity:1;stroke-width:0.264583"
@@ -232,15 +238,15 @@
        id="text24647"><tspan
          x="14.871119"
          y="41.253422"
-         id="tspan108954"><tspan
+         id="tspan15401"><tspan
            style="fill:#272932"
-           id="tspan108952">
+           id="tspan15399">
 </tspan></tspan><tspan
          x="14.871119"
          y="47.427037"
-         id="tspan108958"><tspan
+         id="tspan15405"><tspan
            style="font-style:italic;font-weight:bold;fill:#272932"
-           id="tspan108956">
+           id="tspan15403">
 </tspan></tspan></text>
     <text
        xml:space="preserve"

@@ -34,7 +34,7 @@
      inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer3"
      inkscape:snap-global="false">
     <sodipodi:guide
        position="15.025556,294.23757"
@@ -567,32 +567,32 @@
        id="text13198-0"><tspan
          x="14.871119"
          y="41.253422"
-         id="tspan34718"><tspan
+         id="tspan2387"><tspan
            style="font-weight:bold;fill:#ed6a5a"
-           id="tspan34716">
+           id="tspan2385">
 </tspan></tspan><tspan
          x="14.871119"
          y="47.427037"
-         id="tspan34722"><tspan
+         id="tspan2391"><tspan
            style="fill:#272932"
-           id="tspan34720">
+           id="tspan2389">
 </tspan></tspan><tspan
          x="14.871119"
          y="53.600651"
-         id="tspan34726"><tspan
+         id="tspan2395"><tspan
            style="fill:#272932"
-           id="tspan34724">Get even more out of Sequel 8 &amp; 16 with the Sequel Save module. Save the state </tspan></tspan><tspan
+           id="tspan2393">Get even more out of Sequel 8 &amp; 16 with the Sequel Save module. Save the state </tspan></tspan><tspan
          x="14.871119"
          y="59.774266"
-         id="tspan34730"><tspan
+         id="tspan2399"><tspan
            style="fill:#272932"
-           id="tspan34728">of Sequel to one of 4 slots and then restore that setting via CV or button controls..
+           id="tspan2397">of Sequel to one of 4 slots and then restore that setting via CV or button controls.
 </tspan></tspan><tspan
          x="14.871119"
          y="65.94788"
-         id="tspan34734"><tspan
+         id="tspan2403"><tspan
            style="font-style:italic;font-weight:bold;fill:#272932"
-           id="tspan34732">
+           id="tspan2401">
 </tspan></tspan></text>
     <text
        xml:space="preserve"
@@ -603,91 +603,91 @@
        transform="translate(0.00181546,160.75518)"><tspan
          x="14.871119"
          y="41.253422"
-         id="tspan34738"><tspan
+         id="tspan2407"><tspan
            style="font-weight:bold;fill:#ed6a5a"
-           id="tspan34736">
+           id="tspan2405">
 </tspan></tspan><tspan
          x="14.871119"
          y="47.427037"
-         id="tspan34742"><tspan
+         id="tspan2411"><tspan
            style="fill:#272932"
-           id="tspan34740">
+           id="tspan2409">
 </tspan></tspan><tspan
          x="14.871119"
          y="53.600651"
-         id="tspan34746"><tspan
+         id="tspan2415"><tspan
            style="fill:#272932"
-           id="tspan34744">To active Sequel Save, place it directly to the right of Sequel 8 or 16, the Active </tspan></tspan><tspan
+           id="tspan2413">To active Sequel Save, place it directly to the right of Sequel 8 or 16, the Active </tspan></tspan><tspan
          x="14.871119"
          y="59.774266"
-         id="tspan34754"><tspan
+         id="tspan2423"><tspan
            style="fill:#272932"
-           id="tspan34748">LED </tspan><tspan
+           id="tspan2417">LED </tspan><tspan
            style="font-weight:bold;fill:#ed6a5a"
-           id="tspan34750">(E)</tspan><tspan
+           id="tspan2419">(E)</tspan><tspan
            style="fill:#272932"
-           id="tspan34752"> will light when positioned correctly.
+           id="tspan2421"> will light when positioned correctly.
 </tspan></tspan><tspan
          x="14.871119"
          y="65.94788"
-         id="tspan34758"><tspan
+         id="tspan2427"><tspan
            style="fill:#272932"
-           id="tspan34756">
+           id="tspan2425">
 </tspan></tspan><tspan
          x="14.871119"
          y="72.121495"
-         id="tspan34766"><tspan
+         id="tspan2435"><tspan
            style="fill:#272932"
-           id="tspan34760">Sequel Save has 4 slots that can be saved to, using either the Save Buttons </tspan><tspan
+           id="tspan2429">Sequel Save has 4 slots that can be saved to, using either the Save Buttons </tspan><tspan
            style="font-weight:bold;fill:#ed6a5a"
-           id="tspan34762">(A)</tspan><tspan
+           id="tspan2431">(A)</tspan><tspan
            style="fill:#272932"
-           id="tspan34764"> or </tspan></tspan><tspan
+           id="tspan2433"> or </tspan></tspan><tspan
          x="14.871119"
          y="78.295109"
-         id="tspan34774"><tspan
+         id="tspan2443"><tspan
            style="fill:#272932"
-           id="tspan34768">the Save trigger inputs </tspan><tspan
+           id="tspan2437">the Save trigger inputs </tspan><tspan
            style="font-weight:bold;fill:#ed6a5a"
-           id="tspan34770">(B)</tspan><tspan
+           id="tspan2439">(B)</tspan><tspan
            style="fill:#272932"
-           id="tspan34772">. Upon saving, the state of all the panel parameters of </tspan></tspan><tspan
+           id="tspan2441">. Upon saving, the state of all the panel parameters of </tspan></tspan><tspan
          x="14.871119"
          y="84.468724"
-         id="tspan34778"><tspan
+         id="tspan2447"><tspan
            style="fill:#272932"
-           id="tspan34776">Sequel are remembered.
+           id="tspan2445">Sequel are remembered.
 </tspan></tspan><tspan
          x="14.871119"
          y="90.642338"
-         id="tspan34782"><tspan
+         id="tspan2451"><tspan
            style="fill:#272932"
-           id="tspan34780">
+           id="tspan2449">
 </tspan></tspan><tspan
          x="14.871119"
          y="96.815953"
-         id="tspan34794"><tspan
+         id="tspan2463"><tspan
            style="fill:#272932"
-           id="tspan34784">Use either the Load Buttons </tspan><tspan
+           id="tspan2453">Use either the Load Buttons </tspan><tspan
            style="font-weight:bold;fill:#ed6a5a"
-           id="tspan34786">(C)</tspan><tspan
+           id="tspan2455">(C)</tspan><tspan
            style="fill:#272932"
-           id="tspan34788"> or the Load trigger inputs </tspan><tspan
+           id="tspan2457"> or the Load trigger inputs </tspan><tspan
            style="font-weight:bold;fill:#ed6a5a"
-           id="tspan34790">(D)</tspan><tspan
+           id="tspan2459">(D)</tspan><tspan
            style="fill:#272932"
-           id="tspan34792"> to load a previously </tspan></tspan><tspan
+           id="tspan2461"> to load a previously </tspan></tspan><tspan
          x="14.871119"
          y="102.98957"
-         id="tspan34798"><tspan
+         id="tspan2467"><tspan
            style="fill:#272932"
-           id="tspan34796">saved state. 
+           id="tspan2465">saved state. 
 </tspan></tspan><tspan
          x="14.871119"
          y="109.16318"
-         id="tspan34802"><tspan
+         id="tspan2471"><tspan
            style="font-style:italic;font-weight:bold;fill:#272932"
-           id="tspan34800">
+           id="tspan2469">
 </tspan></tspan></text>
     <text
        xml:space="preserve"
