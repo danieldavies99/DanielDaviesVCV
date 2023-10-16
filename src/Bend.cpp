@@ -37,7 +37,6 @@ struct Bend : Module {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(KNOB_BEND_PARAM, 0.f, 1.f, 0.5f, "Bend");
 		configSwitch(SWITCH_LFO_PARAM, 0.f, 1.f, 0.f, "LFO mode", {"Off", "On"});
-
 		struct FrequencyQuantity : ParamQuantity {
 			float getDisplayValue() override {
 				Bend* module = reinterpret_cast<Bend*>(this->module);
@@ -61,7 +60,7 @@ struct Bend : Module {
 		configParam<FrequencyQuantity>(KNOB_COARSE_PARAM, -54.f, 54.f, 0.f, "Frequency", " Hz", dsp::FREQ_SEMITONE, dsp::FREQ_C4);
 		configParam(KNOB_FREQUENCY_MODULATION_PARAM, -1.f, 1.f, 0.f, "Frequency modulation");
 		configParam(KNOB_BEND_MODULATION_PARAM, -1.f, 1.f, 0.f, "Bend modulation");
-		configParam(KNOB_GLIDE_PARAM, 0.0f, 1.f, 0.2f, "Bend time");
+		configParam(KNOB_GLIDE_PARAM, 0.0f, 1.f, 0.0f, "Bend time");
 		configParam(KNOB_AMPLITUDE_PARAM, 0.f, 1.f, 1.f, "Amplitude");
 		configParam(KNOB_AMPLITUDE_MODULATION_PARAM, -1.f, 1.f, 0.f, "Amplitude modulation");
 		configInput(PITCH_IN_INPUT, "Pitch v/oct");
