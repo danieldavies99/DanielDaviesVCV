@@ -195,18 +195,10 @@ struct IgnoreClockAfterResetTimer {
 
 struct JamesClockTracker {
 	
-	JamesClockTracker(
-		short initializeNumSteps,
-		short numRows = 6
-	) {
-        numSteps = initializeNumSteps;
-		numRows = numRows;
-
-		for(int i = 0; i < numRows; i++) {
-			hasPulsedThisClockTracker.push_back(false);
-			rushTracker.push_back(0);
-		}
-		rushTracker[1] = (4);
+	JamesClockTracker() {
+        numSteps = 16;
+		numRows = 6;
+		initializeRows();
     }
 
 	short numRows;
@@ -215,16 +207,20 @@ struct JamesClockTracker {
 
 	short clocksSinceLastStart = 0;
 
-	std::vector<bool> hasPulsedThisClockTracker;
 	std::vector<int> rushTracker;
+
+	void initializeRows();
+	void reset();
 
 	void nextClock();
 	int getCurrentStep();
+	int getNextStep();
+	int getCurrentStepAccountingForRush(short row);
 	int getClocksSinceStart();
 	int getClocksSinceLastStep();
 	int getRushForRow(short row);
 
-	void setHasPulsedThisStepForRow(int row, bool val);
+	void setRushForRow(short row, short rush);
 };
 
 struct SequelClockTracker {
@@ -300,44 +296,87 @@ struct SequelSaveInterface {
 	bool isDirty = false;
 };
 
-struct BendOscillator {
-	float phase = 0.f;
-	float lastPitch = 0.f;
-	int lastFrame = 0;
-	bool lastSyncInputWasNegative = false;
+struct BendWavetable {
+	int resolution = 2048;
+	float phaseShift = 0.f;
+	float table[2048];
 
-	float sinOut = 0.0f;
-	float squareOut = 0.0f;
-	float triOut = 0.0f;
-	float noiseOut = 0.0f;
+	float getFrame(int frameNum);
+	virtual void generate() {};
+};
 
-	float *frequencyControl;
-	float *portamentoVal;
+struct BendTriTable : BendWavetable {
+	BendTriTable() {
+		generate();
+	}
+	void generate() override;
+};
 
-	// float *frequencyModulationIn;
-	float *frequencyModulationMod;
+struct BendSinTable : BendWavetable {
+	BendSinTable() {
+		phaseShift = -0.25;
+		generate();
+	}
+	void generate() override;
+};
 
-	// float *syncIn;
+struct BendAnalogSquareTable : BendWavetable {
+	float envelopeFactor;
+	BendAnalogSquareTable() {
+		envelopeFactor = 0.75;
+		generate();
+	}
+	void generate() override;
+};
 
-	float *shiftControl;
-	// float *shiftIn;
-	float *shiftMod;
+struct BendPerfectSquareTable : BendWavetable {
+	BendPerfectSquareTable() {
+		generate();
+	}
+	void generate() override;
+};
 
-	float *amplitudeControl;
-	// float *amplitudeIn;
-	float *amplitudeMod;
+struct BendOscillatorSimd {
+	simd::float_4 bend = 0.5f;
+	simd::float_4 amplitude = 1.f;
+	simd::float_4 phase = 0.f;
+	simd::float_4 freq = 0.f;
 
-	float *pulseWidthControl;
-	// float *pulseWidthIn;
-	float *pulseWidthMod;
+	bool syncEnabled = false;
+	simd::float_4 sync = 0.f;
+	simd::float_4 lastSync = 0.f;
 
-	void process(
-		float sampleTime,
-		float pitchInput,
-		float syncIn,
-		float frequencyModulationIn,
-		float shiftIn,
-		float amplitudeIn,
-		float pulseWidthIn
-	);
+	bool unipolar = false;
+
+	// in LFO mode, we should use a perfect square
+	// instead of the "analog" version
+	bool usePerfectSquare = false;
+
+	int channels = 0;
+
+	simd::float_4 sinOut = 0.f;
+	simd::float_4 squareOut = 0.f;
+	simd::float_4 triOut = 0.f;
+	simd::float_4 noiseOut = 0.f;
+
+	void process(float deltaTime);
+
+	BendSinTable sinTable;
+	BendTriTable triTable;
+	BendAnalogSquareTable analogSquareTable;
+	BendPerfectSquareTable perfectSquareTable;
+
+	float generateNoise();
+};
+
+struct GlideCalculator {
+	bool initialized = false;
+
+	simd::float_4 targetFreq = 0.f;
+	simd::float_4 currentFreq = 0.f;
+	
+	float glideAmount = 0.f; // should range from 0 - 1
+
+	void initialize(simd::float_4 initialFreq);
+	void process(float deltaTime);
 };

@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="012_Bend_page_3.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.15686275"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="0.66449955"
+     inkscape:cx="319.78953"
+     inkscape:cy="721.59567"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:snap-global="false">
+    <sodipodi:guide
+       position="15.025556,294.23757"
+       orientation="1,0"
+       id="guide10826" />
+    <sodipodi:guide
+       position="195.00473,294.53551"
+       orientation="1,0"
+       id="guide10828" />
+    <sodipodi:guide
+       position="111.72336,282.10355"
+       orientation="0,-1"
+       id="guide10830" />
+    <sodipodi:guide
+       position="22.892336,14.989785"
+       orientation="0,-1"
+       id="guide10832" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath30795">
+      <rect
+         style="fill:#ed6a5a;fill-opacity:1;stroke-width:0.264567"
+         id="rect30797"
+         width="124.75986"
+         height="152.349"
+         x="54.266777"
+         y="105.302"
+         ry="0" />
+    </clipPath>
+  </defs>
+  <g
+     inkscape:label="Background"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline">
+    <rect
+       style="fill:#f9fafb;stroke-width:0.263614"
+       id="rect10864"
+       width="210"
+       height="297"
+       x="0"
+       y="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.93889px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;display:inline;fill:#9bc1bc;fill-opacity:1;stroke-width:0.264583"
+       x="145.76755"
+       y="45.298748"
+       id="text13198-0-6-0-0-4-7-4-7"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial Bold';fill:#9bc1bc;fill-opacity:1;stroke-width:0.264583"
+         x="145.76755"
+         y="45.298748"
+         id="tspan35968-04-3-6-9-6-1-7" /></text>
+    <g
+       aria-label="Daniel Davies"
+       id="text158043"
+       style="font-size:4.93889px;line-height:1.25;display:inline;stroke-width:0.264583"
+       transform="matrix(1.2870167,0,0,1.2870167,-51.913076,121.18908)">
+      <path
+         d="m 106.74159,123.09153 q 0,0.50161 -0.2291,0.89951 -0.22909,0.3955 -0.57877,0.60772 -0.26286,0.15916 -0.57637,0.22186 -0.3135,0.0627 -0.74276,0.0627 h -1.26607 v -3.59082 h 1.30224 q 0.43891,0 0.75724,0.0748 0.31832,0.0724 0.53536,0.20739 0.37139,0.22669 0.5836,0.61254 0.21463,0.38344 0.21463,0.90434 z m -0.95739,-0.007 q 0,-0.3545 -0.13022,-0.6053 -0.12782,-0.25321 -0.40756,-0.3955 -0.14228,-0.0699 -0.2918,-0.094 -0.1471,-0.0265 -0.44614,-0.0265 h -0.23392 v 2.24758 h 0.23392 q 0.33039,0 0.48473,-0.0289 0.15434,-0.0314 0.30144,-0.11093 0.25322,-0.1447 0.37138,-0.38586 0.11817,-0.24356 0.11817,-0.60048 z"
+         style="fill:#ed6a5a"
+         id="path170552" />
+      <path
+         d="m 109.03982,124.17673 v -0.5643 q -0.17605,0.0145 -0.38103,0.041 -0.20498,0.0241 -0.31109,0.0579 -0.13023,0.041 -0.20016,0.12058 -0.0675,0.0772 -0.0675,0.20498 0,0.0844 0.0145,0.13746 0.0145,0.0531 0.0724,0.10129 0.0555,0.0482 0.13264,0.0724 0.0772,0.0217 0.24115,0.0217 0.13023,0 0.26286,-0.053 0.13505,-0.0531 0.23634,-0.13988 z m 0,0.41962 q -0.0699,0.053 -0.17364,0.12781 -0.10369,0.0748 -0.19533,0.11817 -0.12782,0.0579 -0.26528,0.0844 -0.13745,0.0289 -0.30144,0.0289 -0.38585,0 -0.6463,-0.23874 -0.26045,-0.23875 -0.26045,-0.61013 0,-0.29662 0.13264,-0.48473 0.13263,-0.1881 0.3762,-0.29662 0.24116,-0.10852 0.59807,-0.15434 0.35691,-0.0458 0.74035,-0.0675 v -0.0145 q 0,-0.22428 -0.18328,-0.30868 -0.18328,-0.0868 -0.54019,-0.0868 -0.21463,0 -0.4582,0.0772 -0.24357,0.0748 -0.34968,0.11576 h -0.0796 v -0.65354 q 0.13746,-0.0362 0.44614,-0.0844 0.3111,-0.0507 0.62219,-0.0507 0.74035,0 1.06832,0.2291 0.33039,0.22669 0.33039,0.71383 v 1.84243 h -0.86093 z"
+         style="fill:#ed6a5a"
+         id="path170554" />
+      <path
+         d="m 113.41922,124.88332 h -0.87298 v -1.34324 q 0,-0.16399 -0.0169,-0.32556 -0.0169,-0.16399 -0.0579,-0.24116 -0.0482,-0.0892 -0.14229,-0.13022 -0.0916,-0.041 -0.25803,-0.041 -0.11817,0 -0.24116,0.0386 -0.12058,0.0386 -0.26286,0.12299 v 1.9196 h -0.86816 v -2.70819 h 0.86816 v 0.29904 q 0.23151,-0.18087 0.44373,-0.27733 0.21463,-0.0965 0.47508,-0.0965 0.4389,0 0.68488,0.25563 0.24839,0.25563 0.24839,0.76447 z"
+         style="fill:#ed6a5a"
+         id="path170556" />
+      <path
+         d="m 115.08562,124.88332 h -0.86817 v -2.70819 h 0.86817 z m 0.0241,-3.09404 h -0.91639 v -0.65836 h 0.91639 z"
+         style="fill:#ed6a5a"
+         id="path170558" />
+      <path
+         d="m 118.57274,123.6896 h -1.98713 q 0.0193,0.31832 0.24116,0.48713 0.22427,0.16881 0.65836,0.16881 0.27491,0 0.53295,-0.0989 0.25804,-0.0989 0.40756,-0.21222 h 0.0965 v 0.69694 q -0.29421,0.11817 -0.55466,0.17123 -0.26045,0.053 -0.57637,0.053 -0.81511,0 -1.24919,-0.36656 -0.43408,-0.36656 -0.43408,-1.04421 0,-0.67041 0.40997,-1.06109 0.41237,-0.39308 1.12861,-0.39308 0.66077,0 0.99357,0.33521 0.33279,0.33279 0.33279,0.9598 z m -0.86334,-0.50884 q -0.007,-0.27251 -0.13505,-0.40997 -0.12781,-0.13746 -0.3979,-0.13746 -0.25081,0 -0.41238,0.13023 -0.16158,0.13022 -0.18087,0.4172 z"
+         style="fill:#ed6a5a"
+         id="path170560" />
+      <path
+         d="m 120.05345,124.88332 h -0.86817 v -3.7524 h 0.86817 z"
+         style="fill:#ed6a5a"
+         id="path170562" />
+      <path
+         d="m 126.00278,123.09153 q 0,0.50161 -0.2291,0.89951 -0.2291,0.3955 -0.57877,0.60772 -0.26286,0.15916 -0.57637,0.22186 -0.3135,0.0627 -0.74276,0.0627 h -1.26607 v -3.59082 h 1.30224 q 0.43891,0 0.75723,0.0748 0.31833,0.0724 0.53537,0.20739 0.37138,0.22669 0.5836,0.61254 0.21463,0.38344 0.21463,0.90434 z m -0.95739,-0.007 q 0,-0.3545 -0.13023,-0.6053 -0.12781,-0.25321 -0.40755,-0.3955 -0.14228,-0.0699 -0.2918,-0.094 -0.14711,-0.0265 -0.44614,-0.0265 h -0.23392 v 2.24758 h 0.23392 q 0.33038,0 0.48473,-0.0289 0.15434,-0.0314 0.30144,-0.11093 0.25322,-0.1447 0.37138,-0.38586 0.11817,-0.24356 0.11817,-0.60048 z"
+         style="fill:#9bc1bc"
+         id="path170564" />
+      <path
+         d="m 128.30101,124.17673 v -0.5643 q -0.17605,0.0145 -0.38103,0.041 -0.20499,0.0241 -0.31109,0.0579 -0.13023,0.041 -0.20016,0.12058 -0.0675,0.0772 -0.0675,0.20498 0,0.0844 0.0145,0.13746 0.0145,0.0531 0.0724,0.10129 0.0555,0.0482 0.13263,0.0724 0.0772,0.0217 0.24116,0.0217 0.13023,0 0.26286,-0.053 0.13505,-0.0531 0.23634,-0.13988 z m 0,0.41962 q -0.0699,0.053 -0.17364,0.12781 -0.10369,0.0748 -0.19533,0.11817 -0.12782,0.0579 -0.26528,0.0844 -0.13746,0.0289 -0.30144,0.0289 -0.38585,0 -0.6463,-0.23874 -0.26045,-0.23875 -0.26045,-0.61013 0,-0.29662 0.13263,-0.48473 0.13264,-0.1881 0.37621,-0.29662 0.24116,-0.10852 0.59807,-0.15434 0.35691,-0.0458 0.74035,-0.0675 v -0.0145 q 0,-0.22428 -0.18328,-0.30868 -0.18328,-0.0868 -0.54019,-0.0868 -0.21463,0 -0.4582,0.0772 -0.24357,0.0748 -0.34968,0.11576 h -0.0796 v -0.65354 q 0.13746,-0.0362 0.44614,-0.0844 0.31109,-0.0507 0.62219,-0.0507 0.74035,0 1.06832,0.2291 0.33038,0.22669 0.33038,0.71383 v 1.84243 h -0.86092 z"
+         style="fill:#9bc1bc"
+         id="path170566" />
+      <path
+         d="m 132.68765,122.17513 -1.04421,2.70819 h -0.98392 l -1.03698,-2.70819 h 0.91881 l 0.62701,1.86173 0.61977,-1.86173 z"
+         style="fill:#9bc1bc"
+         id="path170568" />
+      <path
+         d="m 134.03812,124.88332 h -0.86816 v -2.70819 h 0.86816 z m 0.0241,-3.09404 h -0.9164 v -0.65836 h 0.9164 z"
+         style="fill:#9bc1bc"
+         id="path170570" />
+      <path
+         d="m 137.52525,123.6896 h -1.98713 q 0.0193,0.31832 0.24115,0.48713 0.22428,0.16881 0.65836,0.16881 0.27492,0 0.53296,-0.0989 0.25804,-0.0989 0.40755,-0.21222 h 0.0965 v 0.69694 q -0.29421,0.11817 -0.55466,0.17123 -0.26045,0.053 -0.57637,0.053 -0.81511,0 -1.24919,-0.36656 -0.43408,-0.36656 -0.43408,-1.04421 0,-0.67041 0.40996,-1.06109 0.41238,-0.39308 1.12862,-0.39308 0.66077,0 0.99356,0.33521 0.3328,0.33279 0.3328,0.9598 z m -0.86334,-0.50884 q -0.007,-0.27251 -0.13505,-0.40997 -0.12781,-0.13746 -0.39791,-0.13746 -0.2508,0 -0.41238,0.13023 -0.16157,0.13022 -0.18086,0.4172 z"
+         style="fill:#9bc1bc"
+         id="path170572" />
+      <path
+         d="m 140.49148,124.02481 q 0,0.41961 -0.37621,0.67765 -0.3762,0.25562 -1.02974,0.25562 -0.36173,0 -0.65594,-0.0675 -0.29421,-0.0675 -0.47267,-0.14952 v -0.71382 h 0.0796 q 0.0651,0.0458 0.14952,0.10128 0.0868,0.0531 0.24357,0.11576 0.13505,0.0555 0.30627,0.0965 0.17122,0.0386 0.36655,0.0386 0.25563,0 0.37862,-0.0555 0.12299,-0.0579 0.12299,-0.16881 0,-0.0989 -0.0724,-0.14228 -0.0723,-0.0458 -0.27491,-0.0868 -0.0965,-0.0217 -0.26287,-0.0458 -0.16398,-0.0265 -0.29903,-0.0627 -0.36897,-0.0965 -0.54743,-0.29903 -0.17845,-0.20499 -0.17845,-0.50884 0,-0.39068 0.36897,-0.64872 0.37138,-0.26045 1.01286,-0.26045 0.30385,0 0.58118,0.0627 0.27975,0.0603 0.4365,0.13022 v 0.68489 h -0.0748 q -0.19293,-0.13264 -0.44132,-0.21463 -0.24598,-0.0844 -0.49919,-0.0844 -0.20981,0 -0.3545,0.0579 -0.14229,0.0579 -0.14229,0.16399 0,0.0965 0.0651,0.1471 0.0651,0.0506 0.30627,0.10129 0.13263,0.0265 0.28456,0.053 0.15434,0.0241 0.30868,0.0627 0.34244,0.0892 0.50643,0.28216 0.16399,0.19051 0.16399,0.47749 z"
+         style="fill:#9bc1bc"
+         id="path170574" />
+    </g>
+    <rect
+       style="fill:#ed6a5a;fill-opacity:1;stroke-width:0.264583"
+       id="rect30614"
+       width="8.70024e-06"
+       height="0.2190602"
+       x="178.97644"
+       y="105.24268" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.93889px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;white-space:pre;inline-size:180.541;display:inline;fill:#9bc1bc;fill-opacity:1;stroke-width:0.264583"
+       x="13.032981"
+       y="86.661186"
+       id="text13198-0-6-0-0-4-7-4-8-1"
+       transform="translate(1.8599839,-36.05943)"><tspan
+         x="13.032981"
+         y="86.661186"
+         id="tspan2224"><tspan
+           style="-inkscape-font-specification:'Arial Bold';fill:#272932"
+           id="tspan2218">The glide slider </tspan><tspan
+           style="font-weight:bold;fill:#ed6a5a"
+           id="tspan2220">(A)</tspan><tspan
+           style="-inkscape-font-specification:'Arial Bold';fill:#272932"
+           id="tspan2222">  is responsible for adjusting the portamento time when control </tspan></tspan><tspan
+         x="13.032981"
+         y="92.834797"
+         id="tspan2232"><tspan
+           style="-inkscape-font-specification:'Arial Bold';fill:#272932"
+           id="tspan2226">voltages are applied to the v/oct input </tspan><tspan
+           style="font-weight:bold;fill:#ed6a5a"
+           id="tspan2228">(E)</tspan><tspan
+           style="-inkscape-font-specification:'Arial Bold';fill:#272932"
+           id="tspan2230">.  This feature introduces a smooth </tspan></tspan><tspan
+         x="13.032981"
+         y="99.008412"
+         id="tspan2236"><tspan
+           style="-inkscape-font-specification:'Arial Bold';fill:#272932"
+           id="tspan2234">transition between note changes instead of sudden jumps.
+</tspan></tspan><tspan
+         x="13.032981"
+         y="105.18203"
+         id="tspan2240"><tspan
+           style="fill:#ed6a5a"
+           id="tspan2238">
+</tspan></tspan><tspan
+         x="13.032981"
+         y="111.35564"
+         id="tspan2244"><tspan
+           style="font-weight:bold"
+           id="tspan2242">Noise:
+</tspan></tspan><tspan
+         x="13.032981"
+         y="117.52926"
+         id="tspan2252"><tspan
+           style="fill:#272932"
+           id="tspan2246">The noise output </tspan><tspan
+           style="font-weight:bold;fill:#ed6a5a"
+           id="tspan2248">(Q)</tspan><tspan
+           style="fill:#272932"
+           id="tspan2250"> outputs white noise which can be used to add texture to a </tspan></tspan><tspan
+         x="13.032981"
+         y="123.70287"
+         id="tspan2256"><tspan
+           style="fill:#272932"
+           id="tspan2254">voice or, when paired with a sample &amp; hold module, to generate random/</tspan></tspan><tspan
+         x="13.032981"
+         y="129.87648"
+         id="tspan2260"><tspan
+           style="fill:#272932"
+           id="tspan2258">unpredictable control voltages.
+</tspan></tspan><tspan
+         x="13.032981"
+         y="136.05009"
+         id="tspan2264"><tspan
+           style="font-weight:bold"
+           id="tspan2262">
+</tspan></tspan><tspan
+         x="13.032981"
+         y="142.22371"
+         id="tspan2268"><tspan
+   style="font-weight:bold"
+   id="tspan2266">LFO Mode:</tspan>
+</tspan><tspan
+         x="13.032981"
+         y="148.39732"
+         id="tspan2276"><tspan
+   style="fill:#272932"
+   id="tspan2270">You can activate LFO Mode by toggling the LFO mode switch</tspan> <tspan
+   style="font-weight:bold;fill:#ed6a5a"
+   id="tspan2272">(F).</tspan> <tspan
+   style="fill:#272932"
+   id="tspan2274">When activated, </tspan></tspan><tspan
+         x="13.032981"
+         y="154.57093"
+         id="tspan2284"><tspan
+   style="fill:#272932"
+   id="tspan2278">the frequency ranges of the square, sine, and triangle wave outputs </tspan><tspan
+   style="font-weight:bold;fill:#ed6a5a"
+   id="tspan2280">(N, O, P)</tspan> <tspan
+   style="fill:#272932"
+   id="tspan2282">are </tspan></tspan><tspan
+         x="13.032981"
+         y="160.74455"
+         id="tspan2288"><tspan
+           style="fill:#272932"
+           id="tspan2286">significantly attenuated, extending into frequencies below the audible range. This </tspan></tspan><tspan
+         x="13.032981"
+         y="166.91816"
+         id="tspan2292"><tspan
+           style="fill:#272932"
+           id="tspan2290">transformation makes Bend a versatile modulation source.
+</tspan></tspan><tspan
+         x="13.032981"
+         y="173.09178"
+         id="tspan2296"><tspan
+           style="fill:#272932"
+           id="tspan2294">
+</tspan></tspan><tspan
+         x="13.032981"
+         y="179.26539"
+         id="tspan2302"><tspan
+           style="font-weight:bold"
+           id="tspan2298">Note:</tspan><tspan
+           style="fill:#272932"
+           id="tspan2300"> When LFO mode is enabled, the glide functionality of Bend is disabled.
+</tspan></tspan><tspan
+         x="13.032981"
+         y="185.43901"
+         id="tspan2306"><tspan
+           style="font-weight:bold"
+           id="tspan2304">
+</tspan></tspan><tspan
+         x="13.032981"
+         y="191.61262"
+         id="tspan2310"><tspan
+           style="font-weight:bold"
+           id="tspan2308">Sync:
+</tspan></tspan><tspan
+         x="13.032981"
+         y="197.78624"
+         id="tspan2318"><tspan
+           style="fill:#272932"
+           id="tspan2312">Bend features a hard sync input </tspan><tspan
+           style="font-weight:bold;fill:#ed6a5a"
+           id="tspan2314">(J)</tspan><tspan
+           style="fill:#272932"
+           id="tspan2316">. Experiment with connecting the square wave </tspan></tspan><tspan
+         x="13.032981"
+         y="203.95985"
+         id="tspan2322"><tspan
+           style="fill:#272932"
+           id="tspan2320">output of another oscillator to this input, and then adjust the frequencies of the two </tspan></tspan><tspan
+         x="13.032981"
+         y="210.13347"
+         id="tspan2326"><tspan
+           style="fill:#272932"
+           id="tspan2324">oscillators independently to unlock intriguing sonic possibilities.
+</tspan></tspan><tspan
+         x="13.032981"
+         y="216.30708"
+         id="tspan2330"><tspan
+           style="font-weight:bold"
+           id="tspan2328">
+</tspan></tspan><tspan
+         x="13.032981"
+         y="222.48069"
+         id="tspan2334"><tspan
+           style="font-weight:bold"
+           id="tspan2332">Bend, Frequency, and Amp modulation:
+</tspan></tspan><tspan
+         x="13.032981"
+         y="228.65431"
+         id="tspan2338"><tspan
+           style="font-weight:bold;fill:#272932"
+           id="tspan2336"> 
+</tspan></tspan><tspan
+         x="13.032981"
+         y="234.82792"
+         id="tspan2348"><tspan
+   style="font-weight:bold;fill:#ed6a5a"
+   id="tspan2340">Bend:</tspan> <tspan
+   style="fill:#272932"
+   id="tspan2342">by modulating the bend amount using the BM input</tspan> <tspan
+   style="font-weight:bold;fill:#ed6a5a"
+   id="tspan2344">(K)</tspan> <tspan
+   style="fill:#272932"
+   id="tspan2346">you can simulate a </tspan></tspan><tspan
+         x="13.032981"
+         y="241.00154"
+         id="tspan2352"><tspan
+   style="fill:#272932"
+   id="tspan2350">filter sweep effect on the tri/sin wave outputs, and PWM on the square output.</tspan>
+</tspan><tspan
+         x="13.032981"
+         y="247.17515"
+         id="tspan2354">
+</tspan><tspan
+         x="13.032981"
+         y="253.34877"
+         id="tspan2360"><tspan
+   style="font-weight:bold;fill:#ed6a5a"
+   id="tspan2356">Frequency:</tspan> <tspan
+   style="fill:#272932"
+   id="tspan2358">Bend features frequency modulation that is commonplace on most </tspan></tspan><tspan
+         x="13.032981"
+         y="259.52238"
+         id="tspan2368"><tspan
+   style="fill:#272932"
+   id="tspan2362">oscillators via the FM input </tspan><tspan
+   style="font-weight:bold;fill:#ed6a5a"
+   id="tspan2364">(L)</tspan><tspan
+   style="fill:#272932"
+   id="tspan2366">. </tspan>
+</tspan><tspan
+         x="13.032981"
+         y="265.69598"
+         id="tspan2370">
+</tspan><tspan
+         x="13.032981"
+         y="271.86959"
+         id="tspan2378"><tspan
+           style="font-weight:bold;fill:#ed6a5a"
+           id="tspan2372">Amplitude:</tspan><tspan
+           style="fill:#ed6a5a"
+           id="tspan2374"> </tspan><tspan
+           style="fill:#272932"
+           id="tspan2376">Modulating the amplitude of a waveform can bring about significant </tspan></tspan><tspan
+         x="13.032981"
+         y="278.04321"
+         id="tspan2382"><tspan
+           style="fill:#272932"
+           id="tspan2380">changes in the sonic characteristics produced by an oscillator. This is why I've </tspan></tspan><tspan
+         x="13.032981"
+         y="284.21682"
+         id="tspan2386"><tspan
+           style="fill:#272932"
+           id="tspan2384">included this parameter, which is often absent in other oscillator modules. </tspan></tspan><tspan
+         x="13.032981"
+         y="290.39044"
+         id="tspan2394"><tspan
+   style="fill:#272932"
+   id="tspan2388">Experiment by connecting another VCO or LFO to the AM input </tspan><tspan
+   style="font-weight:bold;fill:#ed6a5a"
+   id="tspan2390">(Q)</tspan> <tspan
+   style="fill:#272932"
+   id="tspan2392">to explore </tspan></tspan><tspan
+         x="13.032981"
+         y="296.56405"
+         id="tspan2400"><tspan
+           style="fill:#272932"
+           id="tspan2396">intriguing and creative outcomes.</tspan><tspan
+           style="font-weight:bold"
+           id="tspan2398">
+</tspan></tspan><tspan
+         x="13.032981"
+         y="302.73767"
+         id="tspan2402">
+</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="image"
+     style="display:inline" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Text"
+     style="display:inline">
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;fill:#9bc1bc;fill-opacity:1;stroke-width:0.264583"
+       x="14.587587"
+       y="19.01762"
+       id="text13198"><tspan
+         sodipodi:role="line"
+         id="tspan13196"
+         style="font-weight:normal;font-size:5.64444px;fill:#272932;fill-opacity:1;stroke-width:0.264583"
+         x="14.587587"
+         y="19.01762">Daniel Davies VCV &gt; Manuals &gt; Bend</tspan></text>
+    <g
+       id="g181378"
+       transform="translate(57.2833,-0.06028895)" />
+    <text
+       xml:space="preserve"
+       style="font-size:14.1111px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;fill:#cccccc;fill-opacity:1;stroke-width:0.264583"
+       x="13.98952"
+       y="35.131268"
+       id="text24682"><tspan
+         sodipodi:role="line"
+         id="tspan24680"
+         style="font-weight:bold;font-size:14.1111px;fill:#ed6a5a;fill-opacity:1;stroke-width:0.264583"
+         x="13.98952"
+         y="35.131268">Additional features</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14.1111px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;display:inline;fill:#9bc1bc;fill-opacity:1;stroke-width:0.264583"
+       x="179.98079"
+       y="282.01236"
+       id="text24682-29"><tspan
+         sodipodi:role="line"
+         id="tspan24680-02"
+         style="font-weight:bold;font-size:14.1111px;fill:#9bc1bc;fill-opacity:1;stroke-width:0.264583"
+         x="179.98079"
+         y="282.01236">12</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.93889px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;stroke-width:0.264583"
+       x="14.67337"
+       y="43.140648"
+       id="text108768"><tspan
+         sodipodi:role="line"
+         id="tspan108766"
+         style="font-weight:bold;font-size:4.93889px;fill:#9bc1bc;fill-opacity:1;stroke-width:0.264583"
+         x="14.67337"
+         y="43.140648">Glide: </tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.93889px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;display:inline;stroke-width:0.264583"
+       x="14.67337"
+       y="74.47438"
+       id="text108768-2"><tspan
+         sodipodi:role="line"
+         id="tspan108766-9"
+         style="font-weight:bold;font-size:4.93889px;fill:#ed6a5a;fill-opacity:1;stroke-width:0.264583"
+         x="14.67337"
+         y="74.47438" /></text>
+  </g>
+</svg>

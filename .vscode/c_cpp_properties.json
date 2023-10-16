@@ -6,11 +6,13 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/../**"
             ],
+            "configurationProvider": "ms-vscode.cpptools-tools",
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
-            ]
+            ],
+            "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],
     "version": 4
