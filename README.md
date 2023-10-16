@@ -57,6 +57,6 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 If you encounter any issues while using these modules, feel free to open an issue on this repo and I will look into it.
 
 ## How to build manual
-I build each page of the manual as an individual A4 SVG. The python script found at ./manual/generator/svg2pdf.py can be used to compiled all of the SVGs into pdf's and then flatten them into a single manual PDF.
+I create each page of the manual as an individual A4 SVG in inkscape. The Python script found at ./manual/generator/svg2pdf.py can be used to compile all of the SVGs into PDFs and then flatten them into a single manual PDF.
 
 to run:  ```py ./manual/generator/svg2pdf.py```
