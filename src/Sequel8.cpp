@@ -506,12 +506,12 @@ struct Sequel8 : Module {
 		}
  
 		if(outputs[OUT_GATE_R1_OUTPUT].isConnected() && !gateTriggerModeEnabled) {
-			const bool shouldGateR1 = params[getButtonId(0, clockTracker.getCurrentStepForRow(0))].getValue() > 0;
+			const bool shouldGateR1 = params[getButtonId(1, clockTracker.getCurrentStepForRow(1))].getValue() > 0;
 			outputs[OUT_GATE_R1_OUTPUT].setVoltage(shouldGateR1 ? 10.0 : 0.0);		
 		}
 
 		if(outputs[OUT_GATE_R2_OUTPUT].isConnected() && !gateTriggerModeEnabled) {
-			const bool shouldGateR2 = params[getButtonId(0, clockTracker.getCurrentStepForRow(0))].getValue() > 0;
+			const bool shouldGateR2 = params[getButtonId(2, clockTracker.getCurrentStepForRow(2))].getValue() > 0;
 			outputs[OUT_GATE_R2_OUTPUT].setVoltage(shouldGateR2 ? 10.0 : 0.0);		
 		}
 		// End
