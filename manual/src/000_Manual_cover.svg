@@ -27,8 +27,8 @@
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:zoom="0.70710678"
-     inkscape:cx="368.40263"
-     inkscape:cy="488.61079"
+     inkscape:cx="335.16861"
+     inkscape:cy="860.54895"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
      inkscape:window-x="1912"
@@ -204,12 +204,12 @@
      inkscape:label="Text"
      style="display:inline;opacity:1">
     <rect
-       style="display:inline;fill:#9bc1bc;fill-opacity:1;stroke-width:0.373958"
+       style="display:inline;fill:#9bc1bc;fill-opacity:1;stroke-width:0.394233"
        id="rect30821"
        width="240.27986"
-       height="20.158136"
+       height="22.4032"
        x="-17.350758"
-       y="280.04709" />
+       y="274.5968" />
     <rect
        style="display:inline;fill:#f9fafb;stroke-width:0.15996"
        id="rect10864-3"
@@ -293,19 +293,24 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-size:6.35px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;display:inline;fill:#f9fafb;fill-opacity:1;stroke-width:0.264583"
-       x="14.981385"
-       y="290.87271"
+       style="font-size:6.06807px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;display:inline;fill:#f9fafb;fill-opacity:1;stroke-width:0.252836"
+       x="14.984964"
+       y="284.17621"
        id="text520865-0"><tspan
          sodipodi:role="line"
          id="tspan520863-5"
-         style="font-weight:normal;font-size:6.35px;fill:#f9fafb;fill-opacity:1;stroke-width:0.264583"
-         x="14.981385"
-         y="290.87271">v2.0: Licensed under GPLv3-or-later</tspan><tspan
+         style="font-weight:normal;font-size:6.06807px;fill:#f9fafb;fill-opacity:1;stroke-width:0.252836"
+         x="14.984964"
+         y="284.17621">v2.1: Licensed under GPLv3-or-later  </tspan><tspan
          sodipodi:role="line"
-         style="font-weight:normal;font-size:6.35px;fill:#f9fafb;fill-opacity:1;stroke-width:0.264583"
-         x="14.981385"
-         y="298.81021"
+         style="font-weight:normal;font-size:6.06807px;fill:#f9fafb;fill-opacity:1;stroke-width:0.252836"
+         x="14.984964"
+         y="291.76129"
+         id="tspan15129">For DanielDaviesVCV v2.3.0</tspan><tspan
+         sodipodi:role="line"
+         style="font-weight:normal;font-size:6.06807px;fill:#f9fafb;fill-opacity:1;stroke-width:0.252836"
+         x="14.984964"
+         y="299.34637"
          id="tspan17023" /></text>
   </g>
 </svg>
