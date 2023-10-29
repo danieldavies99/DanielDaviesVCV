@@ -250,11 +250,11 @@ struct BendWidget : ModuleWidget {
 		setNoneInterpolationMode->module = module;
 		menu->addChild(setNoneInterpolationMode);
 
-		SetInterpolationMode* setCubicSplineInterpolationMode = createMenuItem<SetInterpolationMode>("Cubic spline");
-		setCubicSplineInterpolationMode->setInterpolationMode(BendWavetable::InterpolationMode::CUBIC_SPLINE);
-		setCubicSplineInterpolationMode->rightText = CHECKMARK(module->interpolationMode == BendWavetable::InterpolationMode::CUBIC_SPLINE);
-		setCubicSplineInterpolationMode->module = module;
-		menu->addChild(setCubicSplineInterpolationMode);
+		// SetInterpolationMode* setCubicSplineInterpolationMode = createMenuItem<SetInterpolationMode>("Cubic spline");
+		// setCubicSplineInterpolationMode->setInterpolationMode(BendWavetable::InterpolationMode::CUBIC_SPLINE);
+		// setCubicSplineInterpolationMode->rightText = CHECKMARK(module->interpolationMode == BendWavetable::InterpolationMode::CUBIC_SPLINE);
+		// setCubicSplineInterpolationMode->module = module;
+		// menu->addChild(setCubicSplineInterpolationMode);
 	}
 };
 
