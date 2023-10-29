@@ -40,13 +40,14 @@ void BendOscillatorSimd::process(float deltaTime)
         }
     }
     bentPhase = simd::clamp(bentPhase, 0.f, 1.f); // defensive programming or something
-    simd::float_4 bentFrames = simd::floor(bentPhase * resolution);
+    // simd::float_4 bentFrames = simd::floor(bentPhase * resolution);
 
     // sin out
-    for (int i = 0; i < channels; i++)
-    {
-        sinOut[i] = sinTable.getFrame(bentFrames[i], interpolationMode);
-    }
+    // for (int i = 0; i < channels; i++)
+    // {
+    //     sinOut[i] = sinTable.getFrame(bentPhase[i], interpolationMode);
+    // }
+    sinOut = sinTable.getFrame(bentPhase, interpolationMode);
     if (unipolar)
     {
         sinOut = (sinOut + 1) * amplitude;
@@ -57,10 +58,11 @@ void BendOscillatorSimd::process(float deltaTime)
     }
 
     // tri out
-    for (int i = 0; i < channels; i++)
-    {
-        triOut[i] = triTable.getFrame(bentFrames[i], interpolationMode);
-    }
+    // for (int i = 0; i < channels; i++)
+    // {
+    //     triOut[i] = triTable.getFrame(bentPhase[i], interpolationMode);
+    // }
+    triOut = triTable.getFrame(bentPhase, interpolationMode);
     if (unipolar)
     {
         triOut = (triOut + 1) * amplitude;
@@ -73,17 +75,19 @@ void BendOscillatorSimd::process(float deltaTime)
     // square out
     if (!usePerfectSquare)
     {
-        for (int i = 0; i < channels; i++)
-        {
-            squareOut[i] = analogSquareTable.getFrame(bentFrames[i], interpolationMode);
-        }
+        // for (int i = 0; i < channels; i++)
+        // {
+        //     squareOut[i] = analogSquareTable.getFrame(bentPhase[i], interpolationMode);
+        // }
+        squareOut = analogSquareTable.getFrame(bentPhase, interpolationMode);
     }
     else
     {
-        for (int i = 0; i < channels; i++)
-        {
-            squareOut[i] = perfectSquareTable.getFrame(bentFrames[i], interpolationMode);
-        }
+        // for (int i = 0; i < channels; i++)
+        // {
+        //     squareOut[i] = perfectSquareTable.getFrame(bentPhase[i], interpolationMode);
+        // }
+        squareOut = perfectSquareTable.getFrame(bentPhase, interpolationMode);
     }
 
     if (unipolar)

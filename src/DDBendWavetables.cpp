@@ -2,34 +2,52 @@
 
 using namespace rack;
 
-float BendWavetable::getFrame(
-    float frameNum,
+simd::float_4 BendWavetable::getFrame(
+    simd::float_4 phase,
     InterpolationMode interpolationMode
 ) {
+
+    simd::float_4 frames = simd::floor(phase * resolution);
+
     if (interpolationMode == BendWavetable::InterpolationMode::LINEAR)
     {
         // linear interpolation:
-        int bottomFrameNum = floor(frameNum);
-        int topFrameNum = ceil(frameNum);
-        float bottomFrame = table[bottomFrameNum];
-        float topFrame = table[topFrameNum];
-        float interpolationValue = frameNum - bottomFrameNum; // i.e. 0.3, 0.6, etc
-        float difference = abs(topFrame - bottomFrame);
-        float res = bottomFrame + (difference * interpolationValue);
-        if(res > 1.0) {
-            res = 1.0;
-        }
+        simd::float_4 bottomFrameNums = simd::floor(frames);
+        simd::float_4 topFrameNums = simd::ceil(frames);
+        simd::float_4 bottomFrames = {
+            table[(int)bottomFrameNums[0]],
+            table[(int)bottomFrameNums[1]],
+            table[(int)bottomFrameNums[2]],
+            table[(int)bottomFrameNums[3]],
+        };
+
+        simd::float_4 topFrames = {
+            table[(int)topFrameNums[0]],
+            table[(int)topFrameNums[1]],
+            table[(int)topFrameNums[2]],
+            table[(int)topFrameNums[3]],
+        };
+
+        simd::float_4 interpolationValues = frames - bottomFrameNums; // i.e. 0.3, 0.6, etc
+        simd::float_4 difference = simd::abs(topFrames - bottomFrames);
+        simd::float_4 res = bottomFrames + (difference * interpolationValues);
         return res;
     }
     if (
-        frameNum >= 0
-        && frameNum <= resolution
-        && interpolationMode == BendWavetable::InterpolationMode::NONE
+        interpolationMode == BendWavetable::InterpolationMode::NONE
     ) {
-        int truncatedFrameNum = floor(frameNum);
-        return table[truncatedFrameNum];
+        simd::float_4 truncatedFrames = simd::floor(frames);
+        simd::float_4 res = {
+            table[(int)truncatedFrames[0]],
+            table[(int)truncatedFrames[1]],
+            table[(int)truncatedFrames[2]],
+            table[(int)truncatedFrames[3]],
+        };
+        return res;
+
     }
-    return 0;
+    simd::float_4 res = {0.f,0.f,0.f,0.f};
+    return res;
 }
 
 void BendTriTable::generate()

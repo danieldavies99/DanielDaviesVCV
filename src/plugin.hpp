@@ -329,9 +329,9 @@ struct BendWavetable
 
 	int resolution = 8096;
 	float phaseShift = 0.f;
-	float table[resolution];
+	float table[8096];
 
-	float getFrame(float frameNum, InterpolationMode interpolationMode);
+	simd::float_4 getFrame(simd::float_4 phase, InterpolationMode interpolationMode);
 	virtual void generate(){};
 };
 
