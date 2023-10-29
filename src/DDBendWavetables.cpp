@@ -2,7 +2,7 @@
 
 using namespace rack;
 
-simd::float_4 BendWavetable::getFrame(
+simd::float_4 BendWavetable::getValue(
     simd::float_4 phase,
     InterpolationMode interpolationMode
 ) {

@@ -327,11 +327,11 @@ struct BendWavetable
 	std::string debugName = "default";
 	enum InterpolationMode { NONE, LINEAR, CUBIC_SPLINE };
 
-	int resolution = 8096;
+	int resolution = 4096;
 	float phaseShift = 0.f;
-	float table[8096];
+	float table[4096];
 
-	simd::float_4 getFrame(simd::float_4 phase, InterpolationMode interpolationMode);
+	simd::float_4 getValue(simd::float_4 phase, InterpolationMode interpolationMode);
 	virtual void generate(){};
 };
 
@@ -381,8 +381,6 @@ struct BendOscillatorSimd
 	simd::float_4 amplitude = 1.f;
 	simd::float_4 phase = 0.f;
 	simd::float_4 freq = 0.f;
-
-	int resolution = 8096;
 
 	BendWavetable::InterpolationMode interpolationMode = BendWavetable::InterpolationMode::LINEAR;
 
