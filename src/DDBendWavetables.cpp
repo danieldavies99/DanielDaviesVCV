@@ -2,16 +2,40 @@
 
 using namespace rack;
 
-float BendWavetable::getFrame(int frameNum) {
-    if(frameNum >= 0 && frameNum <= resolution)
+float BendWavetable::getFrame(
+    float frameNum,
+    InterpolationMode interpolationMode
+) {
+    if (interpolationMode == BendWavetable::InterpolationMode::LINEAR)
     {
-        return table[frameNum];
+        // linear interpolation:
+        int bottomFrameNum = floor(frameNum);
+        int topFrameNum = ceil(frameNum);
+        float bottomFrame = table[bottomFrameNum];
+        float topFrame = table[topFrameNum];
+        float interpolationValue = frameNum - bottomFrameNum; // i.e. 0.3, 0.6, etc
+        float difference = abs(topFrame - bottomFrame);
+        float res = bottomFrame + (difference * interpolationValue);
+        if(res > 1.0) {
+            res = 1.0;
+        }
+        return res;
+    }
+    if (
+        frameNum >= 0
+        && frameNum <= resolution
+        && interpolationMode == BendWavetable::InterpolationMode::NONE
+    ) {
+        int truncatedFrameNum = floor(frameNum);
+        return table[truncatedFrameNum];
     }
     return 0;
 }
 
-void BendTriTable::generate() {
-    for (int i = 0; i < resolution; i++) {
+void BendTriTable::generate()
+{
+    for (int i = 0; i < resolution; i++)
+    {
         float normalizedIndex = static_cast<float>(i) / (resolution - 1);
         normalizedIndex = std::fmod(normalizedIndex + phaseShift, 1.0); // Apply phase shift
         float triangleValue = 2.0 * (0.5 - std::abs(normalizedIndex - 0.5));
@@ -20,27 +44,31 @@ void BendTriTable::generate() {
     }
 }
 
-void BendSinTable::generate() {
-    float stepSize = (2*M_PI) / resolution;
-    for (int i = 0; i < resolution; i++) {
-        table[i] = std::sin(i*stepSize + (2*M_PI*phaseShift));
+void BendSinTable::generate()
+{
+    float stepSize = (2 * M_PI) / resolution;
+    for (int i = 0; i < resolution; i++)
+    {
+        table[i] = std::sin(i * stepSize + (2 * M_PI * phaseShift));
     }
 }
 
-void BendAnalogSquareTable::generate() {
+void BendAnalogSquareTable::generate()
+{
     // "analog" square
     // Pre-calculate the envelope values with reversed effect on the troughs
     float envelope[resolution];
-    for (int i = 0; i < resolution; i++) {
+    for (int i = 0; i < resolution; i++)
+    {
         float normalizedIndex = static_cast<float>(i) / (resolution - 1);
-        float envelopeValue = (std::sin(2.0 * M_PI * normalizedIndex) < 0.0) ?
-            std::pow(envelopeFactor, std::cos(2.0 * M_PI * normalizedIndex))
-            : std::pow(envelopeFactor, -std::cos(2.0 * M_PI * normalizedIndex));
+        float envelopeValue = (std::sin(2.0 * M_PI * normalizedIndex) < 0.0) ? std::pow(envelopeFactor, std::cos(2.0 * M_PI * normalizedIndex))
+                                                                             : std::pow(envelopeFactor, -std::cos(2.0 * M_PI * normalizedIndex));
         envelope[i] = envelopeValue;
     }
 
     // Generate the square wave using the mixed envelope values
-    for (int i = 0; i < resolution; i++) {
+    for (int i = 0; i < resolution; i++)
+    {
         float normalizedIndex = static_cast<float>(i) / (resolution - 1);
         float phaseAdjustedIndex = normalizedIndex + phaseShift;
         int indexInEnvelope = static_cast<int>(normalizedIndex * (resolution - 1));
@@ -52,8 +80,10 @@ void BendAnalogSquareTable::generate() {
     }
 }
 
-void BendPerfectSquareTable::generate() {
-    for (int i = 0; i < resolution; i++) {
+void BendPerfectSquareTable::generate()
+{
+    for (int i = 0; i < resolution; i++)
+    {
         float normalizedIndex = static_cast<float>(i) / (resolution - 1);
         float phaseAdjustedIndex = normalizedIndex + phaseShift;
         float squareValue = (std::sin(2.0 * M_PI * phaseAdjustedIndex) >= 0.0) ? 1.0 : -1.0;

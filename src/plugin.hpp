@@ -5,55 +5,64 @@
 using namespace rack;
 
 // Declare the Plugin, defined in plugin.cpp
-extern Plugin* pluginInstance;
+extern Plugin *pluginInstance;
 
 // Declare each Model, defined in each module source file
-extern Model* modelSequel8Module;
-extern Model* modelSequel16Module;
-extern Model* modelSequelSave;
-extern Model* modelQuantify;
-extern Model* modelSamuel;
-extern Model* modelBlank3;
-extern Model* modelBlank5;
-extern Model* modelBend;
-extern Model* modelJames;
-
+extern Model *modelSequel8Module;
+extern Model *modelSequel16Module;
+extern Model *modelSequelSave;
+extern Model *modelQuantify;
+extern Model *modelSamuel;
+extern Model *modelBlank3;
+extern Model *modelBlank5;
+extern Model *modelBend;
+extern Model *modelJames;
 
 /************************** KNOBS **************************/
 
-struct RedKnob : RoundKnob {
-    RedKnob() {
-        setSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/RedKnob.svg")));
-    }
+struct RedKnob : RoundKnob
+{
+	RedKnob()
+	{
+		setSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/RedKnob.svg")));
+	}
 };
 
-struct SteppedRedKnob : RoundKnob {
-    SteppedRedKnob() {
-        setSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/RedKnob.svg")));
-        snap = true;
-    }
+struct SteppedRedKnob : RoundKnob
+{
+	SteppedRedKnob()
+	{
+		setSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/RedKnob.svg")));
+		snap = true;
+	}
 };
 
-struct CKD6Latch : app::SvgSwitch {
-	CKD6Latch() {
+struct CKD6Latch : app::SvgSwitch
+{
+	CKD6Latch()
+	{
 		momentary = false;
-        latch = false; // this is WEIRD seems to be reversed
+		latch = false; // this is WEIRD seems to be reversed
 		addFrame(Svg::load(asset::system("res/ComponentLibrary/CKD6_0.svg")));
 		addFrame(Svg::load(asset::system("res/ComponentLibrary/CKD6_1.svg")));
 	}
 };
 
-struct CKD6InvisibleLatch : app::SvgSwitch {
-	CKD6InvisibleLatch() {
+struct CKD6InvisibleLatch : app::SvgSwitch
+{
+	CKD6InvisibleLatch()
+	{
 		momentary = false;
-        latch = true; // this is WEIRD seems to be reversed (value is latched but animation frame is as if it's momentary)
+		latch = true; // this is WEIRD seems to be reversed (value is latched but animation frame is as if it's momentary)
 		addFrame(Svg::load(asset::system("res/ComponentLibrary/CKD6_0.svg")));
 		addFrame(Svg::load(asset::system("res/ComponentLibrary/CKD6_1.svg")));
 	}
 };
 
-struct RedSliderMedium : app::SvgSlider {
-	RedSliderMedium() {
+struct RedSliderMedium : app::SvgSlider
+{
+	RedSliderMedium()
+	{
 		setBackgroundSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/SliderBackgroundMedium.svg")));
 		setHandleSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/RedSlideKnob.svg")));
 		minHandlePos = mm2px(Vec(-1.f, 0.f));
@@ -63,30 +72,32 @@ struct RedSliderMedium : app::SvgSlider {
 };
 
 // Custom Widgets
-struct DigitDisplay : SvgWidget {
-    std::shared_ptr<rack::Svg> digit0 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay0.svg"));
-    std::shared_ptr<rack::Svg> digit1 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay1.svg"));
-    std::shared_ptr<rack::Svg> digit2 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay2.svg"));
-    std::shared_ptr<rack::Svg> digit3 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay3.svg"));
-    std::shared_ptr<rack::Svg> digit4 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay4.svg"));
-    std::shared_ptr<rack::Svg> digit5 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay5.svg"));
-    std::shared_ptr<rack::Svg> digit6 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay6.svg"));
-    std::shared_ptr<rack::Svg> digit7 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay7.svg"));
-    std::shared_ptr<rack::Svg> digit8 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay8.svg"));
-    std::shared_ptr<rack::Svg> digit9 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay9.svg"));
+struct DigitDisplay : SvgWidget
+{
+	std::shared_ptr<rack::Svg> digit0 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay0.svg"));
+	std::shared_ptr<rack::Svg> digit1 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay1.svg"));
+	std::shared_ptr<rack::Svg> digit2 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay2.svg"));
+	std::shared_ptr<rack::Svg> digit3 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay3.svg"));
+	std::shared_ptr<rack::Svg> digit4 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay4.svg"));
+	std::shared_ptr<rack::Svg> digit5 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay5.svg"));
+	std::shared_ptr<rack::Svg> digit6 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay6.svg"));
+	std::shared_ptr<rack::Svg> digit7 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay7.svg"));
+	std::shared_ptr<rack::Svg> digit8 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay8.svg"));
+	std::shared_ptr<rack::Svg> digit9 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay9.svg"));
 
-    int *value = 0;
+	int *value = 0;
 
-    DigitDisplay() {}
+	DigitDisplay() {}
 
-    void draw(const DrawArgs &args) override;
+	void draw(const DrawArgs &args) override;
 
-    private:
-        std::string formatDigitValue(int value);
+private:
+	std::string formatDigitValue(int value);
 };
 
-struct KeyboardDisplay : SvgWidget {
-    std::shared_ptr<rack::Svg> keyOnC = APP->window->loadSvg(asset::plugin(pluginInstance, "res/KeyOnC.svg"));
+struct KeyboardDisplay : SvgWidget
+{
+	std::shared_ptr<rack::Svg> keyOnC = APP->window->loadSvg(asset::plugin(pluginInstance, "res/KeyOnC.svg"));
 	std::shared_ptr<rack::Svg> keyOnD = APP->window->loadSvg(asset::plugin(pluginInstance, "res/KeyOnD.svg"));
 	std::shared_ptr<rack::Svg> keyOnE = APP->window->loadSvg(asset::plugin(pluginInstance, "res/KeyOnE.svg"));
 	std::shared_ptr<rack::Svg> keyOnF = APP->window->loadSvg(asset::plugin(pluginInstance, "res/KeyOnF.svg"));
@@ -95,27 +106,29 @@ struct KeyboardDisplay : SvgWidget {
 	std::shared_ptr<rack::Svg> keyOnB = APP->window->loadSvg(asset::plugin(pluginInstance, "res/KeyOnB.svg"));
 	std::shared_ptr<rack::Svg> keyOnSharp = APP->window->loadSvg(asset::plugin(pluginInstance, "res/KeyOnSharp.svg"));
 
-    double *keyOnValue = 0;
+	double *keyOnValue = 0;
 
-    KeyboardDisplay() {}
+	KeyboardDisplay() {}
 
-    void draw(const DrawArgs &args) override;
+	void draw(const DrawArgs &args) override;
 
-    private:
-        std::string formatDigitValue(int value);
+private:
+	std::string formatDigitValue(int value);
 };
 
-struct OledPixel {
+struct OledPixel
+{
 	int x;
 	int y;
 	bool isLit;
 };
 
-struct OledPixelDisplay : widget::Widget {
+struct OledPixelDisplay : widget::Widget
+{
 	std::vector<std::vector<OledPixel>> pixels;
 	int numPixelsX = 0;
 	int numPixelsY = 0;
-	NVGcolor pixelColor =  nvgRGBA(233, 79, 61, 255);
+	NVGcolor pixelColor = nvgRGBA(233, 79, 61, 255);
 
 	double pixelWidth = mm2px(1.03);
 	double pixelWidthWithGaps = mm2px(1.04);
@@ -125,43 +138,48 @@ struct OledPixelDisplay : widget::Widget {
 	void lightPixel(int x, int y, int offsetX, int offsetY);
 	void lightAll();
 	void darkenAll();
-	void drawGrid(const DrawArgs& args);
-	void drawLayer(const DrawArgs& args, int layer) override;
-	virtual void process() {};
+	void drawGrid(const DrawArgs &args);
+	void drawLayer(const DrawArgs &args, int layer) override;
+	virtual void process(){};
 };
 
-struct CharacterDisplay : OledPixelDisplay {
+struct CharacterDisplay : OledPixelDisplay
+{
 	void drawLetter(char letter, int x, int y);
 };
 
-struct TextInputDisplay : CharacterDisplay {
-	TextInputDisplay() {
-		numPixelsX = 83; // should be multiple of six minus one for letters 
+struct TextInputDisplay : CharacterDisplay
+{
+	TextInputDisplay()
+	{
+		numPixelsX = 83; // should be multiple of six minus one for letters
 		numPixelsY = 47; // should be multiple of eight minus one for letters
 	}
 	bool isSelected = false;
 	bool shouldShowCursor = true;
 	int framesSinceLastCursorChange = 0;
-	std::string* message;
+	std::string *message;
 
-	void onButton(const ButtonEvent& e) override;
-	void onSelectKey(const SelectKeyEvent& e) override;
-	void onSelect(const SelectEvent& e) override;
-	void onDeselect(const DeselectEvent& e) override;
+	void onButton(const ButtonEvent &e) override;
+	void onSelectKey(const SelectKeyEvent &e) override;
+	void onSelect(const SelectEvent &e) override;
+	void onDeselect(const DeselectEvent &e) override;
 
 	void drawCursor(int x, int y);
 	void drawMessage();
 	void process() override;
 };
- struct LengthValuesDisplay : CharacterDisplay {
-	char* val0;
-	char* val1;
-	char* val2;
-	char* val3;
+struct LengthValuesDisplay : CharacterDisplay
+{
+	char *val0;
+	char *val1;
+	char *val2;
+	char *val3;
 
-	LengthValuesDisplay() {
-		numPixelsX = 71 - 14; // should be multiple of six minus one for letters 
-		numPixelsY = 7; // should be multiple of eight minus one for letters
+	LengthValuesDisplay()
+	{
+		numPixelsX = 71 - 14; // should be multiple of six minus one for letters
+		numPixelsY = 7;		  // should be multiple of eight minus one for letters
 	}
 	void process() override;
 };
@@ -183,7 +201,8 @@ static const double KEY_ON_B = 0.9166;
 // End
 
 // Timing Utils
-struct IgnoreClockAfterResetTimer {
+struct IgnoreClockAfterResetTimer
+{
 
 	dsp::Timer timer;
 	bool shouldIgnore = false;
@@ -192,14 +211,15 @@ struct IgnoreClockAfterResetTimer {
 	void process(float deltaTime);
 };
 
+struct JamesClockTracker
+{
 
-struct JamesClockTracker {
-	
-	JamesClockTracker() {
-        numSteps = 16;
+	JamesClockTracker()
+	{
+		numSteps = 16;
 		numRows = 6;
 		initializeRows();
-    }
+	}
 
 	short numRows;
 	short numSteps;
@@ -223,7 +243,8 @@ struct JamesClockTracker {
 	void setRushForRow(short row, short rush);
 };
 
-struct SequelClockTracker {
+struct SequelClockTracker
+{
 
 	short numSteps;
 	short numRows;
@@ -252,24 +273,28 @@ struct SequelClockTracker {
 	void setHasPulsedThisStepForRow(short row, bool val);
 };
 
-struct Sequel8ClockTracker : SequelClockTracker {
-    Sequel8ClockTracker() {
-        numSteps = 8;
-        numRows = 3;
-		initializeRows();
-    }
-};
-
-struct Sequel16ClockTracker : SequelClockTracker {
-    Sequel16ClockTracker() {
-        numSteps = 16;
+struct Sequel8ClockTracker : SequelClockTracker
+{
+	Sequel8ClockTracker()
+	{
+		numSteps = 8;
 		numRows = 3;
 		initializeRows();
-    }
+	}
 };
 
+struct Sequel16ClockTracker : SequelClockTracker
+{
+	Sequel16ClockTracker()
+	{
+		numSteps = 16;
+		numRows = 3;
+		initializeRows();
+	}
+};
 
-struct SequenceGenerator {
+struct SequenceGenerator
+{
 	int dotLength = 1;
 	int dashLength = 3;
 	int newLetterLength = 3;
@@ -284,7 +309,8 @@ struct SequenceGenerator {
 };
 // End
 
-struct SequelSaveInterface {
+struct SequelSaveInterface
+{
 	std::array<std::array<double, 16>, 3> knobVals = {{0.f}};
 	std::array<std::array<bool, 16>, 3> switchVals = {{false}};
 	std::array<double, 3> clockDivideVals = {1.f, 1.f, 1.f};
@@ -296,51 +322,69 @@ struct SequelSaveInterface {
 	bool isDirty = false;
 };
 
-struct BendWavetable {
-	int resolution = 2048;
+struct BendWavetable
+{	
+	std::string debugName = "default";
+	enum InterpolationMode { NONE, LINEAR, CUBIC_SPLINE };
+
+	int resolution = 8096;
 	float phaseShift = 0.f;
-	float table[2048];
+	float table[resolution];
 
-	float getFrame(int frameNum);
-	virtual void generate() {};
+	float getFrame(float frameNum, InterpolationMode interpolationMode);
+	virtual void generate(){};
 };
 
-struct BendTriTable : BendWavetable {
-	BendTriTable() {
+struct BendTriTable : BendWavetable
+{
+	BendTriTable()
+	{
 		generate();
 	}
 	void generate() override;
 };
 
-struct BendSinTable : BendWavetable {
-	BendSinTable() {
+struct BendSinTable : BendWavetable
+{
+	BendSinTable()
+	{
 		phaseShift = -0.25;
+		debugName = "sin";
 		generate();
 	}
 	void generate() override;
 };
 
-struct BendAnalogSquareTable : BendWavetable {
+struct BendAnalogSquareTable : BendWavetable
+{
 	float envelopeFactor;
-	BendAnalogSquareTable() {
+	BendAnalogSquareTable()
+	{
 		envelopeFactor = 0.75;
 		generate();
 	}
 	void generate() override;
 };
 
-struct BendPerfectSquareTable : BendWavetable {
-	BendPerfectSquareTable() {
+struct BendPerfectSquareTable : BendWavetable
+{
+	BendPerfectSquareTable()
+	{
 		generate();
 	}
 	void generate() override;
 };
 
-struct BendOscillatorSimd {
+struct BendOscillatorSimd
+{
 	simd::float_4 bend = 0.5f;
 	simd::float_4 amplitude = 1.f;
 	simd::float_4 phase = 0.f;
 	simd::float_4 freq = 0.f;
+
+	int resolution = 8096;
+
+	BendWavetable::InterpolationMode interpolationMode = BendWavetable::InterpolationMode::LINEAR;
 
 	bool syncEnabled = false;
 	simd::float_4 sync = 0.f;
@@ -369,12 +413,13 @@ struct BendOscillatorSimd {
 	float generateNoise();
 };
 
-struct GlideCalculator {
+struct GlideCalculator
+{
 	bool initialized = false;
 
 	simd::float_4 targetFreq = 0.f;
 	simd::float_4 currentFreq = 0.f;
-	
+
 	float glideAmount = 0.f; // should range from 0 - 1
 
 	void initialize(simd::float_4 initialFreq);
