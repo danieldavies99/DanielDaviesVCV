@@ -327,9 +327,9 @@ struct BendWavetable
 	std::string debugName = "default";
 	enum InterpolationMode { NONE, LINEAR, CUBIC_SPLINE };
 
-	int resolution = 4096;
+	int resolution = 131072;
 	float phaseShift = 0.f;
-	float table[4096];
+	float table[131072];
 
 	simd::float_4 getValue(simd::float_4 phase, InterpolationMode interpolationMode);
 	virtual void generate(){};

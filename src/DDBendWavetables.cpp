@@ -64,7 +64,7 @@ void BendTriTable::generate()
 
 void BendSinTable::generate()
 {
-    float stepSize = (2 * M_PI) / resolution;
+    float stepSize = (2 * M_PI) / (resolution);
     for (int i = 0; i < resolution; i++)
     {
         table[i] = std::sin(i * stepSize + (2 * M_PI * phaseShift));
