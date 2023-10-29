@@ -79,6 +79,8 @@ struct Bend : Module {
 
 	bool lfoEnabled = false;
 
+	BendWavetable::InterpolationMode interpolationMode = BendWavetable::LINEAR;
+
 	void process(const ProcessArgs& args) override {
 		float frequencyControl = params[KNOB_COARSE_PARAM].getValue() / 12.f;
 		if(lfoEnabled) {
@@ -124,6 +126,8 @@ struct Bend : Module {
 			oscillator.unipolar = lfoEnabled;
 			oscillator.usePerfectSquare = lfoEnabled;
 
+			oscillator.interpolationMode = interpolationMode;
+
 			simd::float_4 pitch = 0.f;
 			simd::float_4 freq = 0.f;
 			if(!lfoEnabled) {
@@ -167,6 +171,19 @@ struct Bend : Module {
 		outputs[SIN_OUT_OUTPUT].setChannels(channels);
 		outputs[NOISE_OUT_OUTPUT].setChannels(channels);
 	}
+
+	json_t *dataToJson() override {
+		json_t *rootJ = json_object();
+		json_object_set_new(rootJ, "interpolationMode", json_integer(interpolationMode));
+		return rootJ;
+	}
+
+	void dataFromJson(json_t *rootJ) override {
+		json_t *interpolationModeJ = json_object_get(rootJ, "interpolationMode");
+		if(interpolationModeJ) {
+			interpolationMode = (BendWavetable::InterpolationMode)json_integer_value(interpolationModeJ);
+		}
+	}
 };
 
 
@@ -200,6 +217,44 @@ struct BendWidget : ModuleWidget {
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(26.183, 110.457)), module, Bend::SIN_OUT_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(40.257, 110.457)), module, Bend::TRIANGLE_OUT_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(54.331, 110.457)), module, Bend::NOISE_OUT_OUTPUT));
+	}
+
+	void appendContextMenu(Menu* menu) override {
+		Bend* module = dynamic_cast<Bend*>(this->module);
+
+		struct SetInterpolationMode : MenuItem {
+			Bend* module;
+			BendWavetable::InterpolationMode interpolationMode = BendWavetable::InterpolationMode::NONE;
+
+			void setInterpolationMode(BendWavetable::InterpolationMode argInterpolationMode) {
+				interpolationMode = argInterpolationMode;
+			}
+	
+			void onAction(const event::Action &e) override {
+				module->interpolationMode = interpolationMode;
+			}
+		};
+
+		menu->addChild(new MenuEntry);
+		menu->addChild(createMenuLabel("Interpolation mode"));
+
+		SetInterpolationMode* setLinearInterpolationMode = createMenuItem<SetInterpolationMode>("Linear");
+		setLinearInterpolationMode->setInterpolationMode(BendWavetable::InterpolationMode::LINEAR);
+		setLinearInterpolationMode->rightText = CHECKMARK(module->interpolationMode == BendWavetable::InterpolationMode::LINEAR);
+		setLinearInterpolationMode->module = module;
+		menu->addChild(setLinearInterpolationMode);
+
+		SetInterpolationMode* setNoneInterpolationMode = createMenuItem<SetInterpolationMode>("None");
+		setNoneInterpolationMode->setInterpolationMode(BendWavetable::InterpolationMode::NONE);
+		setNoneInterpolationMode->rightText = CHECKMARK(module->interpolationMode == BendWavetable::InterpolationMode::NONE);
+		setNoneInterpolationMode->module = module;
+		menu->addChild(setNoneInterpolationMode);
+
+		// SetInterpolationMode* setCubicSplineInterpolationMode = createMenuItem<SetInterpolationMode>("Cubic spline");
+		// setCubicSplineInterpolationMode->setInterpolationMode(BendWavetable::InterpolationMode::CUBIC_SPLINE);
+		// setCubicSplineInterpolationMode->rightText = CHECKMARK(module->interpolationMode == BendWavetable::InterpolationMode::CUBIC_SPLINE);
+		// setCubicSplineInterpolationMode->module = module;
+		// menu->addChild(setCubicSplineInterpolationMode);
 	}
 };
 
