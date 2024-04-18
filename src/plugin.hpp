@@ -17,6 +17,7 @@ extern Model *modelBlank3;
 extern Model *modelBlank5;
 extern Model *modelBend;
 extern Model *modelJames;
+extern Model* modelEnvyModule;
 
 /************************** KNOBS **************************/
 
@@ -59,17 +60,30 @@ struct CKD6InvisibleLatch : app::SvgSwitch
 	}
 };
 
-struct RedSliderMedium : app::SvgSlider
+struct RedSliderMediumHorizontal : app::SvgSlider
 {
-	RedSliderMedium()
+	RedSliderMediumHorizontal()
 	{
 		setBackgroundSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/SliderBackgroundMedium.svg")));
-		setHandleSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/RedSlideKnob.svg")));
-		minHandlePos = mm2px(Vec(-1.f, 0.f));
-		maxHandlePos = mm2px(Vec(20.5f, 0.f));
+		setHandleSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/RedSliderKnob.svg")));
+		maxHandlePos = mm2px(Vec(20.5, -0.1f));
+		minHandlePos = mm2px(Vec(-1.f, -0.1f));
 		horizontal = true;
 	}
 };
+
+struct RedSliderMediumVertical : app::SvgSlider
+{
+	RedSliderMediumVertical()
+	{	
+		std::shared_ptr<rack::Svg> rail = APP->window->loadSvg(asset::plugin(pluginInstance, "res/SliderBackgroundMediumVertical.svg"));
+		setBackgroundSvg(rail);
+		setHandleSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/RedSliderKnobVertical.svg")));
+		maxHandlePos = mm2px(Vec(0.f, 0.75f));
+		minHandlePos = mm2px(Vec(0.f, 22.25f));
+	}
+};
+
 
 // Custom Widgets
 struct DigitDisplay : SvgWidget

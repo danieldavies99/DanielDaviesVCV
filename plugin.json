@@ -90,6 +90,12 @@
         "Sequencer"
       ],
       "hidden": false
+    },
+    {
+      "slug": "EnvyModule",
+      "name": "EnvyModule",
+      "description": "",
+      "tags": []
     }
   ]
 }
