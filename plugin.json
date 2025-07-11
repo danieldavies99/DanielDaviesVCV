@@ -17,89 +17,63 @@
       "slug": "Sequel8",
       "name": "Sequel 8",
       "description": "3 row / 8 step sequencer with built-in clock divider",
-      "tags": [
-        "Clock modulator",
-        "Sequencer"
-      ]
+      "tags": ["Clock modulator", "Sequencer"]
     },
     {
       "slug": "Sequel16",
       "name": "Sequel 16",
       "description": "3 row / 16 step sequencer with built-in clock divider",
-      "tags": [
-        "Clock modulator",
-        "Sequencer"
-      ]
+      "tags": ["Clock modulator", "Sequencer"]
     },
     {
       "slug": "Quantify",
       "name": "Quantify",
       "description": "3x Quantizer with attenuverted inputs + nudge and transpose controls",
-      "tags": [
-        "Quantizer"
-      ]
+      "tags": ["Quantizer"]
     },
     {
       "slug": "Samuel",
       "name": "Samuel",
       "description": "Morse code based rhythm generator",
-      "tags": [
-        "Clock modulator"
-      ]
+      "tags": ["Clock modulator"]
     },
     {
       "slug": "Blank3",
       "name": "Blank3",
       "description": "3HP wide blank panel",
-      "tags": [
-        "Blank"
-      ]
+      "tags": ["Blank"]
     },
     {
       "slug": "Blank5",
       "name": "Blank5",
       "description": "5HP wide blank panel",
-      "tags": [
-        "Blank"
-      ]
+      "tags": ["Blank"]
     },
     {
       "slug": "SequelSave",
       "name": "Sequel Save",
       "description": "Save state expander module for Sequel 8 & Sequel 16",
-      "tags": [
-        "expander"
-      ]
+      "tags": ["expander"]
     },
     {
       "slug": "Bend",
       "name": "Bend",
       "description": "Phase modulation oscillator",
-      "tags": [
-        "Oscillator",
-        "Low-frequency oscillator"
-      ],
+      "tags": ["Oscillator", "Low-frequency oscillator"],
       "hidden": false
     },
     {
       "slug": "James",
       "name": "James",
       "description": "6 row drum sequencer with per-row rush/drag controls",
-      "tags": [
-        "Clock modulator",
-        "Sequencer"
-      ],
+      "tags": ["Clock modulator", "Sequencer"],
       "hidden": false
     },
     {
       "slug": "Knot",
       "name": "Knot",
       "description": "4x4 sequential switch",
-      "tags": [
-          "Switch",
-          "Logic",
-          "Visual"
-      ]
+      "tags": ["Switch", "Logic", "Visual"]
     }
   ]
 }
