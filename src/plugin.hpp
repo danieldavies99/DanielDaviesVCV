@@ -17,6 +17,7 @@ extern Model *modelBlank3;
 extern Model *modelBlank5;
 extern Model *modelBend;
 extern Model *modelJames;
+extern Model* modelSwitchModule;
 
 /************************** KNOBS **************************/
 
@@ -141,6 +142,31 @@ struct OledPixelDisplay : widget::Widget
 	void drawGrid(const DrawArgs &args);
 	void drawLayer(const DrawArgs &args, int layer) override;
 	virtual void process(){};
+};
+
+
+// TODO: abstract a new class that includes the specific draw functions
+// for the switch module
+struct LineDisplay : OledPixelDisplay
+{
+	LineDisplay()
+	{
+		numPixelsX = 39;
+		numPixelsY = 72;
+	}
+
+	void drawLine(int x1, int y1, int x2, int y2);
+	void process() override;
+
+	bool *in1connected;
+	bool *in2connected;
+	bool *in3connected;
+	bool *in4connected;
+
+	int *output1Index;
+	int *output2Index;
+	int *output3Index;
+	int *output4Index;
 };
 
 struct CharacterDisplay : OledPixelDisplay
@@ -422,4 +448,11 @@ struct GlideCalculator
 
 	void initialize(simd::float_4 initialFreq);
 	void process(float deltaTime);
+};
+
+struct GateDetector
+{
+	float lastInput = 0.f;
+	
+	bool check(float input);
 };

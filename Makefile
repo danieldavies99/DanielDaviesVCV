@@ -20,3 +20,9 @@ DISTRIBUTABLES += $(wildcard LICENSE*)
 
 # Include the Rack plugin Makefile framework
 include $(RACK_DIR)/plugin.mk
+
+run:
+	"/C/Program Files/VCV/Rack2Free/Rack.exe" -d -u "/C/Users/danie/Documents/Rack2" -s "/C/Program Files/VCV/Rack2Free"
+
+copy:
+	cp "C:\C++\Rack-SDK-2.6.4-win\Rack-SDK\DanielDaviesVCV\dist\SequelSequencers" "C:\Users\danie\Documents\Rack2\plugins" -r

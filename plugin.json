@@ -90,6 +90,16 @@
         "Sequencer"
       ],
       "hidden": false
+    },
+    {
+      "slug": "Knot",
+      "name": "Knot",
+      "description": "4x4 sequential switch",
+      "tags": [
+          "Switch",
+          "Logic",
+          "Visual"
+      ]
     }
   ]
 }
