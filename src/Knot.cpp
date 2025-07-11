@@ -282,4 +282,4 @@ struct KnotModuleWidget : ModuleWidget {
 };
 
 
-Model* modelKnotModule = createModel<KnotModule, KnotModuleWidget>("KnotModule");
+Model* modelKnot = createModel<KnotModule, KnotModuleWidget>("KnotModule");

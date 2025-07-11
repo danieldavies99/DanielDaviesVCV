@@ -1022,4 +1022,4 @@ struct Sequel16Widget : ModuleWidget {
 };
 
 
-Model* modelSequel16Module = createModel<Sequel16, Sequel16Widget>("Sequel16");
+Model* modelSequel16 = createModel<Sequel16, Sequel16Widget>("Sequel16");

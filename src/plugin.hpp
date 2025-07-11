@@ -8,8 +8,8 @@ using namespace rack;
 extern Plugin *pluginInstance;
 
 // Declare each Model, defined in each module source file
-extern Model *modelSequel8Module;
-extern Model *modelSequel16Module;
+extern Model *modelSequel8;
+extern Model *modelSequel16;
 extern Model *modelSequelSave;
 extern Model *modelQuantify;
 extern Model *modelSamuel;
@@ -17,7 +17,7 @@ extern Model *modelBlank3;
 extern Model *modelBlank5;
 extern Model *modelBend;
 extern Model *modelJames;
-extern Model* modelSwitchModule;
+extern Model *modelKnot;
 
 /************************** KNOBS **************************/
 

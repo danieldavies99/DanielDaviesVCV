@@ -781,4 +781,4 @@ struct Sequel8ModuleWidget : ModuleWidget {
 };
 
 
-Model* modelSequel8Module = createModel<Sequel8, Sequel8ModuleWidget>("Sequel8");
+Model* modelSequel8 = createModel<Sequel8, Sequel8ModuleWidget>("Sequel8");
