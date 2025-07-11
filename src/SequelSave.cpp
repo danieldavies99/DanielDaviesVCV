@@ -85,7 +85,7 @@ struct SequelSave : Module {
 	SequelSaveInterface sequelSaveStates[4];
 
 	void process(const ProcessArgs& args) override {
-		sequelPresent = leftExpander.module && (leftExpander.module->model == modelSequel8Module || leftExpander.module->model == modelSequel16Module);
+		sequelPresent = leftExpander.module && (leftExpander.module->model == modelSequel8 || leftExpander.module->model == modelSequel16);
 
 		double saveButton0Val = params[SWITCH_SAVE_0_PARAM].getValue();
 		double saveButton1Val = params[SWITCH_SAVE_1_PARAM].getValue();

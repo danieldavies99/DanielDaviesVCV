@@ -207,7 +207,6 @@ struct KnotModule : Module {
 			output4Index = indexes[3];
 		}
 
-
 		int out1in = getInputIndexControl(output1Index);
 		int out2in = getInputIndexControl(output2Index);
 		int out3in = getInputIndexControl(output3Index);
@@ -225,8 +224,6 @@ struct KnotModule : Module {
 		if (inputs[out4in].isConnected()) {
 			outputs[OUTPUT_OUT_4_OUTPUT].setVoltage(inputs[out4in].getVoltage());
 		}
-		// pass inputs to outputs
-
 	}
 };
 
