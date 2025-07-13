@@ -408,6 +408,8 @@ struct Sequel16 : Module {
 
 	bool sampleAndHoldEnabled = false;
 
+	bool showDashes = false;
+
 	bool shouldPulseThisStep(short row) {
 		return params[getButtonId(row, clockTracker.getCurrentStepForRow(row))].getValue() > 0.5 && clockTracker.getHasPulsedThisStepForRow(row) == false;
 	}
@@ -933,16 +935,20 @@ struct Sequel16Widget : ModuleWidget {
 			TwoDigitDisplay *clockDivideDisplayR0 = new TwoDigitDisplay();
 			clockDivideDisplayR0->box.pos = mm2px(Vec(19.5, 37));
 			clockDivideDisplayR0->value = &module->clockDivideDisplayValueR0;
+			clockDivideDisplayR0->showDashes = &module->showDashes;
+			
 			addChild(clockDivideDisplayR0);
 
 			TwoDigitDisplay *clockDivideDisplayR1 = new TwoDigitDisplay();
 			clockDivideDisplayR1->box.pos = mm2px(Vec(19.5, 37 + 29.898));
 			clockDivideDisplayR1->value = &module->clockDivideDisplayValueR1;
+			clockDivideDisplayR1->showDashes = &module->showDashes;
 			addChild(clockDivideDisplayR1);
 
 			TwoDigitDisplay *clockDivideDisplayR2 = new TwoDigitDisplay();
 			clockDivideDisplayR2->box.pos = mm2px(Vec(19.5, 37 + 29.898 + 29.898));
 			clockDivideDisplayR2->value = &module->clockDivideDisplayValueR2;
+			clockDivideDisplayR2->showDashes = &module->showDashes;
 			addChild(clockDivideDisplayR2);
 		}
 	}
