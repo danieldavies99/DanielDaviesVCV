@@ -89,9 +89,9 @@ struct DigitDisplay : SvgWidget
 	std::shared_ptr<rack::Svg> digitOff = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplayOff.svg"));
 
 	int *value = 0;
+	bool *showDashes = 0;
 
 	int numDigits = 2;
-	bool showDashes = false;
 
 	DigitDisplay() {}
 

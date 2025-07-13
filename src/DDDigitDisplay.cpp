@@ -21,8 +21,9 @@ void DigitDisplay::draw(const DrawArgs &args)  {
     nvgFill(args.vg);
     std::string twoDigitValue = formatDigitValue(*value);
     for(std::string::size_type i = 0; i < twoDigitValue.length(); i++) {
-        if (showDashes) {
+        if (*showDashes) {
             svgDraw(args.vg, digitDash->handle);
+            nvgTranslate(args.vg, mm2px(3.6), 0);
             continue;
         }
         switch(twoDigitValue[i]) {

@@ -97,6 +97,7 @@ struct Knot : Module {
 	GateDetector redoDetector;
 
 	int selectedPattern = 0;
+	bool presetPatternsDisabled = true;
 
 	// undo and redo stacks
 	const size_t MAX_STACK_SIZE = 128;
@@ -315,6 +316,11 @@ struct Knot : Module {
 		}
 
 		selectedPattern = params[KNOB_PATTERN_SELECT_PARAM].getValue();
+		if (selectedPattern == 0) {
+			presetPatternsDisabled = true;
+		} else {
+			presetPatternsDisabled = false;
+		}
 
 		// map inputs to outputs
 		int out1in = getInputId(output1Index);
@@ -391,6 +397,7 @@ struct KnotWidget : ModuleWidget {
 			ThreeDigitDisplay *patternSelectDisplay = new ThreeDigitDisplay();
 			patternSelectDisplay->box.pos = mm2px(Vec(54.496, 14.018));
 			patternSelectDisplay->value = &module->selectedPattern;
+			patternSelectDisplay->showDashes = &module->presetPatternsDisabled;
 			addChild(patternSelectDisplay);
 		}
 	}
