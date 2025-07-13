@@ -85,15 +85,29 @@ struct DigitDisplay : SvgWidget
 	std::shared_ptr<rack::Svg> digit7 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay7.svg"));
 	std::shared_ptr<rack::Svg> digit8 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay8.svg"));
 	std::shared_ptr<rack::Svg> digit9 = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplay9.svg"));
+	std::shared_ptr<rack::Svg> digitDash = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplayDash.svg"));
+	std::shared_ptr<rack::Svg> digitOff = APP->window->loadSvg(asset::plugin(pluginInstance, "res/DigitDisplayOff.svg"));
 
 	int *value = 0;
+
+	int numDigits = 2;
+	bool showDashes = false;
 
 	DigitDisplay() {}
 
 	void draw(const DrawArgs &args) override;
-
 private:
 	std::string formatDigitValue(int value);
+};
+
+struct TwoDigitDisplay : DigitDisplay
+{
+	TwoDigitDisplay() { numDigits = 2; }
+};
+
+struct ThreeDigitDisplay : DigitDisplay
+{
+	ThreeDigitDisplay() { numDigits = 3; }
 };
 
 struct KeyboardDisplay : SvgWidget
@@ -455,4 +469,20 @@ struct GateDetector
 	float lastInput = 0.f;
 	
 	bool check(float input);
+};
+
+struct KnotUndoState
+{
+	int output1Index;
+	int output2Index;
+	int output3Index;
+	int output4Index;
+
+	KnotUndoState(int output1Index, int output2Index, int output3Index, int output4Index)
+	{
+		this->output1Index = output1Index;
+		this->output2Index = output2Index;
+		this->output3Index = output3Index;
+		this->output4Index = output4Index;
+	}
 };

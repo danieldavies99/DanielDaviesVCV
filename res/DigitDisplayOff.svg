@@ -8,7 +8,7 @@
    version="1.1"
    id="svg1138"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
-   sodipodi:docname="DigitDisplay0.svg"
+   sodipodi:docname="digitDisplay0.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,11 +27,11 @@
      inkscape:cx="7.953125"
      inkscape:cy="9.984375"
      inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="1912"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g20202" />
+     inkscape:current-layer="layer7" />
   <defs
      id="defs1135" />
   <g
@@ -58,7 +58,7 @@
        inkscape:groupmode="layer"
        id="layer1"
        inkscape:label="off 1"
-       style="display:none"
+       style="display:inline"
        sodipodi:insensitive="true">
       <path
          style="font-size:6.70278px;line-height:1.25;font-family:'Digital Display';-inkscape-font-specification:'Digital Display';display:inline;fill:#393939;fill-opacity:1;stroke-width:0.264583"
@@ -69,7 +69,7 @@
        inkscape:groupmode="layer"
        id="layer2"
        inkscape:label="off 2"
-       style="display:none"
+       style="display:inline"
        sodipodi:insensitive="true">
       <path
          style="font-size:6.70278px;line-height:1.25;font-family:'Digital Display';-inkscape-font-specification:'Digital Display';display:inline;fill:#393939;fill-opacity:1;stroke-width:0.264583"
@@ -80,7 +80,7 @@
        inkscape:groupmode="layer"
        id="layer3"
        inkscape:label="off 3"
-       style="display:none"
+       style="display:inline"
        sodipodi:insensitive="true">
       <path
          style="font-size:6.70278px;line-height:1.25;font-family:'Digital Display';-inkscape-font-specification:'Digital Display';display:inline;fill:#393939;fill-opacity:1;stroke-width:0.264583"
@@ -102,7 +102,7 @@
        inkscape:groupmode="layer"
        id="layer5"
        inkscape:label="off 5"
-       style="display:none"
+       style="display:inline"
        sodipodi:insensitive="true">
       <path
          style="font-size:6.70278px;line-height:1.25;font-family:'Digital Display';-inkscape-font-specification:'Digital Display';display:inline;fill:#393939;fill-opacity:1;stroke-width:0.264583"
@@ -113,7 +113,7 @@
        inkscape:groupmode="layer"
        id="layer6"
        inkscape:label="off 6"
-       style="display:none"
+       style="display:inline"
        sodipodi:insensitive="true">
       <path
          style="font-size:6.70278px;line-height:1.25;font-family:'Digital Display';-inkscape-font-specification:'Digital Display';display:inline;fill:#393939;fill-opacity:1;stroke-width:0.264583"
@@ -124,17 +124,17 @@
        inkscape:groupmode="layer"
        id="layer7"
        inkscape:label="off 7"
-       style="display:none"
+       style="display:inline"
        sodipodi:insensitive="true">
       <path
-         style="font-size:6.70278px;line-height:1.25;font-family:'Digital Display';-inkscape-font-specification:'Digital Display';display:none;fill:#393939;fill-opacity:1;stroke-width:0.264583"
+         style="font-size:6.70278px;line-height:1.25;font-family:'Digital Display';-inkscape-font-specification:'Digital Display';display:inline;fill:#393939;fill-opacity:1;stroke-width:0.264583"
          d="M 4.0584762,4.183687 3.7707576,4.4074682 3.5096795,4.1943432 V 2.8250154 l 0.2610781,-0.213125 0.2877186,0.2291094 z"
          id="path1528" />
     </g>
     <g
        aria-label="8"
        id="text10330-6"
-       style="font-size:6.70278px;line-height:1.25;font-family:'Digital Display';-inkscape-font-specification:'Digital Display';display:none;fill:#393939;stroke-width:0.264583" />
+       style="font-size:6.70278px;line-height:1.25;font-family:'Digital Display';-inkscape-font-specification:'Digital Display';fill:#393939;stroke-width:0.264583" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -146,7 +146,7 @@
        inkscape:groupmode="layer"
        id="layer12"
        inkscape:label="on 1"
-       style="display:inline">
+       style="display:none">
       <path
          d="M 1.4903206,2.1696562 1.2026019,2.3934374 0.9415238,2.1803124 V 0.80032833 L 1.2026019,0.58720338 1.4903206,0.8163127 Z"
          id="path22373"
@@ -156,7 +156,7 @@
        inkscape:groupmode="layer"
        id="g20202"
        inkscape:label="on 2"
-       style="display:inline">
+       style="display:none">
       <path
          d="M 1.4903206,4.183687 1.2026019,4.4074682 0.9415238,4.1943432 V 2.8250154 l 0.2610781,-0.213125 0.2877187,0.2291094 z"
          id="path22377"
@@ -166,7 +166,7 @@
        inkscape:groupmode="layer"
        id="g20204"
        inkscape:label="on 3"
-       style="display:inline">
+       style="display:none">
       <path
          d="M 3.658867,0.46998466 3.3977889,0.69909398 H 1.554258 L 1.3038362,0.47531278 1.5649143,0.23554721 h 1.8275465 z"
          id="path22367"
@@ -186,7 +186,7 @@
        inkscape:groupmode="layer"
        id="g20208"
        inkscape:label="on 5"
-       style="display:inline">
+       style="display:none">
       <path
          d="M 3.658867,4.5246869 3.3977889,4.7644525 H 1.5702424 L 1.3038362,4.5246869 1.554258,4.2955776 h 1.8435309 z"
          id="path22375"
@@ -196,7 +196,7 @@
        inkscape:groupmode="layer"
        id="g20210"
        inkscape:label="on 6"
-       style="display:inline">
+       style="display:none">
       <path
          d="M 4.0584762,2.1696562 3.7707576,2.3934374 3.5096795,2.1803124 V 0.80032833 L 3.7707576,0.58720338 4.0584762,0.8163127 Z"
          id="path22150"
@@ -206,7 +206,7 @@
        inkscape:groupmode="layer"
        id="g20212"
        inkscape:label="on 7"
-       style="display:inline">
+       style="display:none">
       <path
          d="M 4.0584762,4.183687 3.7707576,4.4074682 3.5096795,4.1943432 V 2.8250154 l 0.2610781,-0.213125 0.2877186,0.2291094 z"
          id="path22369"

@@ -5,11 +5,8 @@ using namespace rack;
 
 std::string DigitDisplay::formatDigitValue(int value) {
     std::string res = std::to_string(value);
-    if(value < 10) {
-        res = "0" + res;
-    }
-    if(res.length() < 2) {
-    	return "00";
+    while (res.length() < numDigits) {
+        res = "@" + res; // where @ is off
     }
     return res;
 };
@@ -19,12 +16,19 @@ void DigitDisplay::draw(const DrawArgs &args)  {
     	return;
     }
     nvgBeginPath(args.vg);
-    nvgRoundedRect(args.vg, 0, mm2px(-1), mm2px(8.5), mm2px(7), 1);
+    nvgRoundedRect(args.vg, 0, mm2px(-1), mm2px(1.f + (numDigits*3.75)), mm2px(7), 1);
     nvgFillColor(args.vg, nvgRGBA(0, 0, 0, 255));
     nvgFill(args.vg);
     std::string twoDigitValue = formatDigitValue(*value);
     for(std::string::size_type i = 0; i < twoDigitValue.length(); i++) {
+        if (showDashes) {
+            svgDraw(args.vg, digitDash->handle);
+            continue;
+        }
         switch(twoDigitValue[i]) {
+            case '@':
+                svgDraw(args.vg, digitOff->handle);
+                break;
             case '0':
                 svgDraw(args.vg, digit0->handle);
                 break;

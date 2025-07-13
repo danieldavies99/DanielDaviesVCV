@@ -22,7 +22,10 @@ DISTRIBUTABLES += $(wildcard LICENSE*)
 include $(RACK_DIR)/plugin.mk
 
 run:
-	"/C/Program Files/VCV/Rack2Free/Rack.exe" -d -u "/C/Users/danie/Documents/Rack2" -s "/C/Program Files/VCV/Rack2Free"
+	"/C/Program Files/VCV/Rack2Free/Rack.exe" -d -u "/C/Users/danie/Documents/Rack2" -s "/C/Program Files/VCV/Rack2Free" 2>&1 | cat
 
 copy:
 	cp "C:\C++\Rack-SDK-2.6.4-win\Rack-SDK\DanielDaviesVCV\dist\SequelSequencers" "C:\Users\danie\Documents\Rack2\plugins" -r
+
+build-and-run:
+	make install && make copy && make run

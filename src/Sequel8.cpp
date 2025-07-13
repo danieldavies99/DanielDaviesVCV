@@ -689,17 +689,17 @@ struct Sequel8ModuleWidget : ModuleWidget {
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(179.754, 89.076)), module, Sequel8::LIGHT_R2_C7_LIGHT));
 
 		if(module) {
-			DigitDisplay *clockDivideDisplayR0 = new DigitDisplay();
+			TwoDigitDisplay *clockDivideDisplayR0 = new TwoDigitDisplay();
 			clockDivideDisplayR0->box.pos = mm2px(Vec(19.5, 37));
 			clockDivideDisplayR0->value = &module->clockDivideDisplayValueR0;
 			addChild(clockDivideDisplayR0);
 
-			DigitDisplay *clockDivideDisplayR1 = new DigitDisplay();
+			TwoDigitDisplay *clockDivideDisplayR1 = new TwoDigitDisplay();
 			clockDivideDisplayR1->box.pos = mm2px(Vec(19.5, 37 + 29.898));
 			clockDivideDisplayR1->value = &module->clockDivideDisplayValueR1;
 			addChild(clockDivideDisplayR1);
 
-			DigitDisplay *clockDivideDisplayR2 = new DigitDisplay();
+			TwoDigitDisplay *clockDivideDisplayR2 = new TwoDigitDisplay();
 			clockDivideDisplayR2->box.pos = mm2px(Vec(19.5, 37 + 29.898 + 29.898));
 			clockDivideDisplayR2->value = &module->clockDivideDisplayValueR2;
 			addChild(clockDivideDisplayR2);
