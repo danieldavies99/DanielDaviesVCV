@@ -136,7 +136,7 @@ struct SamuelWidget : ModuleWidget
 	SamuelWidget(Samuel *module)
 	{
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/Samuel.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Samuel.svg")));
 
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));

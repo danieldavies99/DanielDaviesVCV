@@ -21,14 +21,14 @@ static const double KEY_ON_B = 0.9166;
 
 struct KeyboardDisplay : SvgWidget
 {
-    std::shared_ptr<rack::Svg> keyOnC = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/KeyOnC.svg"));
-    std::shared_ptr<rack::Svg> keyOnD = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/KeyOnD.svg"));
-    std::shared_ptr<rack::Svg> keyOnE = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/KeyOnE.svg"));
-    std::shared_ptr<rack::Svg> keyOnF = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/KeyOnF.svg"));
-    std::shared_ptr<rack::Svg> keyOnG = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/KeyOnG.svg"));
-    std::shared_ptr<rack::Svg> keyOnA = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/KeyOnA.svg"));
-    std::shared_ptr<rack::Svg> keyOnB = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/KeyOnB.svg"));
-    std::shared_ptr<rack::Svg> keyOnSharp = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/KeyOnSharp.svg"));
+    std::shared_ptr<rack::Svg> keyOnC = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/widgets/KeyOnC.svg"));
+    std::shared_ptr<rack::Svg> keyOnD = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/widgets/KeyOnD.svg"));
+    std::shared_ptr<rack::Svg> keyOnE = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/widgets/KeyOnE.svg"));
+    std::shared_ptr<rack::Svg> keyOnF = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/widgets/KeyOnF.svg"));
+    std::shared_ptr<rack::Svg> keyOnG = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/widgets/KeyOnG.svg"));
+    std::shared_ptr<rack::Svg> keyOnA = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/widgets/KeyOnA.svg"));
+    std::shared_ptr<rack::Svg> keyOnB = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/widgets/KeyOnB.svg"));
+    std::shared_ptr<rack::Svg> keyOnSharp = rack::Svg::load(rack::asset::plugin(pluginInstance, "res/widgets/KeyOnSharp.svg"));
 
     double *keyOnValue = 0;
 

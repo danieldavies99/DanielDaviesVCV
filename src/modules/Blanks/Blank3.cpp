@@ -34,7 +34,7 @@ struct Blank3Widget : ModuleWidget
 	Blank3Widget(Blank3 *module)
 	{
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/Blank3.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Blank3.svg")));
 	}
 };
 

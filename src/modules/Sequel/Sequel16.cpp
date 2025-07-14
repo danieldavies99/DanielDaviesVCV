@@ -773,7 +773,7 @@ struct Sequel16Widget : ModuleWidget
 	Sequel16Widget(Sequel16 *module)
 	{
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/Sequel16.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Sequel16.svg")));
 
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
