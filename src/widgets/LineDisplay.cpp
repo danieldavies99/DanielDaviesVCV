@@ -133,24 +133,43 @@ void LineDisplay::drawLine(int x1, int y1, int x2, int y2)
     }
     int decInc = longLen == 0 ? decInc = 0 : ((shortLen << 16) / longLen);
 
+    std::string debugString = "";
+
     if (yLonger)
     {
         y1 *= numPixelsY;
         y2 *= numPixelsY;
-        if (longLen > 0)
-            for (int j = 0x8000 + (x1 << 16); y1 <= y2; y1 += numPixelsY, j += decInc)
-                lightPixel((j >> 16) % numPixelsX, y1 / numPixelsY, 0, 0);
+        if (longLen >= 0)
+            for (int j = 0x8000 + (x1 << 16); y1 <= y2; y1 += numPixelsY, j += decInc) {
+                int x = (j >> 16);
+                if (x >= 0 && x < numPixelsX)
+                    lightPixel(x, y1 / numPixelsY, 0, 0);
+            }
+
+
         else
-            for (int j = 0x8000 + (x1 << 16); y1 >= y2; y1 -= numPixelsY, j -= decInc)
-                lightPixel((j >> 16) % numPixelsX, y1 / numPixelsY, 0, 0);
+            for (int j = 0x8000 + (x1 << 16); y1 >= y2; y1 -= numPixelsY, j -= decInc) {
+                int x = (j >> 16);
+                if (x >= 0 && x < numPixelsX)
+                    lightPixel(x, y1 / numPixelsY, 0, 0);
+            }
+
     }
     else
     {
-        if (longLen > 0)
-            for (int j = 0x8000 + (y1 << 16); x1 <= x2; ++x1, j += decInc)
-                lightPixel(x1, (j >> 16) % numPixelsY, 0, 0);
+        if (longLen >= 0)
+            for (int j = 0x8000 + (y1 << 16); x1 <= x2; ++x1, j += decInc) {
+                int y = (j >> 16);
+                if (y >= 0 && y < numPixelsY)
+                     lightPixel(x1, y, 0, 0);
+
+            }
         else
-            for (int j = 0x8000 + (y1 << 16); x1 >= x2; --x1, j -= decInc)
-                lightPixel(x1, (j >> 16) % numPixelsY, 0, 0);
+            for (int j = 0x8000 + (y1 << 16); x1 >= x2; --x1, j -= decInc){
+                int y = (j >> 16);
+                if (y >= 0 && y < numPixelsY)
+                     lightPixel(x1, y, 0, 0);
+
+            }
     }
 }
