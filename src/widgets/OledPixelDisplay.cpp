@@ -2,12 +2,15 @@
 
 using namespace rack;
 
-void OledPixelDisplay::initialize() {
-    box.size.x = (numPixelsX*pixelWidthWithGaps) + (2*borderSize);
-    box.size.y = numPixelsY*pixelWidthWithGaps  + (2*borderSize);
-    for(int i = 0; i < numPixelsX; i++) {
+void OledPixelDisplay::initialize()
+{
+    box.size.x = (numPixelsX * pixelWidthWithGaps) + (2 * borderSize);
+    box.size.y = numPixelsY * pixelWidthWithGaps + (2 * borderSize);
+    for (int i = 0; i < numPixelsX; i++)
+    {
         std::vector<OledPixel> newPixelRow;
-        for(int j = 0; j < numPixelsY; j++) {
+        for (int j = 0; j < numPixelsY; j++)
+        {
             OledPixel newPixel;
             newPixel.x = i;
             newPixel.y = j;
@@ -18,62 +21,74 @@ void OledPixelDisplay::initialize() {
     }
 }
 
-void OledPixelDisplay::lightPixel(int x, int y, int offsetX, int offsetY) {
-    if(x + offsetX < numPixelsX && y + offsetY < numPixelsY) {
+void OledPixelDisplay::lightPixel(int x, int y, int offsetX, int offsetY)
+{
+    if (x + offsetX < numPixelsX && y + offsetY < numPixelsY)
+    {
         pixels[x + offsetX][y + offsetY].isLit = true;
     }
 }
 
-void OledPixelDisplay::drawLayer(const DrawArgs& args, int layer) {
+void OledPixelDisplay::drawLayer(const DrawArgs &args, int layer)
+{
     if (layer != 1)
         return;
 
     process();
 
     nvgBeginPath(args.vg);
-    nvgRoundedRect(args.vg, 0, 0, pixelWidthWithGaps * numPixelsX + (borderSize*2), pixelWidthWithGaps * numPixelsY + (borderSize*2), 1);
+    nvgRoundedRect(args.vg, 0, 0, pixelWidthWithGaps * numPixelsX + (borderSize * 2), pixelWidthWithGaps * numPixelsY + (borderSize * 2), 1);
     nvgFillColor(args.vg, nvgRGBA(0, 0, 0, 255));
     nvgFill(args.vg);
 
     drawGrid(args);
 }
 
-void OledPixelDisplay::lightAll() {
-    for(int i = 0; i < numPixelsX; i++) {
-        for(int j = 0; j < numPixelsY; j++) {
+void OledPixelDisplay::lightAll()
+{
+    for (int i = 0; i < numPixelsX; i++)
+    {
+        for (int j = 0; j < numPixelsY; j++)
+        {
             pixels[i][j].isLit = true;
         }
     }
 }
 
-void OledPixelDisplay::darkenAll() {
-    for(int i = 0; i < numPixelsX; i++) {
-        for(int j = 0; j < numPixelsY; j++) {
+void OledPixelDisplay::darkenAll()
+{
+    for (int i = 0; i < numPixelsX; i++)
+    {
+        for (int j = 0; j < numPixelsY; j++)
+        {
             pixels[i][j].isLit = false;
         }
     }
 }
 
-void OledPixelDisplay::drawGrid(const DrawArgs& args) {
+void OledPixelDisplay::drawGrid(const DrawArgs &args)
+{
     nvgTranslate(args.vg, borderSize, borderSize);
-    if((int)pixels[0].size() < numPixelsY || (int)pixels.size() < numPixelsX) {
+    if ((int)pixels[0].size() < numPixelsY || (int)pixels.size() < numPixelsX)
+    {
         return;
     }
-    for(int i = 0; i < numPixelsX; i++) {
-        for(int j = 0; j < numPixelsY; j++) {
-            if(pixels[i][j].isLit == true) {
+    for (int i = 0; i < numPixelsX; i++)
+    {
+        for (int j = 0; j < numPixelsY; j++)
+        {
+            if (pixels[i][j].isLit == true)
+            {
                 nvgBeginPath(args.vg);
                 nvgRect(
                     args.vg,
-                    pixelWidthWithGaps*i,
-                    pixelWidthWithGaps*j,
+                    pixelWidthWithGaps * i,
+                    pixelWidthWithGaps * j,
                     pixelWidth,
-                    pixelWidth
-                );
+                    pixelWidth);
                 nvgFillColor(
                     args.vg,
-                    pixelColor
-                );
+                    pixelColor);
                 nvgFill(args.vg);
             }
         }

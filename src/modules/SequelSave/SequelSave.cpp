@@ -1,8 +1,10 @@
 #include "DanielDavies.hpp"
 #include "SequelSaveInterface.hpp"
 
-struct SequelSave : Module {
-	enum ParamId {
+struct SequelSave : Module
+{
+	enum ParamId
+	{
 		SWITCH_SAVE_0_PARAM,
 		SWITCH_LOAD_0_PARAM,
 		SWITCH_SAVE_1_PARAM,
@@ -13,7 +15,8 @@ struct SequelSave : Module {
 		SWITCH_LOAD_3_PARAM,
 		PARAMS_LEN
 	};
-	enum InputId {
+	enum InputId
+	{
 		IN_SAVE_0_INPUT,
 		IN_LOAD_0_INPUT,
 		IN_SAVE_1_INPUT,
@@ -24,17 +27,20 @@ struct SequelSave : Module {
 		IN_LOAD_3_INPUT,
 		INPUTS_LEN
 	};
-	enum OutputId {
+	enum OutputId
+	{
 		OUTPUTS_LEN
 	};
-	enum LightId {
+	enum LightId
+	{
 		LIGHT_CONNECTED_LIGHT,
 		LIGHTS_LEN
 	};
 
 	SequelSaveInterface leftMessages[2];
 
-	SequelSave() {
+	SequelSave()
+	{
 		leftExpander.producerMessage = &leftMessages[0];
 		leftExpander.consumerMessage = &leftMessages[1];
 
@@ -84,7 +90,8 @@ struct SequelSave : Module {
 
 	SequelSaveInterface sequelSaveStates[4];
 
-	void process(const ProcessArgs& args) override {
+	void process(const ProcessArgs &args) override
+	{
 		sequelPresent = leftExpander.module && (leftExpander.module->model == modelSequel8 || leftExpander.module->model == modelSequel16);
 
 		double saveButton0Val = params[SWITCH_SAVE_0_PARAM].getValue();
@@ -107,53 +114,63 @@ struct SequelSave : Module {
 		double loadInput2Val = inputs[IN_LOAD_2_INPUT].getVoltage();
 		double loadInput3Val = inputs[IN_LOAD_3_INPUT].getVoltage();
 
-		SequelSaveInterface *messagesFromMother = (SequelSaveInterface*)leftExpander.consumerMessage;
+		SequelSaveInterface *messagesFromMother = (SequelSaveInterface *)leftExpander.consumerMessage;
 
 		lights[LIGHT_CONNECTED_LIGHT].setBrightness(0.f);
-		if(sequelPresent) {
+		if (sequelPresent)
+		{
 			lights[LIGHT_CONNECTED_LIGHT].setBrightness(1.f);
-			if((saveButton0Val > 0 && lastSaveButton0Val == 0) || (saveInput0Val > 0 && lastSaveInput0 == 0)) { // requesting mother
+			if ((saveButton0Val > 0 && lastSaveButton0Val == 0) || (saveInput0Val > 0 && lastSaveInput0 == 0))
+			{ // requesting mother
 				selectedSaveRow = 0;
 				leftExpander.messageFlipRequested = true;
 			}
-			if((saveButton1Val > 0 && lastSaveButton1Val == 0) || (saveInput1Val > 0 && lastSaveInput1 == 0)) { // requesting mother
+			if ((saveButton1Val > 0 && lastSaveButton1Val == 0) || (saveInput1Val > 0 && lastSaveInput1 == 0))
+			{ // requesting mother
 				selectedSaveRow = 1;
 				leftExpander.messageFlipRequested = true;
 			}
-			if((saveButton2Val > 0 && lastSaveButton2Val == 0) || (saveInput2Val > 0 && lastSaveInput2 == 0)) { // requesting mother
+			if ((saveButton2Val > 0 && lastSaveButton2Val == 0) || (saveInput2Val > 0 && lastSaveInput2 == 0))
+			{ // requesting mother
 				selectedSaveRow = 2;
 				leftExpander.messageFlipRequested = true;
 			}
-			if((saveButton3Val > 0 && lastSaveButton3Val == 0) || (saveInput3Val > 0 && lastSaveInput3 == 0)) { // requesting mother
+			if ((saveButton3Val > 0 && lastSaveButton3Val == 0) || (saveInput3Val > 0 && lastSaveInput3 == 0))
+			{ // requesting mother
 				selectedSaveRow = 3;
 				leftExpander.messageFlipRequested = true;
 			}
 
-			if(messagesFromMother->isDirty) { // info received from mother
+			if (messagesFromMother->isDirty)
+			{ // info received from mother
 				sequelSaveStates[selectedSaveRow] = *messagesFromMother;
 			}
 			*messagesFromMother = cleanInterface;
 
-			if((loadButton0Val > 0 && lastLoadButton0Val == 0) || (loadInput0Val > 0 && lastLoadInput0 == 0)) { // sending saved info to mother
-				SequelSaveInterface *messagesToMother = (SequelSaveInterface*)leftExpander.module->rightExpander.producerMessage;
+			if ((loadButton0Val > 0 && lastLoadButton0Val == 0) || (loadInput0Val > 0 && lastLoadInput0 == 0))
+			{ // sending saved info to mother
+				SequelSaveInterface *messagesToMother = (SequelSaveInterface *)leftExpander.module->rightExpander.producerMessage;
 				*messagesToMother = sequelSaveStates[0];
 				messagesToMother->isDirty = true;
 				leftExpander.module->rightExpander.messageFlipRequested = true;
 			}
-			if((loadButton1Val > 0 && lastLoadButton1Val == 0) || (loadInput1Val > 0 && lastLoadInput1 == 0)) { // sending saved info to mother
-				SequelSaveInterface *messagesToMother = (SequelSaveInterface*)leftExpander.module->rightExpander.producerMessage;
+			if ((loadButton1Val > 0 && lastLoadButton1Val == 0) || (loadInput1Val > 0 && lastLoadInput1 == 0))
+			{ // sending saved info to mother
+				SequelSaveInterface *messagesToMother = (SequelSaveInterface *)leftExpander.module->rightExpander.producerMessage;
 				*messagesToMother = sequelSaveStates[1];
 				messagesToMother->isDirty = true;
 				leftExpander.module->rightExpander.messageFlipRequested = true;
 			}
-			if((loadButton2Val > 0 && lastLoadButton2Val == 0) || (loadInput2Val > 0 && lastLoadInput2 == 0)) { // sending saved info to mother
-				SequelSaveInterface *messagesToMother = (SequelSaveInterface*)leftExpander.module->rightExpander.producerMessage;
+			if ((loadButton2Val > 0 && lastLoadButton2Val == 0) || (loadInput2Val > 0 && lastLoadInput2 == 0))
+			{ // sending saved info to mother
+				SequelSaveInterface *messagesToMother = (SequelSaveInterface *)leftExpander.module->rightExpander.producerMessage;
 				*messagesToMother = sequelSaveStates[2];
 				messagesToMother->isDirty = true;
 				leftExpander.module->rightExpander.messageFlipRequested = true;
 			}
-			if((loadButton3Val > 0 && lastLoadButton3Val == 0) || (loadInput3Val > 0 && lastLoadInput3 == 0)) { // sending saved info to mother
-				SequelSaveInterface *messagesToMother = (SequelSaveInterface*)leftExpander.module->rightExpander.producerMessage;
+			if ((loadButton3Val > 0 && lastLoadButton3Val == 0) || (loadInput3Val > 0 && lastLoadInput3 == 0))
+			{ // sending saved info to mother
+				SequelSaveInterface *messagesToMother = (SequelSaveInterface *)leftExpander.module->rightExpander.producerMessage;
 				*messagesToMother = sequelSaveStates[3];
 				messagesToMother->isDirty = true;
 				leftExpander.module->rightExpander.messageFlipRequested = true;
@@ -179,14 +196,16 @@ struct SequelSave : Module {
 		lastLoadInput1 = loadInput1Val;
 		lastLoadInput2 = loadInput2Val;
 		lastLoadInput3 = loadInput3Val;
-
 	}
 
-	json_t* getJsonKnobsForRow(SequelSaveInterface sequelSaveStateRow) {
+	json_t *getJsonKnobsForRow(SequelSaveInterface sequelSaveStateRow)
+	{
 		json_t *knobs = json_array();
-		for(int i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++)
+		{
 			json_t *newKnobRow = json_array();
-			for(int j = 0; j < 16; j++) {
+			for (int j = 0; j < 16; j++)
+			{
 				json_array_append(newKnobRow, json_real(sequelSaveStateRow.knobVals[i][j]));
 			}
 			json_array_append(knobs, newKnobRow);
@@ -194,11 +213,14 @@ struct SequelSave : Module {
 		return knobs;
 	}
 
-	json_t* getJsonSwitchesForRow(SequelSaveInterface sequelSaveStateRow) {
+	json_t *getJsonSwitchesForRow(SequelSaveInterface sequelSaveStateRow)
+	{
 		json_t *switches = json_array();
-		for(int i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++)
+		{
 			json_t *newSwitchRow = json_array();
-			for(int j = 0; j < 16; j++) {
+			for (int j = 0; j < 16; j++)
+			{
 				json_array_append(newSwitchRow, json_boolean(sequelSaveStateRow.switchVals[i][j]));
 			}
 			json_array_append(switches, newSwitchRow);
@@ -206,15 +228,18 @@ struct SequelSave : Module {
 		return switches;
 	}
 
-	json_t* getJsonClockDivideValsForRow(SequelSaveInterface sequelSaveStateRow) {
+	json_t *getJsonClockDivideValsForRow(SequelSaveInterface sequelSaveStateRow)
+	{
 		json_t *clockDivideVals = json_array();
-		for(int i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++)
+		{
 			json_array_append(clockDivideVals, json_real(sequelSaveStateRow.clockDivideVals[i]));
 		}
 		return clockDivideVals;
 	}
 
-	json_t* getFullJsonForRow(int rowNumber) {
+	json_t *getFullJsonForRow(int rowNumber)
+	{
 		json_t *rootJ = json_object();
 		json_object_set_new(rootJ, "knobVals", getJsonKnobsForRow(sequelSaveStates[rowNumber]));
 		json_object_set_new(rootJ, "switchVals", getJsonSwitchesForRow(sequelSaveStates[rowNumber]));
@@ -225,7 +250,8 @@ struct SequelSave : Module {
 		return rootJ;
 	}
 
-	json_t *dataToJson() override {
+	json_t *dataToJson() override
+	{
 		json_t *rootJ = json_object();
 
 		json_object_set_new(rootJ, "rowState0", getFullJsonForRow(0));
@@ -236,35 +262,45 @@ struct SequelSave : Module {
 		return rootJ;
 	}
 
-	void loadKnobsFromJson(json_t *knobs, SequelSaveInterface &sequelSaveStateRow) {
-		for(int i = 0; i < 3; i++) {
-			for(int j = 0; j < 16; j++) {
+	void loadKnobsFromJson(json_t *knobs, SequelSaveInterface &sequelSaveStateRow)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 16; j++)
+			{
 				sequelSaveStateRow.knobVals[i][j] = json_real_value(json_array_get(json_array_get(knobs, i), j));
 			}
 		}
 	}
 
-	void loadSwitchesFromJson(json_t *switches, SequelSaveInterface &sequelSaveStateRow) {
-		for(int i = 0; i < 3; i++) {
-			for(int j = 0; j < 16; j++) {
+	void loadSwitchesFromJson(json_t *switches, SequelSaveInterface &sequelSaveStateRow)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 16; j++)
+			{
 				sequelSaveStateRow.switchVals[i][j] = json_boolean_value(json_array_get(json_array_get(switches, i), j)) ? 10.f : 0.f;
 			}
 		}
 	}
 
-	void loadClockDivideValsFromJson(json_t *clockDivideVals, SequelSaveInterface &sequelSaveStateRow) {
-		for(int i = 0; i < 3; i++) {
+	void loadClockDivideValsFromJson(json_t *clockDivideVals, SequelSaveInterface &sequelSaveStateRow)
+	{
+		for (int i = 0; i < 3; i++)
+		{
 			sequelSaveStateRow.clockDivideVals[i] = json_real_value(json_array_get(clockDivideVals, i));
 		}
 	}
 
-	void loadRowFromJson(int rowNumber, json_t *rootJ) {
+	void loadRowFromJson(int rowNumber, json_t *rootJ)
+	{
 		std::string rowIdentifier = "rowState" + std::to_string(rowNumber);
 		json_t *row = json_object_get(rootJ, rowIdentifier.c_str());
-		json_t *knobVals= json_object_get(row, "knobVals");
+		json_t *knobVals = json_object_get(row, "knobVals");
 		json_t *switchVals = json_object_get(row, "switchVals");
 		json_t *clockDivideVals = json_object_get(row, "clockDivideVals");
-		if(knobVals && switchVals && clockDivideVals) {
+		if (knobVals && switchVals && clockDivideVals)
+		{
 			loadKnobsFromJson(knobVals, sequelSaveStates[rowNumber]);
 			loadSwitchesFromJson(switchVals, sequelSaveStates[rowNumber]);
 			loadClockDivideValsFromJson(clockDivideVals, sequelSaveStates[rowNumber]);
@@ -274,7 +310,8 @@ struct SequelSave : Module {
 		}
 	}
 
-	void dataFromJson(json_t *rootJ) override {
+	void dataFromJson(json_t *rootJ) override
+	{
 		loadRowFromJson(0, rootJ);
 		loadRowFromJson(1, rootJ);
 		loadRowFromJson(2, rootJ);
@@ -282,9 +319,10 @@ struct SequelSave : Module {
 	}
 };
 
-
-struct SequelSaveWidget : ModuleWidget {
-	SequelSaveWidget(SequelSave* module) {
+struct SequelSaveWidget : ModuleWidget
+{
+	SequelSaveWidget(SequelSave *module)
+	{
 		setModule(module);
 		setPanel(createPanel(asset::plugin(pluginInstance, "res/SequelSave.svg")));
 
@@ -314,5 +352,4 @@ struct SequelSaveWidget : ModuleWidget {
 	}
 };
 
-
-Model* modelSequelSave = createModel<SequelSave, SequelSaveWidget>("SequelSave");
+Model *modelSequelSave = createModel<SequelSave, SequelSaveWidget>("SequelSave");

@@ -9,8 +9,10 @@
 
 using namespace rack;
 
-struct Sequel16 : Module {
-	enum ParamId {
+struct Sequel16 : Module
+{
+	enum ParamId
+	{
 		KNOB_STEP_R0_C0_PARAM,
 		KNOB_STEP_R0_C1_PARAM,
 		KNOB_STEP_R0_C2_PARAM,
@@ -115,12 +117,14 @@ struct Sequel16 : Module {
 		SWITCH_GATE_MODE_PARAM,
 		PARAMS_LEN
 	};
-	enum InputId {
+	enum InputId
+	{
 		IN_CLOCK_INPUT,
 		IN_RESET_INPUT,
 		INPUTS_LEN
 	};
-	enum OutputId {
+	enum OutputId
+	{
 		OUT_CLOCK_OUTPUT,
 		OUT_CV_R0_OUTPUT,
 		OUT_GATE_R0_OUTPUT,
@@ -130,7 +134,8 @@ struct Sequel16 : Module {
 		OUT_GATE_R2_OUTPUT,
 		OUTPUTS_LEN
 	};
-	enum LightId {
+	enum LightId
+	{
 		LIGHT_R0_C0_LIGHT,
 		LIGHT_R0_C1_LIGHT,
 		LIGHT_R0_C2_LIGHT,
@@ -232,10 +237,11 @@ struct Sequel16 : Module {
 		LIGHTS_LEN
 	};
 
-    // Expander
+	// Expander
 	SequelSaveInterface rightMessages[2];
 
-	Sequel16() {
+	Sequel16()
+	{
 		rightExpander.producerMessage = &rightMessages[0];
 		rightExpander.consumerMessage = &rightMessages[1];
 
@@ -244,7 +250,7 @@ struct Sequel16 : Module {
 		// Inputs
 		configInput(IN_RESET_INPUT, "Reset");
 		configInput(IN_CLOCK_INPUT, "Clock");
-		
+
 		// Outputs
 		configOutput(OUT_CV_R0_OUTPUT, "Row 1 CV");
 		configOutput(OUT_CV_R1_OUTPUT, "Row 2 CV");
@@ -253,7 +259,6 @@ struct Sequel16 : Module {
 		configOutput(OUT_GATE_R1_OUTPUT, "Row 2 gate");
 		configOutput(OUT_GATE_R2_OUTPUT, "Row 3 gate");
 		configOutput(OUT_CLOCK_OUTPUT, "Clock");
-
 
 		// Params
 		configParam(KNOB_STEP_COUNT_PARAM, 0.f, 16.f, 16.f, "Step count");
@@ -363,30 +368,40 @@ struct Sequel16 : Module {
 	}
 
 	// ****** Right click menu methods *******
-	void randomizeGates() {
-		for(int row = 0; row < 3; row++) {
-			for(int col = 0; col < 16; col++) {
+	void randomizeGates()
+	{
+		for (int row = 0; row < 3; row++)
+		{
+			for (int col = 0; col < 16; col++)
+			{
 				params[getButtonId(row, col)].setValue(round(random::uniform()));
 			}
 		}
 	}
 
-    void randomizeCVKnobs() {
-		for(int row = 0; row < 3; row++) {
-			for(int col = 0; col < 16; col++) {
+	void randomizeCVKnobs()
+	{
+		for (int row = 0; row < 3; row++)
+		{
+			for (int col = 0; col < 16; col++)
+			{
 				params[getKnobId(row, col)].setValue(random::uniform() * 10);
 			}
 		}
 	}
 
-	void randomizeGatesForRow(short row) {
-		for(int col = 0; col < 16; col++) {
+	void randomizeGatesForRow(short row)
+	{
+		for (int col = 0; col < 16; col++)
+		{
 			params[getButtonId(row, col)].setValue(round(random::uniform()));
 		}
 	}
 
-    void randomizeCVKnobsForRow(short row) {
-		for(int col = 0; col < 16; col++) {
+	void randomizeCVKnobsForRow(short row)
+	{
+		for (int col = 0; col < 16; col++)
+		{
 			params[getKnobId(row, col)].setValue(random::uniform() * 10);
 		}
 	}
@@ -416,53 +431,65 @@ struct Sequel16 : Module {
 
 	bool showDashes = false;
 
-	bool shouldPulseThisStep(short row) {
+	bool shouldPulseThisStep(short row)
+	{
 		return params[getButtonId(row, clockTracker.getCurrentStepForRow(row))].getValue() > 0.5 && clockTracker.getHasPulsedThisStepForRow(row) == false;
 	}
 
-	void turnOffAllStepIndicatorLights() {
-		for(int i = 0; i < 48; i++ ) {
+	void turnOffAllStepIndicatorLights()
+	{
+		for (int i = 0; i < 48; i++)
+		{
 			lights[i].setBrightness(0);
 		}
 	}
 
-	short getLightId(short row, short column) {
-		return column + (row*16);
+	short getLightId(short row, short column)
+	{
+		return column + (row * 16);
 	}
 
-	short getKnobId(short row, short column) {
-		return column + (row*16);
+	short getKnobId(short row, short column)
+	{
+		return column + (row * 16);
 	}
 
-	short getButtonId(short row, short column) {
-		return column + (row*16) + 48;
+	short getButtonId(short row, short column)
+	{
+		return column + (row * 16) + 48;
 	}
 
-	void reset() {
+	void reset()
+	{
 		ignoreClockAfterResetTimer.resetTriggered();
-	
+
 		clockTracker.resetStepTrackers();
 		clockTracker.resetGatesSinceLastStepTrackers();
 		clockTracker.resetHasPulsedThisStepTrackers();
 
-		if(shouldPulseThisStep(0)) {
+		if (shouldPulseThisStep(0))
+		{
 			gatePulseR0.trigger(1e-3f);
 			clockTracker.setHasPulsedThisStepForRow(0, true);
 		}
-		if(shouldPulseThisStep(1)) {
+		if (shouldPulseThisStep(1))
+		{
 			gatePulseR1.trigger(1e-3f);
 			clockTracker.setHasPulsedThisStepForRow(1, true);
 		}
-		if(shouldPulseThisStep(2)) {
+		if (shouldPulseThisStep(2))
+		{
 			gatePulseR2.trigger(1e-3f);
 			clockTracker.setHasPulsedThisStepForRow(2, true);
 		}
 	}
 
-	float getInternalClockVoltage(float sampleRate) {
+	float getInternalClockVoltage(float sampleRate)
+	{
 		clockSpeed = params[KNOB_CLOCK_SPEED_PARAM].getValue();
 		const float timeSinceLastPulsed = timer.process(1.0 / sampleRate);
-		if(timeSinceLastPulsed > 1.0f - (clockSpeed*0.95f)) {
+		if (timeSinceLastPulsed > 1.0f - (clockSpeed * 0.95f))
+		{
 			clockOutPulse.trigger(1e-3f);
 			timer.reset();
 		}
@@ -470,51 +497,61 @@ struct Sequel16 : Module {
 		return shouldClockOutPulse ? 10.0 : 0.0;
 	}
 
-	void handleGateButtonLeds() {
-		for(int i = 0; i < 48; i++) {
-			if(params[i + 48].getValue() > 0) {
-				lights[i+48].setBrightness(0.5);
-			} else {
-				lights[i+48].setBrightness(0.0);
+	void handleGateButtonLeds()
+	{
+		for (int i = 0; i < 48; i++)
+		{
+			if (params[i + 48].getValue() > 0)
+			{
+				lights[i + 48].setBrightness(0.5);
+			}
+			else
+			{
+				lights[i + 48].setBrightness(0.0);
 			}
 		}
 	}
 
-	int mapClockDivideValues(int value) {
-		switch(value) {
-			case 1:
-				return 1;
-			case 2:
-				return 2;
-			case 3:
-				return 3;
-			case 4:
-				return 4;
-			case 5:
-				return 6;
-			case 6:
-				return 8;
-			case 7:
-				return 16;
-			case 8:
-				return 32;
-			case 9:
-				return 48;
-			case 10:
-				return 64;
-			default:
-				return 1;
+	int mapClockDivideValues(int value)
+	{
+		switch (value)
+		{
+		case 1:
+			return 1;
+		case 2:
+			return 2;
+		case 3:
+			return 3;
+		case 4:
+			return 4;
+		case 5:
+			return 6;
+		case 6:
+			return 8;
+		case 7:
+			return 16;
+		case 8:
+			return 32;
+		case 9:
+			return 48;
+		case 10:
+			return 64;
+		default:
+			return 1;
 		}
 	}
-	
+
 	// Sequel Save Expander handling
 	const SequelSaveInterface cleanInterface;
 	bool sequelSavePresent = false;
-	
-	void handleSequelSave() {
-		SequelSaveInterface *messagesToSave= (SequelSaveInterface*)rightExpander.module->leftExpander.producerMessage;
-		for(int i = 0; i < 3; i++) {
-			for(int j = 0; j < 16; j++) {
+
+	void handleSequelSave()
+	{
+		SequelSaveInterface *messagesToSave = (SequelSaveInterface *)rightExpander.module->leftExpander.producerMessage;
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 16; j++)
+			{
 				messagesToSave->knobVals[i][j] = params[getKnobId(i, j)].getValue();
 				messagesToSave->switchVals[i][j] = params[getButtonId(i, j)].getValue() > 0 ? true : false;
 			}
@@ -526,12 +563,14 @@ struct Sequel16 : Module {
 		messagesToSave->stepCount = params[KNOB_STEP_COUNT_PARAM].getValue();
 		messagesToSave->triggerMode = params[SWITCH_GATE_MODE_PARAM].getValue() > 0;
 		messagesToSave->isDirty = true;
-		
 
-		SequelSaveInterface *messagesFromSave = (SequelSaveInterface*)rightExpander.consumerMessage;
-		if(messagesFromSave->isDirty) {
-			for(int i = 0; i < 3; i++) {
-				for(int j = 0; j < 16; j++) {
+		SequelSaveInterface *messagesFromSave = (SequelSaveInterface *)rightExpander.consumerMessage;
+		if (messagesFromSave->isDirty)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				for (int j = 0; j < 16; j++)
+				{
 					params[getKnobId(i, j)].setValue(messagesFromSave->knobVals[i][j]);
 					paramQuantities[getKnobId(i, j)]->setValue(messagesFromSave->knobVals[i][j]);
 					params[getButtonId(i, j)].setValue(messagesFromSave->switchVals[i][j] ? 10.f : 0.f);
@@ -555,9 +594,11 @@ struct Sequel16 : Module {
 	bool hasPulsedR1 = false;
 	bool hasPulsedR2 = false;
 
-	void process(const ProcessArgs& args) override {
+	void process(const ProcessArgs &args) override
+	{
 		sequelSavePresent = (rightExpander.module && rightExpander.module->model == modelSequelSave);
-		if(sequelSavePresent) {
+		if (sequelSavePresent)
+		{
 			handleSequelSave();
 		}
 
@@ -570,9 +611,12 @@ struct Sequel16 : Module {
 		const bool hasExternalClock = inputs[IN_CLOCK_INPUT].isConnected();
 		float internalClockVoltage = 0.0f;
 
-		if(hasExternalClock) {
+		if (hasExternalClock)
+		{
 			outputs[OUT_CLOCK_OUTPUT].setVoltage(inputs[IN_CLOCK_INPUT].getVoltage());
-		} else {
+		}
+		else
+		{
 			internalClockVoltage = getInternalClockVoltage(args.sampleRate);
 			outputs[OUT_CLOCK_OUTPUT].setVoltage(internalClockVoltage);
 		}
@@ -584,7 +628,8 @@ struct Sequel16 : Module {
 
 		handleGateButtonLeds();
 
-		if(clockTracker.numSteps == 0) { // don't output anything if steps = 0;
+		if (clockTracker.numSteps == 0)
+		{ // don't output anything if steps = 0;
 			turnOffAllStepIndicatorLights();
 			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(0);
 			lights[LIGHT_GATE_MODE_CONTINUOUS_LIGHT].setBrightness(0);
@@ -592,23 +637,28 @@ struct Sequel16 : Module {
 		}
 
 		float resetInput = inputs[IN_RESET_INPUT].getVoltage();
-		if (lastResetInput == 0 && resetInput != 0) {
+		if (lastResetInput == 0 && resetInput != 0)
+		{
 			reset();
 		}
 
-		if (lastclockVoltage == 0 && clockVoltage != 0 && !ignoreClockAfterResetTimer.shouldIgnore) {
+		if (lastclockVoltage == 0 && clockVoltage != 0 && !ignoreClockAfterResetTimer.shouldIgnore)
+		{
 			clockTracker.nextClock();
-			if(shouldPulseThisStep(0)) {
+			if (shouldPulseThisStep(0))
+			{
 				gatePulseR0.trigger(1e-3f);
 				hasPulsedR0 = true;
 				clockTracker.setHasPulsedThisStepForRow(0, true);
 			}
-			if(shouldPulseThisStep(1)) {
+			if (shouldPulseThisStep(1))
+			{
 				gatePulseR1.trigger(1e-3f);
 				hasPulsedR1 = true;
 				clockTracker.setHasPulsedThisStepForRow(1, true);
 			}
-			if(shouldPulseThisStep(2)) {
+			if (shouldPulseThisStep(2))
+			{
 				gatePulseR2.trigger(1e-3f);
 				hasPulsedR2 = true;
 				clockTracker.setHasPulsedThisStepForRow(2, true);
@@ -623,11 +673,14 @@ struct Sequel16 : Module {
 		// End
 
 		// handle gate trigger/continuous toggle
-		if(params[SWITCH_GATE_MODE_PARAM].getValue() > 0) {
+		if (params[SWITCH_GATE_MODE_PARAM].getValue() > 0)
+		{
 			gateTriggerModeEnabled = true;
 			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(1);
 			lights[LIGHT_GATE_MODE_CONTINUOUS_LIGHT].setBrightness(0);
-		} else {
+		}
+		else
+		{
 			gateTriggerModeEnabled = false;
 			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(0);
 			lights[LIGHT_GATE_MODE_CONTINUOUS_LIGHT].setBrightness(1);
@@ -635,49 +688,58 @@ struct Sequel16 : Module {
 		// end
 
 		// Handle pulse (trigger) gate outputs
-		if(outputs[OUT_GATE_R0_OUTPUT].isConnected() && gateTriggerModeEnabled) {
+		if (outputs[OUT_GATE_R0_OUTPUT].isConnected() && gateTriggerModeEnabled)
+		{
 			const bool pulseR0 = gatePulseR0.process(1.0 / args.sampleRate);
-			outputs[OUT_GATE_R0_OUTPUT].setVoltage(pulseR0 ? 10.0 : 0.0);		
+			outputs[OUT_GATE_R0_OUTPUT].setVoltage(pulseR0 ? 10.0 : 0.0);
 		}
 
-		if(outputs[OUT_GATE_R1_OUTPUT].isConnected() && gateTriggerModeEnabled) {
+		if (outputs[OUT_GATE_R1_OUTPUT].isConnected() && gateTriggerModeEnabled)
+		{
 			const bool pulseR1 = gatePulseR1.process(1.0 / args.sampleRate);
 			outputs[OUT_GATE_R1_OUTPUT].setVoltage(pulseR1 ? 10.0 : 0.0);
 		}
 
-		if(outputs[OUT_GATE_R2_OUTPUT].isConnected() && gateTriggerModeEnabled) {
+		if (outputs[OUT_GATE_R2_OUTPUT].isConnected() && gateTriggerModeEnabled)
+		{
 			const bool pulseR2 = gatePulseR2.process(1.0 / args.sampleRate);
 			outputs[OUT_GATE_R2_OUTPUT].setVoltage(pulseR2 ? 10.0 : 0.0);
 		}
 		// End
 
 		// Handle continuous gate outputs
-		if(outputs[OUT_GATE_R0_OUTPUT].isConnected() && !gateTriggerModeEnabled) {
+		if (outputs[OUT_GATE_R0_OUTPUT].isConnected() && !gateTriggerModeEnabled)
+		{
 			const bool shouldGateR0 = params[getButtonId(0, clockTracker.getCurrentStepForRow(0))].getValue() > 0;
-			outputs[OUT_GATE_R0_OUTPUT].setVoltage(shouldGateR0 ? 10.0 : 0.0);		
+			outputs[OUT_GATE_R0_OUTPUT].setVoltage(shouldGateR0 ? 10.0 : 0.0);
 		}
 
-		if(outputs[OUT_GATE_R1_OUTPUT].isConnected() && !gateTriggerModeEnabled) {
+		if (outputs[OUT_GATE_R1_OUTPUT].isConnected() && !gateTriggerModeEnabled)
+		{
 			const bool shouldGateR1 = params[getButtonId(1, clockTracker.getCurrentStepForRow(1))].getValue() > 0;
-			outputs[OUT_GATE_R1_OUTPUT].setVoltage(shouldGateR1 ? 10.0 : 0.0);		
+			outputs[OUT_GATE_R1_OUTPUT].setVoltage(shouldGateR1 ? 10.0 : 0.0);
 		}
 
-		if(outputs[OUT_GATE_R2_OUTPUT].isConnected() && !gateTriggerModeEnabled) {
+		if (outputs[OUT_GATE_R2_OUTPUT].isConnected() && !gateTriggerModeEnabled)
+		{
 			const bool shouldGateR2 = params[getButtonId(2, clockTracker.getCurrentStepForRow(2))].getValue() > 0;
-			outputs[OUT_GATE_R2_OUTPUT].setVoltage(shouldGateR2 ? 10.0 : 0.0);		
+			outputs[OUT_GATE_R2_OUTPUT].setVoltage(shouldGateR2 ? 10.0 : 0.0);
 		}
 		// End
 
 		// Handle CV outputs
-		if(outputs[OUT_CV_R0_OUTPUT].isConnected() && (!sampleAndHoldEnabled || (sampleAndHoldEnabled && hasPulsedR0))) {
+		if (outputs[OUT_CV_R0_OUTPUT].isConnected() && (!sampleAndHoldEnabled || (sampleAndHoldEnabled && hasPulsedR0)))
+		{
 			const float voltageOutputR0 = params[getKnobId(0, clockTracker.getCurrentStepForRow(0))].getValue();
 			outputs[OUT_CV_R0_OUTPUT].setVoltage(voltageOutputR0);
 		}
-		if(outputs[OUT_CV_R1_OUTPUT].isConnected() && (!sampleAndHoldEnabled || (sampleAndHoldEnabled && hasPulsedR1))) {
+		if (outputs[OUT_CV_R1_OUTPUT].isConnected() && (!sampleAndHoldEnabled || (sampleAndHoldEnabled && hasPulsedR1)))
+		{
 			const float voltageOutputR1 = params[getKnobId(1, clockTracker.getCurrentStepForRow(1))].getValue();
 			outputs[OUT_CV_R1_OUTPUT].setVoltage(voltageOutputR1);
 		}
-		if(outputs[OUT_CV_R2_OUTPUT].isConnected() && (!sampleAndHoldEnabled || (sampleAndHoldEnabled && hasPulsedR2))) {
+		if (outputs[OUT_CV_R2_OUTPUT].isConnected() && (!sampleAndHoldEnabled || (sampleAndHoldEnabled && hasPulsedR2)))
+		{
 			const float voltageOutputR2 = params[getKnobId(2, clockTracker.getCurrentStepForRow(2))].getValue();
 			outputs[OUT_CV_R2_OUTPUT].setVoltage(voltageOutputR2);
 		}
@@ -689,23 +751,27 @@ struct Sequel16 : Module {
 		hasPulsedR2 = false;
 	}
 
-	json_t *dataToJson() override {
+	json_t *dataToJson() override
+	{
 		json_t *rootJ = json_object();
 		json_object_set_new(rootJ, "sampleAndHoldEnabled", json_boolean(sampleAndHoldEnabled));
 		return rootJ;
 	}
 
-	void dataFromJson(json_t *rootJ) override {
+	void dataFromJson(json_t *rootJ) override
+	{
 		json_t *sampleAndHoldEnabledJ = json_object_get(rootJ, "sampleAndHoldEnabled");
-		if(sampleAndHoldEnabledJ) {
+		if (sampleAndHoldEnabledJ)
+		{
 			sampleAndHoldEnabled = json_boolean_value(sampleAndHoldEnabledJ);
 		}
 	}
 };
 
-
-struct Sequel16Widget : ModuleWidget {
-	Sequel16Widget(Sequel16* module) {
+struct Sequel16Widget : ModuleWidget
+{
+	Sequel16Widget(Sequel16 *module)
+	{
 		setModule(module);
 		setPanel(createPanel(asset::plugin(pluginInstance, "res/Sequel16.svg")));
 
@@ -762,7 +828,7 @@ struct Sequel16Widget : ModuleWidget {
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(309.037, 44.987)), module, Sequel16::SWITCH_GATE_R0_C14_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(328.345, 44.987)), module, Sequel16::SWITCH_GATE_R0_C15_PARAM));
 
-	    addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(38.717, 44.987)), module, Sequel16::GATE_LIGHT_R0_C0_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(38.717, 44.987)), module, Sequel16::GATE_LIGHT_R0_C0_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(58.026, 44.987)), module, Sequel16::GATE_LIGHT_R0_C1_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(77.334, 44.987)), module, Sequel16::GATE_LIGHT_R0_C2_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(96.643, 44.987)), module, Sequel16::GATE_LIGHT_R0_C3_LIGHT));
@@ -770,7 +836,7 @@ struct Sequel16Widget : ModuleWidget {
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(135.26, 44.987)), module, Sequel16::GATE_LIGHT_R0_C5_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(154.568, 44.987)), module, Sequel16::GATE_LIGHT_R0_C6_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(173.877, 44.987)), module, Sequel16::GATE_LIGHT_R0_C7_LIGHT));
-	    addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(193.185, 44.987)), module, Sequel16::GATE_LIGHT_R0_C8_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(193.185, 44.987)), module, Sequel16::GATE_LIGHT_R0_C8_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(212.494, 44.987)), module, Sequel16::GATE_LIGHT_R0_C9_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(231.802, 44.987)), module, Sequel16::GATE_LIGHT_R0_C10_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(251.111, 44.987)), module, Sequel16::GATE_LIGHT_R0_C11_LIGHT));
@@ -821,7 +887,7 @@ struct Sequel16Widget : ModuleWidget {
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(135.26, 74.885)), module, Sequel16::GATE_LIGHT_R1_C5_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(154.568, 74.885)), module, Sequel16::GATE_LIGHT_R1_C6_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(173.877, 74.885)), module, Sequel16::GATE_LIGHT_R1_C7_LIGHT));
-	    addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(193.185, 74.885)), module, Sequel16::GATE_LIGHT_R1_C8_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(193.185, 74.885)), module, Sequel16::GATE_LIGHT_R1_C8_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(212.494, 74.885)), module, Sequel16::GATE_LIGHT_R1_C9_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(231.802, 74.885)), module, Sequel16::GATE_LIGHT_R1_C10_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(251.111, 74.885)), module, Sequel16::GATE_LIGHT_R1_C11_LIGHT));
@@ -846,7 +912,7 @@ struct Sequel16Widget : ModuleWidget {
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(289.728, 93.67)), module, Sequel16::KNOB_STEP_R2_C13_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(309.037, 93.67)), module, Sequel16::KNOB_STEP_R2_C14_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(328.345, 93.67)), module, Sequel16::KNOB_STEP_R2_C15_PARAM));
-		
+
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(38.717, 104.783)), module, Sequel16::SWITCH_GATE_R2_C0_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(58.026, 104.783)), module, Sequel16::SWITCH_GATE_R2_C1_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(77.334, 104.783)), module, Sequel16::SWITCH_GATE_R2_C2_PARAM));
@@ -872,7 +938,7 @@ struct Sequel16Widget : ModuleWidget {
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(135.26, 104.783)), module, Sequel16::GATE_LIGHT_R2_C5_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(154.568, 104.783)), module, Sequel16::GATE_LIGHT_R2_C6_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(173.877, 104.783)), module, Sequel16::GATE_LIGHT_R2_C7_LIGHT));
-	    addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(193.185, 104.783)), module, Sequel16::GATE_LIGHT_R2_C8_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(193.185, 104.783)), module, Sequel16::GATE_LIGHT_R2_C8_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(212.494, 104.783)), module, Sequel16::GATE_LIGHT_R2_C9_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(231.802, 104.783)), module, Sequel16::GATE_LIGHT_R2_C10_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(251.111, 104.783)), module, Sequel16::GATE_LIGHT_R2_C11_LIGHT));
@@ -937,12 +1003,13 @@ struct Sequel16Widget : ModuleWidget {
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(315.443, 89.076)), module, Sequel16::LIGHT_R2_C14_LIGHT));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(334.751, 89.076)), module, Sequel16::LIGHT_R2_C15_LIGHT));
 
-		if(module) {
+		if (module)
+		{
 			TwoDigitDisplay *clockDivideDisplayR0 = new TwoDigitDisplay();
 			clockDivideDisplayR0->box.pos = mm2px(Vec(19.5, 37));
 			clockDivideDisplayR0->value = &module->clockDivideDisplayValueR0;
 			clockDivideDisplayR0->showDashes = &module->showDashes;
-			
+
 			addChild(clockDivideDisplayR0);
 
 			TwoDigitDisplay *clockDivideDisplayR1 = new TwoDigitDisplay();
@@ -959,65 +1026,77 @@ struct Sequel16Widget : ModuleWidget {
 		}
 	}
 
-	void appendContextMenu(Menu* menu) override {
-		Sequel16* module = dynamic_cast<Sequel16*>(this->module);
+	void appendContextMenu(Menu *menu) override
+	{
+		Sequel16 *module = dynamic_cast<Sequel16 *>(this->module);
 
 		menu->addChild(new MenuEntry);
 		menu->addChild(createMenuLabel("Randomize"));
 
-		struct RandomizeAllGates : MenuItem {
-			Sequel16* module;
-			void onAction(const event::Action &e) override {
+		struct RandomizeAllGates : MenuItem
+		{
+			Sequel16 *module;
+			void onAction(const event::Action &e) override
+			{
 				module->randomizeGates();
 			}
 		};
 
-		struct RandomizeAllCVKnobs : MenuItem {
-			Sequel16* module;
-			void onAction(const event::Action &e) override {
+		struct RandomizeAllCVKnobs : MenuItem
+		{
+			Sequel16 *module;
+			void onAction(const event::Action &e) override
+			{
 				module->randomizeCVKnobs();
 			}
 		};
 
-		struct RandomizeCVKnobsForRow : MenuItem {
+		struct RandomizeCVKnobsForRow : MenuItem
+		{
 			short row;
-			Sequel16* module;
-			void onAction(const event::Action &e) override {
+			Sequel16 *module;
+			void onAction(const event::Action &e) override
+			{
 				module->randomizeCVKnobsForRow(row);
 			}
 		};
 
-		struct RandomizeGatesForRow : MenuItem {
+		struct RandomizeGatesForRow : MenuItem
+		{
 			short row;
-			Sequel16* module;
-			void onAction(const event::Action &e) override {
+			Sequel16 *module;
+			void onAction(const event::Action &e) override
+			{
 				module->randomizeGatesForRow(row);
 			}
 		};
 
-		struct ToggleSampleAndHold : MenuItem {
-			Sequel16* module;
-			void onAction(const event::Action &e) override {
+		struct ToggleSampleAndHold : MenuItem
+		{
+			Sequel16 *module;
+			void onAction(const event::Action &e) override
+			{
 				module->sampleAndHoldEnabled = !module->sampleAndHoldEnabled;
 			}
 		};
 
-		RandomizeAllGates* randomizeAllGates = createMenuItem<RandomizeAllGates>("Randomize all gates");
+		RandomizeAllGates *randomizeAllGates = createMenuItem<RandomizeAllGates>("Randomize all gates");
 		randomizeAllGates->module = module;
-		RandomizeAllCVKnobs* randomizeAllCVKnobs = createMenuItem<RandomizeAllCVKnobs>("Randomize all CV knobs");
+		RandomizeAllCVKnobs *randomizeAllCVKnobs = createMenuItem<RandomizeAllCVKnobs>("Randomize all CV knobs");
 		randomizeAllCVKnobs->module = module;
 
 		menu->addChild(randomizeAllCVKnobs);
 		menu->addChild(randomizeAllGates);
 
-		for(short row = 0; row < 3; row++) {
+		for (short row = 0; row < 3; row++)
+		{
 			menu->addChild(new MenuSeparator());
 
-			RandomizeCVKnobsForRow* randomizeCVKnobsForRow = createMenuItem<RandomizeCVKnobsForRow>("Randomize CV knobs for row " + std::to_string(row + 1));
+			RandomizeCVKnobsForRow *randomizeCVKnobsForRow = createMenuItem<RandomizeCVKnobsForRow>("Randomize CV knobs for row " + std::to_string(row + 1));
 			randomizeCVKnobsForRow->row = row;
 			randomizeCVKnobsForRow->module = module;
 
-			RandomizeGatesForRow* randomizeGatesForRow = createMenuItem<RandomizeGatesForRow>("Randomize Gates for row " + std::to_string(row + 1));
+			RandomizeGatesForRow *randomizeGatesForRow = createMenuItem<RandomizeGatesForRow>("Randomize Gates for row " + std::to_string(row + 1));
 			randomizeGatesForRow->row = row;
 			randomizeGatesForRow->module = module;
 
@@ -1026,12 +1105,11 @@ struct Sequel16Widget : ModuleWidget {
 		}
 		menu->addChild(new MenuSeparator());
 		menu->addChild(createMenuLabel("Settings"));
-		ToggleSampleAndHold* sampleAndHoldToggle = createMenuItem<ToggleSampleAndHold>("Sample and hold");
+		ToggleSampleAndHold *sampleAndHoldToggle = createMenuItem<ToggleSampleAndHold>("Sample and hold");
 		sampleAndHoldToggle->rightText = CHECKMARK(module->sampleAndHoldEnabled);
 		sampleAndHoldToggle->module = module;
 		menu->addChild(sampleAndHoldToggle);
 	}
 };
 
-
-Model* modelSequel16 = createModel<Sequel16, Sequel16Widget>("Sequel16");
+Model *modelSequel16 = createModel<Sequel16, Sequel16Widget>("Sequel16");

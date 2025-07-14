@@ -2,7 +2,7 @@
 
 struct GateDetector
 {
-	float lastInput = 0.f;
-	
-	bool check(float input);
+    float lastInput = 0.f;
+
+    bool check(float input);
 };

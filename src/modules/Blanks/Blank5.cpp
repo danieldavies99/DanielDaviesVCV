@@ -1,31 +1,38 @@
 #include "DanielDavies.hpp"
 
-
-struct Blank5 : Module {
-	enum ParamId {
+struct Blank5 : Module
+{
+	enum ParamId
+	{
 		PARAMS_LEN
 	};
-	enum InputId {
+	enum InputId
+	{
 		INPUTS_LEN
 	};
-	enum OutputId {
+	enum OutputId
+	{
 		OUTPUTS_LEN
 	};
-	enum LightId {
+	enum LightId
+	{
 		LIGHTS_LEN
 	};
 
-	Blank5() {
+	Blank5()
+	{
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 	}
 
-	void process(const ProcessArgs& args) override {
+	void process(const ProcessArgs &args) override
+	{
 	}
 };
 
-
-struct Blank5Widget : ModuleWidget {
-	Blank5Widget(Blank5* module) {
+struct Blank5Widget : ModuleWidget
+{
+	Blank5Widget(Blank5 *module)
+	{
 		setModule(module);
 		setPanel(createPanel(asset::plugin(pluginInstance, "res/Blank5.svg")));
 
@@ -36,5 +43,4 @@ struct Blank5Widget : ModuleWidget {
 	}
 };
 
-
-Model* modelBlank5 = createModel<Blank5, Blank5Widget>("Blank5");
+Model *modelBlank5 = createModel<Blank5, Blank5Widget>("Blank5");

@@ -4,13 +4,15 @@
 #include "widgets/Buttons.hpp"
 #include "utilities/IgnoreClockAfterResetTimer.hpp"
 
-struct James : Module {
-	
+struct James : Module
+{
+
 	const int NUM_GATE_SWITCHES = 96;
 	const int NUM_ROWS = 6;
 	const int NUM_STEPS = 16;
 
-	enum ParamId {
+	enum ParamId
+	{
 		SWITCH_GATE_R0_C0_PARAM,
 		SWITCH_GATE_R0_C1_PARAM,
 		SWITCH_GATE_R0_C2_PARAM,
@@ -118,12 +120,14 @@ struct James : Module {
 		SWITCH_GATE_MODE_PARAM,
 		PARAMS_LEN
 	};
-	enum InputId {
+	enum InputId
+	{
 		IN_CLOCK_INPUT,
 		IN_RESET_INPUT,
 		INPUTS_LEN
 	};
-	enum OutputId {
+	enum OutputId
+	{
 		OUT_GATE_R0_OUTPUT,
 		OUT_GATE_R1_OUTPUT,
 		OUT_GATE_R2_OUTPUT,
@@ -133,7 +137,8 @@ struct James : Module {
 		OUT_CLOCK_OUTPUT,
 		OUTPUTS_LEN
 	};
-	enum LightId {
+	enum LightId
+	{
 		GATE_LIGHT_R0_C0_LIGHT,
 		GATE_LIGHT_R0_C1_LIGHT,
 		GATE_LIGHT_R0_C2_LIGHT,
@@ -251,7 +256,8 @@ struct James : Module {
 		LIGHTS_LEN
 	};
 
-	James() {
+	James()
+	{
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(KNOB_STEP_COUNT_PARAM, 0.f, 16.f, 16.f, "Step count");
 		configParam(KNOB_CLOCK_SPEED_PARAM, 0.f, 1.f, 0.5f, "Speed");
@@ -356,9 +362,9 @@ struct James : Module {
 
 		configInput(IN_CLOCK_INPUT, "Clock");
 		configInput(IN_RESET_INPUT, "Reset");
-	
+
 		configOutput(OUT_CLOCK_OUTPUT, "Clock");
-	
+
 		configOutput(OUT_GATE_R0_OUTPUT, "Row 1 gate");
 		configOutput(OUT_GATE_R1_OUTPUT, "Row 2 gate");
 		configOutput(OUT_GATE_R2_OUTPUT, "Row 3 gate");
@@ -374,51 +380,67 @@ struct James : Module {
 		configParam(KNOB_RUSH_R5_PARAM, 15.f, -15.f, 0.f, "Rush / Drag");
 	}
 
-	short getStepLedId(short step) {
+	short getStepLedId(short step)
+	{
 		return NUM_GATE_SWITCHES + step;
 	}
 
-	void turnOffAllStepIndicatorLights() {
-		for(int i = 0; i < NUM_STEPS; i++) {
+	void turnOffAllStepIndicatorLights()
+	{
+		for (int i = 0; i < NUM_STEPS; i++)
+		{
 			lights[getStepLedId(i)].setBrightness(0.0);
 		}
 	}
 
-	short getButtonId(short row, short column) {
-		return column + (row*NUM_STEPS);
+	short getButtonId(short row, short column)
+	{
+		return column + (row * NUM_STEPS);
 	}
 
-	short getLightId(short row, short column) {
-		return column + (row*NUM_STEPS);
+	short getLightId(short row, short column)
+	{
+		return column + (row * NUM_STEPS);
 	}
 
-	short getGateOutputId(short row) {
+	short getGateOutputId(short row)
+	{
 		// I know this seems redundant,
-		// but I'm keeping it so that 
-		// I understand this code a 
+		// but I'm keeping it so that
+		// I understand this code a
 		// year from now
 		return row;
 	}
 
-	void handleGateButtonLeds() {
-		for(int i = 0; i < NUM_GATE_SWITCHES; i++) {
-			if(params[i].getValue() > 0) {
+	void handleGateButtonLeds()
+	{
+		for (int i = 0; i < NUM_GATE_SWITCHES; i++)
+		{
+			if (params[i].getValue() > 0)
+			{
 				lights[i].setBrightness(0.5);
-			} else {
+			}
+			else
+			{
 				lights[i].setBrightness(0.0);
 			}
 		}
 	}
 
-	void randomizeGatesForRow(short row) {
-		for(int col = 0; col < NUM_STEPS; col++) {
+	void randomizeGatesForRow(short row)
+	{
+		for (int col = 0; col < NUM_STEPS; col++)
+		{
 			params[getButtonId(row, col)].setValue(round(random::uniform()));
 		}
 	}
 
-	void randomizeGates() {
-		for(int row = 0; row < NUM_ROWS; row++) {
-			for(int col = 0; col < NUM_STEPS; col++) {
+	void randomizeGates()
+	{
+		for (int row = 0; row < NUM_ROWS; row++)
+		{
+			for (int col = 0; col < NUM_STEPS; col++)
+			{
 				params[getButtonId(row, col)].setValue(round(random::uniform()));
 			}
 		}
@@ -431,38 +453,39 @@ struct James : Module {
 	float lastclockVoltage = 0.0f;
 	float lastResetInput = 0.0f;
 
-	dsp::PulseGenerator gatePulseGenerators [6] = { };
+	dsp::PulseGenerator gatePulseGenerators[6] = {};
 
 	JamesClockTracker clockTracker;
 
 	bool gateTriggerModeEnabled = true;
 
-	bool shouldPulseThisClock(short row) {
+	bool shouldPulseThisClock(short row)
+	{
 		// work out if should pulse based on current step - rush
-		if(params[
-			getButtonId(row, clockTracker.getCurrentStep())
-		].getValue() > 0.5 && 
-		clockTracker.getRushForRow(row) == clockTracker.getClocksSinceLastStep()) {
+		if (params[getButtonId(row, clockTracker.getCurrentStep())].getValue() > 0.5 &&
+			clockTracker.getRushForRow(row) == clockTracker.getClocksSinceLastStep())
+		{
 			return true;
 		}
 
-		// work out if should pulse based on next step - drag 
-		if(params[
-			getButtonId(row, clockTracker.getNextStep())
-		].getValue() > 0.5 && clockTracker.getRushForRow(row) == -(clockTracker.globalClockDivide - clockTracker.getClocksSinceLastStep()) ) {
+		// work out if should pulse based on next step - drag
+		if (params[getButtonId(row, clockTracker.getNextStep())].getValue() > 0.5 && clockTracker.getRushForRow(row) == -(clockTracker.globalClockDivide - clockTracker.getClocksSinceLastStep()))
+		{
 			return true;
 		}
 		return false;
 	}
 
-	float getInternalClockVoltage(float sampleRate) {
+	float getInternalClockVoltage(float sampleRate)
+	{
 		float clockSpeedInvert = 1 - params[KNOB_CLOCK_SPEED_PARAM].getValue();
 
 		const float minInterval = 0.003f;
 		const float maxInterval = 0.08f;
-		const float interval = minInterval + ((maxInterval - minInterval)*clockSpeedInvert);
+		const float interval = minInterval + ((maxInterval - minInterval) * clockSpeedInvert);
 		const float timeSinceLastPulsed = timer.process(1.0 / sampleRate);
-		if(timeSinceLastPulsed > interval) {
+		if (timeSinceLastPulsed > interval)
+		{
 			clockOutPulse.trigger(1e-3f);
 			timer.reset();
 		}
@@ -470,23 +493,29 @@ struct James : Module {
 		return shouldClockOutPulse ? 10.0 : 0.0;
 	}
 
-	int getRushValForRow(short row) {
+	int getRushValForRow(short row)
+	{
 		return -static_cast<int>(params[NUM_GATE_SWITCHES + row].getValue());
 	}
 
-	void reset() {
+	void reset()
+	{
 		clockTracker.reset();
 	}
 
-	void process(const ProcessArgs& args) override {
+	void process(const ProcessArgs &args) override
+	{
 		ignoreClockAfterResetTimer.process(1.0 / args.sampleRate); // must be called every process to ensure timer progresses
 
 		const bool hasExternalClock = inputs[IN_CLOCK_INPUT].isConnected();
 		float internalClockVoltage = 0.0f;
 
-		if(hasExternalClock) {
+		if (hasExternalClock)
+		{
 			outputs[OUT_CLOCK_OUTPUT].setVoltage(inputs[IN_CLOCK_INPUT].getVoltage());
-		} else {
+		}
+		else
+		{
 			internalClockVoltage = getInternalClockVoltage(args.sampleRate);
 			outputs[OUT_CLOCK_OUTPUT].setVoltage(internalClockVoltage);
 		}
@@ -498,7 +527,8 @@ struct James : Module {
 
 		handleGateButtonLeds();
 
-		if(clockTracker.numSteps == 0) { // don't output anything if steps = 0;
+		if (clockTracker.numSteps == 0)
+		{ // don't output anything if steps = 0;
 			turnOffAllStepIndicatorLights();
 			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(0);
 			lights[LIGHT_GATE_MODE_CONTINUOUS_LIGHT].setBrightness(0);
@@ -506,20 +536,25 @@ struct James : Module {
 		}
 
 		float resetInput = inputs[IN_RESET_INPUT].getVoltage();
-		if (lastResetInput == 0 && resetInput != 0) {
+		if (lastResetInput == 0 && resetInput != 0)
+		{
 			reset();
 		}
 
 		// set rush/drag values
-		for(int i = 0; i < NUM_ROWS; i++) {
+		for (int i = 0; i < NUM_ROWS; i++)
+		{
 			clockTracker.setRushForRow(i, getRushValForRow(i));
 		}
 
 		// calculate if row should pulse
-		if (lastclockVoltage == 0 && clockVoltage != 0 && !ignoreClockAfterResetTimer.shouldIgnore) {
+		if (lastclockVoltage == 0 && clockVoltage != 0 && !ignoreClockAfterResetTimer.shouldIgnore)
+		{
 			clockTracker.nextClock();
-			for(int i = 0; i < NUM_ROWS; i++) {
-				if(shouldPulseThisClock(i)) {
+			for (int i = 0; i < NUM_ROWS; i++)
+			{
+				if (shouldPulseThisClock(i))
+				{
 					gatePulseGenerators[i].trigger(1e-3f);
 				}
 			}
@@ -531,11 +566,14 @@ struct James : Module {
 		// End
 
 		// handle gate trigger/continuous toggle
-		if(params[SWITCH_GATE_MODE_PARAM].getValue() > 0) {
+		if (params[SWITCH_GATE_MODE_PARAM].getValue() > 0)
+		{
 			gateTriggerModeEnabled = true;
 			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(1);
 			lights[LIGHT_GATE_MODE_CONTINUOUS_LIGHT].setBrightness(0);
-		} else {
+		}
+		else
+		{
 			gateTriggerModeEnabled = false;
 			lights[LIGHT_GATE_MODE_TRIGGER_LIGHT].setBrightness(0);
 			lights[LIGHT_GATE_MODE_CONTINUOUS_LIGHT].setBrightness(1);
@@ -543,9 +581,12 @@ struct James : Module {
 		// end
 
 		// Handle pulse (trigger) gate outputs
-		if(gateTriggerModeEnabled) {
-			for(int i = 0; i < NUM_ROWS; i++) {
-				if(outputs[getGateOutputId(i)].isConnected()) {
+		if (gateTriggerModeEnabled)
+		{
+			for (int i = 0; i < NUM_ROWS; i++)
+			{
+				if (outputs[getGateOutputId(i)].isConnected())
+				{
 					const bool pulse = gatePulseGenerators[i].process(1.0 / args.sampleRate);
 					outputs[getGateOutputId(i)].setVoltage(pulse ? 10.0 : 0.0);
 				}
@@ -554,11 +595,14 @@ struct James : Module {
 		// End
 
 		// Handle continuous gate outputs
-		if(!gateTriggerModeEnabled) {
-			for(int i = 0; i < NUM_ROWS; i++) {
-				if(outputs[getGateOutputId(i)].isConnected()) {
+		if (!gateTriggerModeEnabled)
+		{
+			for (int i = 0; i < NUM_ROWS; i++)
+			{
+				if (outputs[getGateOutputId(i)].isConnected())
+				{
 					const bool shouldGate = params[getButtonId(i, clockTracker.getCurrentStepAccountingForRush(i))].getValue() > 0;
-					outputs[getGateOutputId(i)].setVoltage(shouldGate ? 10.0 : 0.0);		
+					outputs[getGateOutputId(i)].setVoltage(shouldGate ? 10.0 : 0.0);
 				}
 			}
 		}
@@ -569,9 +613,10 @@ struct James : Module {
 	}
 };
 
-
-struct JamesWidget : ModuleWidget {
-	JamesWidget(James* module) {
+struct JamesWidget : ModuleWidget
+{
+	JamesWidget(James *module)
+	{
 		setModule(module);
 		setPanel(createPanel(asset::plugin(pluginInstance, "res/James.svg")));
 
@@ -591,7 +636,6 @@ struct JamesWidget : ModuleWidget {
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.135, 76.419)), module, James::KNOB_RUSH_R3_PARAM));
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.135, 90.601)), module, James::KNOB_RUSH_R4_PARAM));
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.135, 104.783)), module, James::KNOB_RUSH_R5_PARAM));
-
 
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(26.987, 33.867)), module, James::SWITCH_GATE_R0_C0_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(37.062, 33.867)), module, James::SWITCH_GATE_R0_C1_PARAM));
@@ -627,7 +671,6 @@ struct JamesWidget : ModuleWidget {
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(168.035, 33.867)), module, James::GATE_LIGHT_R0_C14_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(178.11, 33.867)), module, James::GATE_LIGHT_R0_C15_LIGHT));
 
-	
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(26.987, 48.056)), module, James::SWITCH_GATE_R1_C0_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(37.062, 48.056)), module, James::SWITCH_GATE_R1_C1_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(47.137, 48.056)), module, James::SWITCH_GATE_R1_C2_PARAM));
@@ -662,7 +705,6 @@ struct JamesWidget : ModuleWidget {
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(168.035, 48.056)), module, James::GATE_LIGHT_R1_C14_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(178.11, 48.056)), module, James::GATE_LIGHT_R1_C15_LIGHT));
 
-	
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(26.987, 62.238)), module, James::SWITCH_GATE_R2_C0_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(37.062, 62.238)), module, James::SWITCH_GATE_R2_C1_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(47.137, 62.238)), module, James::SWITCH_GATE_R2_C2_PARAM));
@@ -696,7 +738,6 @@ struct JamesWidget : ModuleWidget {
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(157.961, 62.238)), module, James::GATE_LIGHT_R2_C13_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(168.035, 62.238)), module, James::GATE_LIGHT_R2_C14_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(178.11, 62.238)), module, James::GATE_LIGHT_R2_C15_LIGHT));
-
 
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(26.987, 76.419)), module, James::SWITCH_GATE_R3_C0_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(37.062, 76.419)), module, James::SWITCH_GATE_R3_C1_PARAM));
@@ -732,7 +773,6 @@ struct JamesWidget : ModuleWidget {
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(168.035, 76.419)), module, James::GATE_LIGHT_R3_C14_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(178.11, 76.419)), module, James::GATE_LIGHT_R3_C15_LIGHT));
 
-
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(26.987, 90.601)), module, James::SWITCH_GATE_R4_C0_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(37.062, 90.601)), module, James::SWITCH_GATE_R4_C1_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(46.873, 90.601)), module, James::SWITCH_GATE_R4_C2_PARAM));
@@ -766,7 +806,6 @@ struct JamesWidget : ModuleWidget {
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(157.961, 90.601)), module, James::GATE_LIGHT_R4_C13_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(168.035, 90.601)), module, James::GATE_LIGHT_R4_C14_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(178.11, 90.601)), module, James::GATE_LIGHT_R4_C15_LIGHT));
-
 
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(26.987, 104.783)), module, James::SWITCH_GATE_R5_C0_PARAM));
 		addParam(createParamCentered<CKD6Latch>(mm2px(Vec(37.062, 104.783)), module, James::SWITCH_GATE_R5_C1_PARAM));
@@ -802,7 +841,6 @@ struct JamesWidget : ModuleWidget {
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(168.035, 104.783)), module, James::GATE_LIGHT_R5_C14_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(178.11, 104.783)), module, James::GATE_LIGHT_R5_C15_LIGHT));
 
-
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(57.212, 16.145)), module, James::IN_CLOCK_INPUT));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(137.811, 16.145)), module, James::IN_RESET_INPUT));
 
@@ -834,36 +872,41 @@ struct JamesWidget : ModuleWidget {
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(178.11, 114.3)), module, James::LIGHT_STEP_INDICATOR_C15_LIGHT));
 	}
 
-
-	void appendContextMenu(Menu* menu) override {
-		James* module = dynamic_cast<James*>(this->module);
+	void appendContextMenu(Menu *menu) override
+	{
+		James *module = dynamic_cast<James *>(this->module);
 
 		menu->addChild(new MenuEntry);
 		menu->addChild(createMenuLabel("Randomize"));
 
-		struct RandomizeAllGates : MenuItem {
-			James* module;
-			void onAction(const event::Action &e) override {
+		struct RandomizeAllGates : MenuItem
+		{
+			James *module;
+			void onAction(const event::Action &e) override
+			{
 				module->randomizeGates();
 			}
 		};
 
-		struct RandomizeGatesForRow : MenuItem {
+		struct RandomizeGatesForRow : MenuItem
+		{
 			short row;
-			James* module;
-			void onAction(const event::Action &e) override {
+			James *module;
+			void onAction(const event::Action &e) override
+			{
 				module->randomizeGatesForRow(row);
 			}
 		};
 
-		RandomizeAllGates* randomizeAllGates = createMenuItem<RandomizeAllGates>("Randomize all gates");
+		RandomizeAllGates *randomizeAllGates = createMenuItem<RandomizeAllGates>("Randomize all gates");
 		randomizeAllGates->module = module;
 
 		menu->addChild(randomizeAllGates);
 		menu->addChild(new MenuSeparator());
 
-		for(short row = 0; row < 6; row++) {
-			RandomizeGatesForRow* randomizeGatesForRow = createMenuItem<RandomizeGatesForRow>("Randomize Gates for row " + std::to_string(row + 1));
+		for (short row = 0; row < 6; row++)
+		{
+			RandomizeGatesForRow *randomizeGatesForRow = createMenuItem<RandomizeGatesForRow>("Randomize Gates for row " + std::to_string(row + 1));
 			randomizeGatesForRow->row = row;
 			randomizeGatesForRow->module = module;
 			menu->addChild(randomizeGatesForRow);
@@ -871,5 +914,4 @@ struct JamesWidget : ModuleWidget {
 	}
 };
 
-
-Model* modelJames = createModel<James, JamesWidget>("James");
+Model *modelJames = createModel<James, JamesWidget>("James");

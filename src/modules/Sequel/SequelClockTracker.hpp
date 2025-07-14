@@ -4,49 +4,49 @@
 struct SequelClockTracker
 {
 
-	short numSteps;
-	short numRows;
+    short numSteps;
+    short numRows;
 
-	std::vector<short> currentStepTracker;
-	std::vector<short> gatesSinceLastStepTracker;
-	std::vector<short> divideTracker;
-	std::vector<bool> hasPulsedThisStepTracker;
+    std::vector<short> currentStepTracker;
+    std::vector<short> gatesSinceLastStepTracker;
+    std::vector<short> divideTracker;
+    std::vector<bool> hasPulsedThisStepTracker;
 
-	void initializeRows();
+    void initializeRows();
 
-	void nextClock();
+    void nextClock();
 
-	void nextStepForRow(short row);
+    void nextStepForRow(short row);
 
-	int getCurrentStepForRow(short row);
+    int getCurrentStepForRow(short row);
 
-	void resetStepTrackers();
+    void resetStepTrackers();
 
-	void resetGatesSinceLastStepTrackers();
+    void resetGatesSinceLastStepTrackers();
 
-	void resetHasPulsedThisStepTrackers();
+    void resetHasPulsedThisStepTrackers();
 
-	bool getHasPulsedThisStepForRow(short row);
+    bool getHasPulsedThisStepForRow(short row);
 
-	void setHasPulsedThisStepForRow(short row, bool val);
+    void setHasPulsedThisStepForRow(short row, bool val);
 };
 
 struct Sequel8ClockTracker : SequelClockTracker
 {
-	Sequel8ClockTracker()
-	{
-		numSteps = 8;
-		numRows = 3;
-		initializeRows();
-	}
+    Sequel8ClockTracker()
+    {
+        numSteps = 8;
+        numRows = 3;
+        initializeRows();
+    }
 };
 
 struct Sequel16ClockTracker : SequelClockTracker
 {
-	Sequel16ClockTracker()
-	{
-		numSteps = 16;
-		numRows = 3;
-		initializeRows();
-	}
+    Sequel16ClockTracker()
+    {
+        numSteps = 16;
+        numRows = 3;
+        initializeRows();
+    }
 };

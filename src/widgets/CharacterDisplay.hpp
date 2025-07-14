@@ -4,5 +4,5 @@
 
 struct CharacterDisplay : OledPixelDisplay
 {
-	void drawLetter(char letter, int x, int y);
+    void drawLetter(char letter, int x, int y);
 };

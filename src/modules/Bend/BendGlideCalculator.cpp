@@ -2,13 +2,16 @@
 
 using namespace rack;
 
-void GlideCalculator::initialize(simd::float_4 initialFreq) {
+void GlideCalculator::initialize(simd::float_4 initialFreq)
+{
     currentFreq = initialFreq;
     initialized = true;
 }
 
-void GlideCalculator::process(float deltaTime) {
-    if(glideAmount < 0.02) {
+void GlideCalculator::process(float deltaTime)
+{
+    if (glideAmount < 0.02)
+    {
         currentFreq = targetFreq;
     }
     float inverseControl = 1.1f - glideAmount;

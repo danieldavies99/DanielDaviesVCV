@@ -4,9 +4,9 @@
 struct IgnoreClockAfterResetTimer
 {
 
-	rack::dsp::Timer timer;
-	bool shouldIgnore = false;
+    rack::dsp::Timer timer;
+    bool shouldIgnore = false;
 
-	void resetTriggered();
-	void process(float deltaTime);
+    void resetTriggered();
+    void process(float deltaTime);
 };

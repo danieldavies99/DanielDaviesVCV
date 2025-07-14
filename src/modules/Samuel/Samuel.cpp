@@ -5,29 +5,35 @@
 #include "widgets/LengthValuesDisplay.hpp"
 #include "utilities/IgnoreClockAfterResetTimer.hpp"
 
-struct Samuel : Module {
-	enum ParamId {
+struct Samuel : Module
+{
+	enum ParamId
+	{
 		KNOB_DOT_LENGTH_PARAM,
 		KNOB_DASH_LENGTH_PARAM,
 		KNOB_NEW_LETTER_LENGTH_PARAM,
 		KNOB_NEW_WORD_LENGTH_PARAM,
 		PARAMS_LEN
 	};
-	enum InputId {
+	enum InputId
+	{
 		INPUT_CLOCK_IN_INPUT,
 		INPUT_RESET_INPUT,
 		INPUTS_LEN
 	};
-	enum OutputId {
+	enum OutputId
+	{
 		OUTPUT_GATE_OUT_OUTPUT,
 		OUT_END_OUTPUT,
 		OUTPUTS_LEN
 	};
-	enum LightId {
+	enum LightId
+	{
 		LIGHTS_LEN
 	};
 
-	Samuel() {
+	Samuel()
+	{
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(KNOB_DOT_LENGTH_PARAM, 0.f, 9.f, 1.f, "Dot Length");
 		configParam(KNOB_DASH_LENGTH_PARAM, 0.f, 9.f, 3.f, "Dash Length");
@@ -58,7 +64,8 @@ struct Samuel : Module {
 
 	SequenceGenerator sequenceGenerator;
 
-	void process(const ProcessArgs& args) override {
+	void process(const ProcessArgs &args) override
+	{
 		sequenceGenerator.dotLength = (int)params[KNOB_DOT_LENGTH_PARAM].getValue();
 		sequenceGenerator.dashLength = (int)params[KNOB_DASH_LENGTH_PARAM].getValue();
 		sequenceGenerator.newLetterLength = (int)params[KNOB_NEW_LETTER_LENGTH_PARAM].getValue();
@@ -72,22 +79,27 @@ struct Samuel : Module {
 		ignoreClockAfterResetTimer.process(1.0 / args.sampleRate);
 
 		float resetInput = inputs[INPUT_RESET_INPUT].getVoltage();
-		if (lastResetInput == 0 && resetInput != 0) { // reset triggered
+		if (lastResetInput == 0 && resetInput != 0)
+		{ // reset triggered
 			ignoreClockAfterResetTimer.resetTriggered();
 			step = 0;
 		}
 
 		sequenceGenerator.generateSequence(message); // TODO: possible efficiency improvement: calling per letter rather than the whole sequence each time
-		if ((int)sequenceGenerator.sequence.size() < 1) {
+		if ((int)sequenceGenerator.sequence.size() < 1)
+		{
 			outputs[OUTPUT_GATE_OUT_OUTPUT].setVoltage(0);
 			return;
 		}
 		const float clockInput = inputs[INPUT_CLOCK_IN_INPUT].getVoltage();
-		if(step > (int)sequenceGenerator.sequence.size()) {
+		if (step > (int)sequenceGenerator.sequence.size())
+		{
 			step = 0;
 		}
-		if (lastclockVoltage == 0 && clockInput != 0 && !ignoreClockAfterResetTimer.shouldIgnore) { // clock detected
-			if(step == 0) {
+		if (lastclockVoltage == 0 && clockInput != 0 && !ignoreClockAfterResetTimer.shouldIgnore)
+		{ // clock detected
+			if (step == 0)
+			{
 				endGatePulse.trigger(1e-3f);
 			}
 			outputs[OUTPUT_GATE_OUT_OUTPUT].setVoltage(sequenceGenerator.sequence[step] ? 10.0f : 0);
@@ -95,30 +107,34 @@ struct Samuel : Module {
 		}
 
 		const bool shouldPulseEnd = endGatePulse.process(1.0 / args.sampleRate);
-		outputs[OUT_END_OUTPUT].setVoltage(shouldPulseEnd ? 10.0 : 0.0);		
+		outputs[OUT_END_OUTPUT].setVoltage(shouldPulseEnd ? 10.0 : 0.0);
 
 		lastclockVoltage = clockInput;
 		lastMessage = message;
 		lastResetInput = resetInput;
 	}
 
-	json_t *dataToJson() override {
+	json_t *dataToJson() override
+	{
 		json_t *rootJ = json_object();
 		json_object_set_new(rootJ, "samuelText", json_string(message.c_str()));
 		return rootJ;
 	}
 
-	void dataFromJson(json_t *rootJ) override {
+	void dataFromJson(json_t *rootJ) override
+	{
 		json_t *messageJ = json_object_get(rootJ, "samuelText");
-		if(messageJ) {
+		if (messageJ)
+		{
 			message = json_string_value(messageJ);
 		}
 	}
 };
 
-
-struct SamuelWidget : ModuleWidget {
-	SamuelWidget(Samuel* module) {
+struct SamuelWidget : ModuleWidget
+{
+	SamuelWidget(Samuel *module)
+	{
 		setModule(module);
 		setPanel(createPanel(asset::plugin(pluginInstance, "res/Samuel.svg")));
 
@@ -138,13 +154,14 @@ struct SamuelWidget : ModuleWidget {
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(88.935, 88.853)), module, Samuel::OUTPUT_GATE_OUT_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(88.935, 99.276)), module, Samuel::OUT_END_OUTPUT));
 
-		if(module) {
-			TextInputDisplay* textInputDisplay = createWidget<TextInputDisplay>(mm2px(Vec(5.759, 25.0)));
+		if (module)
+		{
+			TextInputDisplay *textInputDisplay = createWidget<TextInputDisplay>(mm2px(Vec(5.759, 25.0)));
 			textInputDisplay->initialize();
 			textInputDisplay->message = &module->message;
 			addChild(textInputDisplay);
 
-			LengthValuesDisplay* lengthValuesDisplay = createWidget<LengthValuesDisplay>(mm2px(Vec(5.759, 105.28)));
+			LengthValuesDisplay *lengthValuesDisplay = createWidget<LengthValuesDisplay>(mm2px(Vec(5.759, 105.28)));
 			lengthValuesDisplay->initialize();
 			lengthValuesDisplay->val0 = &module->screenDotLength;
 			lengthValuesDisplay->val1 = &module->screenDashLength;
@@ -152,8 +169,7 @@ struct SamuelWidget : ModuleWidget {
 			lengthValuesDisplay->val3 = &module->screenNewWordLength;
 			addChild(lengthValuesDisplay);
 		}
-
 	}
 };
 
-Model* modelSamuel = createModel<Samuel, SamuelWidget>("Samuel");
+Model *modelSamuel = createModel<Samuel, SamuelWidget>("Samuel");

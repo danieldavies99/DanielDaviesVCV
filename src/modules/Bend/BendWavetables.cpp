@@ -4,8 +4,8 @@ using namespace rack;
 
 simd::float_4 BendWavetable::getValue(
     simd::float_4 phase,
-    InterpolationMode interpolationMode
-) {
+    InterpolationMode interpolationMode)
+{
 
     simd::float_4 frames = simd::floor(phase * resolution);
 
@@ -34,8 +34,8 @@ simd::float_4 BendWavetable::getValue(
         return res;
     }
     if (
-        interpolationMode == BendWavetable::InterpolationMode::NONE
-    ) {
+        interpolationMode == BendWavetable::InterpolationMode::NONE)
+    {
         simd::float_4 truncatedFrames = simd::floor(frames);
         simd::float_4 res = {
             table[(int)truncatedFrames[0]],
@@ -44,9 +44,8 @@ simd::float_4 BendWavetable::getValue(
             table[(int)truncatedFrames[3]],
         };
         return res;
-
     }
-    simd::float_4 res = {0.f,0.f,0.f,0.f};
+    simd::float_4 res = {0.f, 0.f, 0.f, 0.f};
     return res;
 }
 

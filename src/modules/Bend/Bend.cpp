@@ -7,8 +7,10 @@
 #include "widgets/Sliders.hpp"
 
 using namespace rack;
-struct Bend : Module {
-	enum ParamId {
+struct Bend : Module
+{
+	enum ParamId
+	{
 		KNOB_COARSE_PARAM,
 		KNOB_GLIDE_PARAM,
 		KNOB_BEND_PARAM,
@@ -19,7 +21,8 @@ struct Bend : Module {
 		KNOB_AMPLITUDE_MODULATION_PARAM,
 		PARAMS_LEN
 	};
-	enum InputId {
+	enum InputId
+	{
 		SYNC_IN_INPUT,
 		PITCH_IN_INPUT,
 		BEND_IN_INPUT,
@@ -27,33 +30,40 @@ struct Bend : Module {
 		AMPLITUDE_MODULATION_IN_INPUT,
 		INPUTS_LEN
 	};
-	enum OutputId {
+	enum OutputId
+	{
 		SQUARE_OUT_OUTPUT,
 		SIN_OUT_OUTPUT,
 		TRIANGLE_OUT_OUTPUT,
 		NOISE_OUT_OUTPUT,
 		OUTPUTS_LEN
 	};
-	enum LightId {
+	enum LightId
+	{
 		LIGHT_LFO_LIGHT,
 		LIGHTS_LEN
 	};
 
-	Bend() {
+	Bend()
+	{
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(KNOB_BEND_PARAM, 0.f, 1.f, 0.5f, "Bend");
 		configSwitch(SWITCH_LFO_PARAM, 0.f, 1.f, 0.f, "LFO mode", {"Off", "On"});
-		struct FrequencyQuantity : ParamQuantity {
-			float getDisplayValue() override {
-				Bend* module = reinterpret_cast<Bend*>(this->module);
-				if (module->lfoEnabled) {
+		struct FrequencyQuantity : ParamQuantity
+		{
+			float getDisplayValue() override
+			{
+				Bend *module = reinterpret_cast<Bend *>(this->module);
+				if (module->lfoEnabled)
+				{
 					displayBase = 2.f;
 					displayMultiplier = 1.f;
 					minValue = -8.f;
 					maxValue = 10.f;
 					defaultValue = 1.f;
 				}
-				else {
+				else
+				{
 					displayBase = dsp::FREQ_SEMITONE;
 					displayMultiplier = dsp::FREQ_C4;
 					minValue = -54.f;
@@ -87,9 +97,11 @@ struct Bend : Module {
 
 	BendWavetable::InterpolationMode interpolationMode = BendWavetable::LINEAR;
 
-	void process(const ProcessArgs& args) override {
+	void process(const ProcessArgs &args) override
+	{
 		float frequencyControl = params[KNOB_COARSE_PARAM].getValue() / 12.f;
-		if(lfoEnabled) {
+		if (lfoEnabled)
+		{
 			frequencyControl = params[KNOB_COARSE_PARAM].getValue() - 1;
 		}
 		float glideControl = params[KNOB_GLIDE_PARAM].getValue();
@@ -99,7 +111,8 @@ struct Bend : Module {
 		float bendControl = params[KNOB_BEND_PARAM].getValue();
 		float bendMod = params[KNOB_BEND_MODULATION_PARAM].getValue();
 
-		float amplitudeControl = params[KNOB_AMPLITUDE_PARAM].getValue();;
+		float amplitudeControl = params[KNOB_AMPLITUDE_PARAM].getValue();
+		;
 		float amMod = params[KNOB_AMPLITUDE_MODULATION_PARAM].getValue();
 
 		bool syncEnabled = inputs[SYNC_IN_INPUT].isConnected();
@@ -108,15 +121,19 @@ struct Bend : Module {
 		int channels = std::max(inputs[PITCH_IN_INPUT].getChannels(), 1);
 
 		// handle LFO indicator light
-		if(lfoEnabled) {
+		if (lfoEnabled)
+		{
 			lights[LIGHT_LFO_LIGHT].setBrightness(1.f);
-		} else {
+		}
+		else
+		{
 			lights[LIGHT_LFO_LIGHT].setBrightness(0.f);
 		}
 
-		for (int c = 0; c < channels; c += 4) {
-			auto& oscillator = oscillators[c / 4];
-			auto& glideCalculator = glideCalculators[c / 4];
+		for (int c = 0; c < channels; c += 4)
+		{
+			auto &oscillator = oscillators[c / 4];
+			auto &glideCalculator = glideCalculators[c / 4];
 
 			oscillator.amplitude = amplitudeControl + ((inputs[AMPLITUDE_MODULATION_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) / 5) * amMod);
 			oscillator.amplitude = simd::clamp(oscillator.amplitude, 0.f, 1.f);
@@ -136,17 +153,22 @@ struct Bend : Module {
 
 			simd::float_4 pitch = 0.f;
 			simd::float_4 freq = 0.f;
-			if(!lfoEnabled) {
+			if (!lfoEnabled)
+			{
 				pitch = frequencyControl + inputs[PITCH_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c);
 				freq = dsp::FREQ_C4 * dsp::exp2_taylor5(pitch);
-			} else {
+			}
+			else
+			{
 				pitch = frequencyControl + (inputs[FREQUENCY_MODULATION_IN_INPUT].getPolyVoltageSimd<simd::float_4>(c) * fmMod);
 				freq = dsp::exp2_taylor5(pitch) * 2.f;
 			}
 
-			if(!lfoEnabled) {
+			if (!lfoEnabled)
+			{
 				// apply glide
-				if(!glideCalculator.initialized) {
+				if (!glideCalculator.initialized)
+				{
 					glideCalculator.initialize(freq);
 				}
 				glideCalculator.targetFreq = freq;
@@ -178,23 +200,27 @@ struct Bend : Module {
 		outputs[NOISE_OUT_OUTPUT].setChannels(channels);
 	}
 
-	json_t *dataToJson() override {
+	json_t *dataToJson() override
+	{
 		json_t *rootJ = json_object();
 		json_object_set_new(rootJ, "interpolationMode", json_integer(interpolationMode));
 		return rootJ;
 	}
 
-	void dataFromJson(json_t *rootJ) override {
+	void dataFromJson(json_t *rootJ) override
+	{
 		json_t *interpolationModeJ = json_object_get(rootJ, "interpolationMode");
-		if(interpolationModeJ) {
+		if (interpolationModeJ)
+		{
 			interpolationMode = (BendWavetable::InterpolationMode)json_integer_value(interpolationModeJ);
 		}
 	}
 };
 
-
-struct BendWidget : ModuleWidget {
-	BendWidget(Bend* module) {
+struct BendWidget : ModuleWidget
+{
+	BendWidget(Bend *module)
+	{
 		setModule(module);
 		setPanel(createPanel(asset::plugin(pluginInstance, "res/Bend.svg")));
 
@@ -225,18 +251,22 @@ struct BendWidget : ModuleWidget {
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(54.331, 110.457)), module, Bend::NOISE_OUT_OUTPUT));
 	}
 
-	void appendContextMenu(Menu* menu) override {
-		Bend* module = dynamic_cast<Bend*>(this->module);
+	void appendContextMenu(Menu *menu) override
+	{
+		Bend *module = dynamic_cast<Bend *>(this->module);
 
-		struct SetInterpolationMode : MenuItem {
-			Bend* module;
+		struct SetInterpolationMode : MenuItem
+		{
+			Bend *module;
 			BendWavetable::InterpolationMode interpolationMode = BendWavetable::InterpolationMode::NONE;
 
-			void setInterpolationMode(BendWavetable::InterpolationMode argInterpolationMode) {
+			void setInterpolationMode(BendWavetable::InterpolationMode argInterpolationMode)
+			{
 				interpolationMode = argInterpolationMode;
 			}
-	
-			void onAction(const event::Action &e) override {
+
+			void onAction(const event::Action &e) override
+			{
 				module->interpolationMode = interpolationMode;
 			}
 		};
@@ -244,13 +274,13 @@ struct BendWidget : ModuleWidget {
 		menu->addChild(new MenuEntry);
 		menu->addChild(createMenuLabel("Interpolation mode"));
 
-		SetInterpolationMode* setLinearInterpolationMode = createMenuItem<SetInterpolationMode>("Linear");
+		SetInterpolationMode *setLinearInterpolationMode = createMenuItem<SetInterpolationMode>("Linear");
 		setLinearInterpolationMode->setInterpolationMode(BendWavetable::InterpolationMode::LINEAR);
 		setLinearInterpolationMode->rightText = CHECKMARK(module->interpolationMode == BendWavetable::InterpolationMode::LINEAR);
 		setLinearInterpolationMode->module = module;
 		menu->addChild(setLinearInterpolationMode);
 
-		SetInterpolationMode* setNoneInterpolationMode = createMenuItem<SetInterpolationMode>("None");
+		SetInterpolationMode *setNoneInterpolationMode = createMenuItem<SetInterpolationMode>("None");
 		setNoneInterpolationMode->setInterpolationMode(BendWavetable::InterpolationMode::NONE);
 		setNoneInterpolationMode->rightText = CHECKMARK(module->interpolationMode == BendWavetable::InterpolationMode::NONE);
 		setNoneInterpolationMode->module = module;
@@ -264,5 +294,4 @@ struct BendWidget : ModuleWidget {
 	}
 };
 
-
-Model* modelBend = createModel<Bend, BendWidget>("Bend");
+Model *modelBend = createModel<Bend, BendWidget>("Bend");

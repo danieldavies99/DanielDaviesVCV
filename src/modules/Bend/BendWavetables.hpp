@@ -2,18 +2,22 @@
 #include <string>
 #include <rack.hpp>
 
-
 struct BendWavetable
-{	
+{
 	std::string debugName = "default";
-	enum InterpolationMode { NONE, LINEAR, CUBIC_SPLINE };
+	enum InterpolationMode
+	{
+		NONE,
+		LINEAR,
+		CUBIC_SPLINE
+	};
 
 	int resolution = 131072;
 	float phaseShift = 0.f;
 	float table[131072];
 
 	rack::simd::float_4 getValue(rack::simd::float_4 phase, InterpolationMode interpolationMode);
-	virtual void generate(){};
+	virtual void generate() {};
 };
 
 struct BendTriTable : BendWavetable
