@@ -368,51 +368,29 @@ struct Knot : Module
 	void handleShiftDown()
 	{
 		addCurrentStateToUndoStack();
-		output1Index += 1;
-		output2Index += 1;
-		output3Index += 1;
-		output4Index += 1;
-		if (output1Index > 3)
-		{
-			output1Index = 0;
-		}
-		if (output2Index > 3)
-		{
-			output2Index = 0;
-		}
-		if (output3Index > 3)
-		{
-			output3Index = 0;
-		}
-		if (output4Index > 3)
-		{
-			output4Index = 0;
-		}
+		int originalOutput1Index = output1Index;
+		int originalOutput2Index = output2Index;
+		int originalOutput3Index = output3Index;
+		int originalOutput4Index = output4Index;
+
+		output1Index = originalOutput2Index;
+		output2Index = originalOutput3Index;
+		output3Index = originalOutput4Index;
+		output4Index = originalOutput1Index;
 	}
 
 	void handleShiftUp()
-	{
+	{	
 		addCurrentStateToUndoStack();
-		output1Index -= 1;
-		output2Index -= 1;
-		output3Index -= 1;
-		output4Index -= 1;
-		if (output1Index < 0)
-		{
-			output1Index = 3;
-		}
-		if (output2Index < 0)
-		{
-			output2Index = 3;
-		}
-		if (output3Index < 0)
-		{
-			output3Index = 3;
-		}
-		if (output4Index < 0)
-		{
-			output4Index = 3;
-		}
+		int originalOutput1Index = output1Index;
+		int originalOutput2Index = output2Index;
+		int originalOutput3Index = output3Index;
+		int originalOutput4Index = output4Index;
+		
+		output1Index = originalOutput4Index;
+		output2Index = originalOutput1Index;
+		output3Index = originalOutput2Index;
+		output4Index = originalOutput3Index;
 	}
 
 	void handleReset()
@@ -723,11 +701,6 @@ struct Knot : Module
 
 	void dataFromJson(json_t *rootJ) override
 	{
-		// json_t *interpolationModeJ = json_object_get(rootJ, "interpolationMode");
-		// if(interpolationModeJ) {
-		// 	interpolationMode = (BendWavetable::InterpolationMode)json_integer_value(interpolationModeJ);
-		// }
-
 		json_t *undoStackJ = json_object_get(rootJ, "undoStack");
 		if (undoStackJ)
 		{
