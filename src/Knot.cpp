@@ -258,6 +258,58 @@ struct Knot : Module
 		redoStack.clear();
 	}
 
+	json_t* getUndoStackJson() {
+		json_t* undoStackJson = json_array();
+		for (int i = 0; i < undoStack.size(); i++) {
+			KnotUndoState undoState = undoStack[i];
+			json_t* undoStateJson = json_array();
+			json_array_append_new(undoStateJson, json_integer(undoState.output1Index));
+			json_array_append_new(undoStateJson, json_integer(undoState.output2Index));
+			json_array_append_new(undoStateJson, json_integer(undoState.output3Index));
+			json_array_append_new(undoStateJson, json_integer(undoState.output4Index));
+			json_array_append_new(undoStackJson, undoStateJson);
+		}
+		return undoStackJson;
+	}
+
+	void setUndoStackFromJson(json_t* undoStackJson) {
+		undoStack.clear();
+		for (int i = 0; i < json_array_size(undoStackJson); i++) {
+			json_t* undoStateJson = json_array_get(undoStackJson, i);
+			int output1Index = json_integer_value(json_array_get(undoStateJson, 0));
+			int output2Index = json_integer_value(json_array_get(undoStateJson, 1));
+			int output3Index = json_integer_value(json_array_get(undoStateJson, 2));
+			int output4Index = json_integer_value(json_array_get(undoStateJson, 3));
+			undoStack.push_back(KnotUndoState(output1Index, output2Index, output3Index, output4Index));
+		}
+	}
+
+	json_t *getRedoStackJson() {
+		json_t* redoStackJson = json_array();
+		for (int i = 0; i < redoStack.size(); i++) {
+			KnotUndoState undoState = redoStack[i];
+			json_t* undoStateJson = json_array();
+			json_array_append_new(undoStateJson, json_integer(undoState.output1Index));
+			json_array_append_new(undoStateJson, json_integer(undoState.output2Index));
+			json_array_append_new(undoStateJson, json_integer(undoState.output3Index));
+			json_array_append_new(undoStateJson, json_integer(undoState.output4Index));
+			json_array_append_new(redoStackJson, undoStateJson);
+		}
+		return redoStackJson;
+	}
+
+	void setRedoStackFromJson(json_t* redoStackJson) {
+		redoStack.clear();
+		for (int i = 0; i < json_array_size(redoStackJson); i++) {
+			json_t* undoStateJson = json_array_get(redoStackJson, i);
+			int output1Index = json_integer_value(json_array_get(undoStateJson, 0));
+			int output2Index = json_integer_value(json_array_get(undoStateJson, 1));
+			int output3Index = json_integer_value(json_array_get(undoStateJson, 2));
+			int output4Index = json_integer_value(json_array_get(undoStateJson, 3));
+			redoStack.push_back(KnotUndoState(output1Index, output2Index, output3Index, output4Index));
+		}
+	}
+
 	float getInputVoltage(int inputIndex)
 	{
 		if (inputIndex == 0)
@@ -463,6 +515,34 @@ struct Knot : Module
 		}
 	}
 
+	json_t *getInputMappingJson() {
+		json_t *root = json_object();
+		json_object_set(root, "1", json_integer(output1Index));
+		json_object_set(root, "2", json_integer(output2Index));
+		json_object_set(root, "3", json_integer(output3Index));
+		json_object_set(root, "4", json_integer(output4Index));
+		return root;
+	}
+
+	void setInputMappingFromJson(json_t *root) {
+		output1Index = json_integer_value(json_object_get(root, "1"));
+		output2Index = json_integer_value(json_object_get(root, "2"));
+		output3Index = json_integer_value(json_object_get(root, "3"));
+		output4Index = json_integer_value(json_object_get(root, "4"));
+	}
+
+	json_t *getPatternStateJson() {
+		json_t *root = json_object();
+		json_object_set(root, "selectedPattern", json_integer(selectedPattern));
+		json_object_set(root, "patternStep", json_integer(patterns[selectedPattern].patternIndex));
+		return root;
+	}
+
+	void setPatternStateFromJson(json_t *root) {
+		selectedPattern = json_integer_value(json_object_get(root, "selectedPattern"));
+		patterns[selectedPattern].patternIndex = json_integer_value(json_object_get(root, "patternStep"));
+	}
+
 	void process(const ProcessArgs &args) override
 	{
 
@@ -605,6 +685,52 @@ struct Knot : Module
 			outputs[OUTPUT_OUT_4_OUTPUT].setVoltage(inputs[out4in].getVoltage());
 		}
 	}
+
+	json_t *dataToJson() override {
+		json_t *rootJ = json_object();		
+
+		json_t *undoStackJ = getUndoStackJson();
+		json_object_set_new(rootJ, "undoStack", undoStackJ);
+
+		json_t *redoStackJ = getRedoStackJson();
+		json_object_set_new(rootJ, "redoStack", redoStackJ);
+
+		json_t *patternStateJ = getPatternStateJson();
+		json_object_set_new(rootJ, "patternState", patternStateJ);
+
+		json_t *inputMapJson = getInputMappingJson();
+		json_object_set_new(rootJ, "inputMap", inputMapJson);
+
+		return rootJ;
+	}
+
+	void dataFromJson(json_t *rootJ) override {
+		// json_t *interpolationModeJ = json_object_get(rootJ, "interpolationMode");
+		// if(interpolationModeJ) {
+		// 	interpolationMode = (BendWavetable::InterpolationMode)json_integer_value(interpolationModeJ);
+		// }
+
+		json_t *undoStackJ = json_object_get(rootJ, "undoStack");
+		if(undoStackJ) {
+			setUndoStackFromJson(undoStackJ);
+		}
+
+		json_t *redoStackJ = json_object_get(rootJ, "redoStack");
+		if(redoStackJ) {
+			setRedoStackFromJson(redoStackJ);
+		}
+
+		json_t *patternStateJ = json_object_get(rootJ, "patternState");
+		if(patternStateJ) {
+			setPatternStateFromJson(patternStateJ);
+		}
+
+		json_t *inputMapJson = json_object_get(rootJ, "inputMap");
+		if(inputMapJson) {
+			setInputMappingFromJson(inputMapJson);
+		}
+	}
+
 };
 
 struct KnotWidget : ModuleWidget

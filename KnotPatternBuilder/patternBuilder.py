@@ -186,6 +186,7 @@ readable_lists += [
   ['swap_12', 'swap_34',  'random', 'undo', 'random', 'undo', 'redo', 'undo', 'swap_12', 'swap_34'],
   ['random', 'reset',  'undo', 'undo', 'redo', 'redo'],
   ['random', 'reset',  'undo', 'undo', 'redo', 'redo','undo', 'undo', 'redo', 'redo', 'undo', 'undo', 'redo', 'redo'],
+  ['random', 'swap_1234',  'undo', 'undo', 'redo', 'redo','undo', 'undo', 'redo', 'redo', 'undo', 'undo', 'redo', 'redo'],
   ['random', 'swap_1423',  'undo', 'undo', 'redo', 'redo','undo', 'undo', 'redo', 'redo', 'undo', 'undo', 'redo', 'redo'],
 ]
 
