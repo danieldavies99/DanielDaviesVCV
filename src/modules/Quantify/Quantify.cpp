@@ -359,12 +359,12 @@ struct QuantifyWidget : ModuleWidget
 	QuantifyWidget(Quantify *module)
 	{
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Quantify.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Quantify.svg"),asset::plugin(pluginInstance, "res/panels/dark/Quantify.svg")));
 
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(22.852, 39.147)), module, Quantify::KNOB_ATTENUVERT_R0_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(22.852, 69.329)), module, Quantify::KNOB_ATTENUVERT_R1_PARAM));
@@ -399,13 +399,13 @@ struct QuantifyWidget : ModuleWidget
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(35.704, 94.129)), module, Quantify::LIGHT_KEY_BUTTON_C_SHARP_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(44.452, 99.127)), module, Quantify::LIGHT_KEY_BUTTON_C_LIGHT));
 
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(11.412, 39.147)), module, Quantify::IN_CV_R0_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(11.412, 69.329)), module, Quantify::IN_CV_R1_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(11.412, 99.127)), module, Quantify::IN_CV_R2_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(11.412, 39.147)), module, Quantify::IN_CV_R0_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(11.412, 69.329)), module, Quantify::IN_CV_R1_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(11.412, 99.127)), module, Quantify::IN_CV_R2_INPUT));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(99.541, 39.147)), module, Quantify::OUT_CV_R0_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(99.541, 69.329)), module, Quantify::OUT_CV_R1_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(99.541, 99.127)), module, Quantify::OUT_CV_R2_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(99.541, 39.147)), module, Quantify::OUT_CV_R0_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(99.541, 69.329)), module, Quantify::OUT_CV_R1_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(99.541, 99.127)), module, Quantify::OUT_CV_R2_OUTPUT));
 
 		if (module)
 		{

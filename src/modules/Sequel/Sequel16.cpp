@@ -773,18 +773,18 @@ struct Sequel16Widget : ModuleWidget
 	Sequel16Widget(Sequel16 *module)
 	{
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Sequel16.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Sequel16.svg"),asset::plugin(pluginInstance, "res/panels/dark/Sequel16.svg")));
 
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(96.643, 16.145)), module, Sequel16::KNOB_STEP_COUNT_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(135.26, 16.145)), module, Sequel16::KNOB_CLOCK_SPEED_PARAM));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(77.334, 16.145)), module, Sequel16::IN_CLOCK_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(154.568, 16.145)), module, Sequel16::IN_RESET_INPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(115.951, 16.145)), module, Sequel16::OUT_CLOCK_OUTPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(77.334, 16.145)), module, Sequel16::IN_CLOCK_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(154.568, 16.145)), module, Sequel16::IN_RESET_INPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(115.951, 16.145)), module, Sequel16::OUT_CLOCK_OUTPUT));
 
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(12.224, 39.431)), module, Sequel16::KNOB_TIME_DIVIDE_R0_PARAM));
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(12.224, 69.329)), module, Sequel16::KNOB_TIME_DIVIDE_R1_PARAM));
@@ -947,12 +947,12 @@ struct Sequel16Widget : ModuleWidget
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(309.037, 104.783)), module, Sequel16::GATE_LIGHT_R2_C14_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(328.345, 104.783)), module, Sequel16::GATE_LIGHT_R2_C15_LIGHT));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(359.296, 33.591)), module, Sequel16::OUT_CV_R0_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(359.296, 44.704)), module, Sequel16::OUT_GATE_R0_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(359.297, 63.772)), module, Sequel16::OUT_CV_R1_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(359.297, 74.885)), module, Sequel16::OUT_GATE_R1_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(359.297, 93.67)), module, Sequel16::OUT_CV_R2_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(359.297, 104.783)), module, Sequel16::OUT_GATE_R2_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(359.296, 33.591)), module, Sequel16::OUT_CV_R0_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(359.296, 44.704)), module, Sequel16::OUT_GATE_R0_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(359.297, 63.772)), module, Sequel16::OUT_CV_R1_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(359.297, 74.885)), module, Sequel16::OUT_GATE_R1_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(359.297, 93.67)), module, Sequel16::OUT_CV_R2_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(359.297, 104.783)), module, Sequel16::OUT_GATE_R2_OUTPUT));
 
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(45.123, 29.28)), module, Sequel16::LIGHT_R0_C0_LIGHT));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(64.432, 29.28)), module, Sequel16::LIGHT_R0_C1_LIGHT));

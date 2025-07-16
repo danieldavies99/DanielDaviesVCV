@@ -732,38 +732,38 @@ struct KnotWidget : ModuleWidget
 	KnotWidget(Knot *module)
 	{
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Knot.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Knot.svg"),asset::plugin(pluginInstance, "res/panels/dark/Knot.svg")));
 
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(45.509, 16.557)), module, Knot::KNOB_PATTERN_SELECT_PARAM));
 
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(75.716, 16.557)), module, Knot::INPUT_PATTERN_RESET_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(90.819, 16.557)), module, Knot::INPUT_PATTERN_STEP_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(9.996, 38.971)), module, Knot::INPUT_CONTROL_1_2_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(25.53, 38.971)), module, Knot::INPUT_CONTROL_1_3_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(41.063, 38.971)), module, Knot::INPUT_CONTROL_RANDOM_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(68.063, 38.971)), module, Knot::INPUT_IN_1_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(9.996, 59.803)), module, Knot::INPUT_CONTROL_3_4_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(25.53, 59.803)), module, Knot::INPUT_CONTROL_2_4_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(41.063, 59.803)), module, Knot::INPUT_CONTROL_UNDO_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(68.063, 59.803)), module, Knot::INPUT_IN_2_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(9.996, 80.635)), module, Knot::INPUT_CONTROL_2_3_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(25.53, 80.635)), module, Knot::INPUT_CONTROL_SHIFT_UP_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(41.063, 80.635)), module, Knot::INPUT_CONTROL_REDO_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(68.063, 80.635)), module, Knot::INPUT_IN_3_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(9.996, 101.467)), module, Knot::INPUT_CONTROL_1_4_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(25.53, 101.467)), module, Knot::INPUT_CONTROL_SHIFT_DOWN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(41.063, 101.467)), module, Knot::INPUT_CONTROL_RESET_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(68.063, 101.467)), module, Knot::INPUT_IN_4_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(75.716, 16.557)), module, Knot::INPUT_PATTERN_RESET_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(90.819, 16.557)), module, Knot::INPUT_PATTERN_STEP_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(9.996, 38.971)), module, Knot::INPUT_CONTROL_1_2_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(25.53, 38.971)), module, Knot::INPUT_CONTROL_1_3_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(41.063, 38.971)), module, Knot::INPUT_CONTROL_RANDOM_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(68.063, 38.971)), module, Knot::INPUT_IN_1_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(9.996, 59.803)), module, Knot::INPUT_CONTROL_3_4_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(25.53, 59.803)), module, Knot::INPUT_CONTROL_2_4_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(41.063, 59.803)), module, Knot::INPUT_CONTROL_UNDO_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(68.063, 59.803)), module, Knot::INPUT_IN_2_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(9.996, 80.635)), module, Knot::INPUT_CONTROL_2_3_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(25.53, 80.635)), module, Knot::INPUT_CONTROL_SHIFT_UP_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(41.063, 80.635)), module, Knot::INPUT_CONTROL_REDO_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(68.063, 80.635)), module, Knot::INPUT_IN_3_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(9.996, 101.467)), module, Knot::INPUT_CONTROL_1_4_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(25.53, 101.467)), module, Knot::INPUT_CONTROL_SHIFT_DOWN_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(41.063, 101.467)), module, Knot::INPUT_CONTROL_RESET_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(68.063, 101.467)), module, Knot::INPUT_IN_4_INPUT));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(140.366, 38.971)), module, Knot::OUTPUT_OUT_1_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(140.366, 59.803)), module, Knot::OUTPUT_OUT_2_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(140.366, 80.635)), module, Knot::OUTPUT_OUT_3_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(140.366, 101.467)), module, Knot::OUTPUT_OUT_4_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(140.366, 38.971)), module, Knot::OUTPUT_OUT_1_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(140.366, 59.803)), module, Knot::OUTPUT_OUT_2_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(140.366, 80.635)), module, Knot::OUTPUT_OUT_3_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(140.366, 101.467)), module, Knot::OUTPUT_OUT_4_OUTPUT));
 
 		if (module)
 		{
