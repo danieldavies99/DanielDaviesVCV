@@ -1,4 +1,5 @@
 #include "DanielDavies.hpp"
+#include "SetCableColorMenu.hpp"
 
 struct Blank5 : Module
 {
@@ -40,6 +41,12 @@ struct Blank5Widget : ModuleWidget
 		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
 		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+	}
+
+	void appendContextMenu(Menu *menu) override
+	{
+		menu->addChild(new MenuSeparator());
+		menu->addChild (new SetCableColorMenu());
 	}
 };
 
