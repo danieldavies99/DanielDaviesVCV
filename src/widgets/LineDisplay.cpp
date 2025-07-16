@@ -23,6 +23,13 @@ void LineDisplay::process()
     CableWidget* input4Cable =  APP->scene->rack->getTopCable(input4Port);
     NVGcolor input4Color = input4Cable ? input4Cable->color : nvgRGBA(233, 79, 61, 0);
 
+    if (!*matchCableColors) {
+        input1Color = nvgRGBA(233, 79, 61, 255);
+        input2Color = nvgRGBA(233, 79, 61, 255);
+        input3Color = nvgRGBA(233, 79, 61, 255);
+        input4Color = nvgRGBA(233, 79, 61, 255);
+    }
+
     // TODO: there has to be a way to write this that doesn't use 4 switch statements
     switch (*output1Index)
     {
