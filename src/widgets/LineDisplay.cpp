@@ -131,7 +131,8 @@ void LineDisplay::drawLine(int x1, int y1, int x2, int y2)
         std::swap(shortLen, longLen);
         yLonger = true;
     }
-    int decInc = longLen == 0 ? decInc = 0 : ((shortLen << 16) / longLen);
+
+    int decInc = (longLen == 0) ? 0 : ((shortLen << 16) / longLen);
 
     std::string debugString = "";
 

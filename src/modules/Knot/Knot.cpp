@@ -265,7 +265,7 @@ struct Knot : Module
 	json_t *getUndoStackJson()
 	{
 		json_t *undoStackJson = json_array();
-		for (int i = 0; i < undoStack.size(); i++)
+		for (std::size_t i = 0; i < undoStack.size(); i++)
 		{
 			KnotUndoState undoState = undoStack[i];
 			json_t *undoStateJson = json_array();
@@ -281,7 +281,7 @@ struct Knot : Module
 	void setUndoStackFromJson(json_t *undoStackJson)
 	{
 		undoStack.clear();
-		for (int i = 0; i < json_array_size(undoStackJson); i++)
+		for (std::size_t i = 0; i < json_array_size(undoStackJson); i++)
 		{
 			json_t *undoStateJson = json_array_get(undoStackJson, i);
 			int output1Index = json_integer_value(json_array_get(undoStateJson, 0));
@@ -295,7 +295,7 @@ struct Knot : Module
 	json_t *getRedoStackJson()
 	{
 		json_t *redoStackJson = json_array();
-		for (int i = 0; i < redoStack.size(); i++)
+		for (std::size_t i = 0; i < redoStack.size(); i++)
 		{
 			KnotUndoState undoState = redoStack[i];
 			json_t *undoStateJson = json_array();
@@ -311,7 +311,7 @@ struct Knot : Module
 	void setRedoStackFromJson(json_t *redoStackJson)
 	{
 		redoStack.clear();
-		for (int i = 0; i < json_array_size(redoStackJson); i++)
+		for (std::size_t i = 0; i < json_array_size(redoStackJson); i++)
 		{
 			json_t *undoStateJson = json_array_get(redoStackJson, i);
 			int output1Index = json_integer_value(json_array_get(undoStateJson, 0));

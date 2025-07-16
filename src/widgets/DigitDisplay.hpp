@@ -20,7 +20,7 @@ struct DigitDisplay : rack::SvgWidget
     int *value = 0;
     bool *showDashes = 0;
 
-    int numDigits = 2;
+    std::size_t numDigits = 2;
 
     DigitDisplay() {}
 
