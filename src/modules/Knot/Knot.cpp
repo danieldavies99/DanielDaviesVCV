@@ -766,7 +766,7 @@ struct KnotWidget : ModuleWidget
 		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(140.366, 101.467)), module, Knot::OUTPUT_OUT_4_OUTPUT));
 
 		if (module)
-		{
+		{	
 			LineDisplay *lineDisplay = createWidget<LineDisplay>(mm2px(Vec(75.696, 30.732)));
 			lineDisplay->initialize();
 			lineDisplay->in1connected = &module->isInput1Connected;
@@ -778,6 +778,14 @@ struct KnotWidget : ModuleWidget
 			lineDisplay->output2Index = &module->output2Index;
 			lineDisplay->output3Index = &module->output3Index;
 			lineDisplay->output4Index = &module->output4Index;
+
+			lineDisplay->input1portId = Knot::INPUT_IN_1_INPUT;
+			lineDisplay->input2portId = Knot::INPUT_IN_2_INPUT;
+			lineDisplay->input3portId = Knot::INPUT_IN_3_INPUT;
+			lineDisplay->input4portId = Knot::INPUT_IN_4_INPUT;
+
+			lineDisplay->moduleWidget = this;
+
 			addChild(lineDisplay);
 
 			ThreeDigitDisplay *patternSelectDisplay = new ThreeDigitDisplay();

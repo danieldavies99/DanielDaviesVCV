@@ -15,17 +15,19 @@ void OledPixelDisplay::initialize()
             newPixel.x = i;
             newPixel.y = j;
             newPixel.isLit = false;
+            newPixel.color = nvgRGBA(233, 79, 61, 255);
             newPixelRow.push_back(newPixel);
         }
         pixels.push_back(newPixelRow);
     }
 }
 
-void OledPixelDisplay::lightPixel(int x, int y, int offsetX, int offsetY)
+void OledPixelDisplay::lightPixel(int x, int y, int offsetX, int offsetY, NVGcolor color)
 {
     if (x + offsetX < numPixelsX && y + offsetY < numPixelsY)
     {
         pixels[x + offsetX][y + offsetY].isLit = true;
+        pixels[x + offsetX][y + offsetY].color = color;
     }
 }
 
@@ -43,6 +45,7 @@ void OledPixelDisplay::drawLayer(const DrawArgs &args, int layer)
 
     drawGrid(args);
 }
+
 
 void OledPixelDisplay::lightAll()
 {
@@ -86,9 +89,7 @@ void OledPixelDisplay::drawGrid(const DrawArgs &args)
                     pixelWidthWithGaps * j,
                     pixelWidth,
                     pixelWidth);
-                nvgFillColor(
-                    args.vg,
-                    pixelColor);
+                nvgFillColor(args.vg, pixels[i][j].color);
                 nvgFill(args.vg);
             }
         }
