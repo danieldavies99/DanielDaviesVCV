@@ -23,6 +23,8 @@ struct LineDisplay : OledPixelDisplay
     bool *in3connected;
     bool *in4connected;
 
+    bool *matchCableColors;
+
     int *output1Index;
     int *output2Index;
     int *output3Index;

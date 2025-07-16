@@ -729,6 +729,7 @@ struct Knot : Module
 
 struct KnotWidget : ModuleWidget
 {
+	bool matchCableColors = true;
 	KnotWidget(Knot *module)
 	{
 		setModule(module);
@@ -784,6 +785,8 @@ struct KnotWidget : ModuleWidget
 			lineDisplay->input3portId = Knot::INPUT_IN_3_INPUT;
 			lineDisplay->input4portId = Knot::INPUT_IN_4_INPUT;
 
+			lineDisplay->matchCableColors = &matchCableColors;
+
 			lineDisplay->moduleWidget = this;
 
 			addChild(lineDisplay);
@@ -794,6 +797,24 @@ struct KnotWidget : ModuleWidget
 			patternSelectDisplay->showDashes = &module->presetPatternsDisabled;
 			addChild(patternSelectDisplay);
 		}
+	}
+
+	void appendContextMenu(Menu *menu) override
+	{
+		struct ToggleMatchCableColors : MenuItem
+		{	
+			bool *matchCableColors;
+			void onAction(const event::Action &e) override
+			{
+				*matchCableColors = !*matchCableColors;
+			}
+		};
+
+		menu->addChild(new MenuSeparator());
+		ToggleMatchCableColors *matchCableColorsToggle = createMenuItem<ToggleMatchCableColors>("Match cable colors");
+		matchCableColorsToggle->matchCableColors = &matchCableColors;
+		matchCableColorsToggle->rightText = CHECKMARK(matchCableColors == true);
+		menu->addChild(matchCableColorsToggle);
 	}
 };
 
