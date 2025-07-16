@@ -380,13 +380,13 @@ struct Knot : Module
 	}
 
 	void handleShiftUp()
-	{	
+	{
 		addCurrentStateToUndoStack();
 		int originalOutput1Index = output1Index;
 		int originalOutput2Index = output2Index;
 		int originalOutput3Index = output3Index;
 		int originalOutput4Index = output4Index;
-		
+
 		output1Index = originalOutput4Index;
 		output2Index = originalOutput1Index;
 		output3Index = originalOutput2Index;
@@ -733,7 +733,7 @@ struct KnotWidget : ModuleWidget
 	KnotWidget(Knot *module)
 	{
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Knot.svg"),asset::plugin(pluginInstance, "res/panels/dark/Knot.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Knot.svg"), asset::plugin(pluginInstance, "res/panels/dark/Knot.svg")));
 
 		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, 0)));
 		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
@@ -767,7 +767,7 @@ struct KnotWidget : ModuleWidget
 		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(140.366, 101.467)), module, Knot::OUTPUT_OUT_4_OUTPUT));
 
 		if (module)
-		{	
+		{
 			LineDisplay *lineDisplay = createWidget<LineDisplay>(mm2px(Vec(75.696, 30.732)));
 			lineDisplay->initialize();
 			lineDisplay->in1connected = &module->isInput1Connected;
@@ -802,7 +802,7 @@ struct KnotWidget : ModuleWidget
 	void appendContextMenu(Menu *menu) override
 	{
 		struct ToggleMatchCableColors : MenuItem
-		{	
+		{
 			bool *matchCableColors;
 			void onAction(const event::Action &e) override
 			{
