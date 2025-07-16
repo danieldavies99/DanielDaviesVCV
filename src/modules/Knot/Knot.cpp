@@ -51,36 +51,33 @@ struct Knot : Module
 	Knot()
 	{
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
-		configParam(KNOB_PATTERN_SELECT_PARAM, 0.f, 128.f, 0.f, "Pattern Select");
+		configParam(KNOB_PATTERN_SELECT_PARAM, 0.f, 128.f, 0.f, "Pattern select");
 
-		configInput(INPUT_IN_1_INPUT, "");
-		configInput(INPUT_IN_2_INPUT, "");
-		configInput(INPUT_IN_3_INPUT, "");
-		configInput(INPUT_IN_4_INPUT, "");
+		configInput(INPUT_IN_1_INPUT, "Input 1");
+		configInput(INPUT_IN_2_INPUT, "Input 2");
+		configInput(INPUT_IN_3_INPUT, "Input 3");
+		configInput(INPUT_IN_4_INPUT, "Input 4");
 
-		configInput(INPUT_PATTERN_RESET_INPUT, "");
-		configInput(INPUT_PATTERN_STEP_INPUT, "");
-		configInput(INPUT_CONTROL_1_2_INPUT, "");
-		configInput(INPUT_CONTROL_1_3_INPUT, "");
-		configInput(INPUT_CONTROL_RANDOM_INPUT, "");
-		configInput(INPUT_IN_1_INPUT, "");
-		configInput(INPUT_CONTROL_3_4_INPUT, "");
-		configInput(INPUT_CONTROL_2_4_INPUT, "");
-		configInput(INPUT_CONTROL_UNDO_INPUT, "");
-		configInput(INPUT_IN_2_INPUT, "");
-		configInput(INPUT_CONTROL_2_3_INPUT, "");
-		configInput(INPUT_CONTROL_SHIFT_UP_INPUT, "");
-		configInput(INPUT_CONTROL_REDO_INPUT, "");
-		configInput(INPUT_IN_3_INPUT, "");
-		configInput(INPUT_CONTROL_1_4_INPUT, "");
-		configInput(INPUT_CONTROL_SHIFT_DOWN_INPUT, "");
-		configInput(INPUT_CONTROL_RESET_INPUT, "");
-		configInput(INPUT_IN_4_INPUT, "");
+		configInput(INPUT_CONTROL_1_2_INPUT, "Swap 1 and 2");
+		configInput(INPUT_CONTROL_1_3_INPUT, "Swap 1 and 3");
+		configInput(INPUT_CONTROL_3_4_INPUT, "Swap 3 and 4");
+		configInput(INPUT_CONTROL_2_4_INPUT, "Swap 2 and 4");
+		configInput(INPUT_CONTROL_2_3_INPUT, "Swap 2 and 3");
+		configInput(INPUT_CONTROL_1_4_INPUT, "Swap 1 and 4");
 
-		configOutput(OUTPUT_OUT_1_OUTPUT, "");
-		configOutput(OUTPUT_OUT_2_OUTPUT, "");
-		configOutput(OUTPUT_OUT_3_OUTPUT, "");
-		configOutput(OUTPUT_OUT_4_OUTPUT, "");
+		configInput(INPUT_PATTERN_RESET_INPUT, "Reset Pattern");
+		configInput(INPUT_PATTERN_STEP_INPUT, "Step Pattern");
+		configInput(INPUT_CONTROL_RANDOM_INPUT, "Randomize outputs");
+		configInput(INPUT_CONTROL_UNDO_INPUT, "Undo");
+		configInput(INPUT_CONTROL_SHIFT_UP_INPUT, "Shift up");
+		configInput(INPUT_CONTROL_REDO_INPUT, "Redo");
+		configInput(INPUT_CONTROL_SHIFT_DOWN_INPUT, "Shift down");
+		configInput(INPUT_CONTROL_RESET_INPUT, "Reset");
+
+		configOutput(OUTPUT_OUT_1_OUTPUT, "Output 1");
+		configOutput(OUTPUT_OUT_2_OUTPUT, "Output 2");
+		configOutput(OUTPUT_OUT_3_OUTPUT, "Output 3");
+		configOutput(OUTPUT_OUT_4_OUTPUT, "Output 4");
 	}
 
 	bool isInput1Connected = true;
