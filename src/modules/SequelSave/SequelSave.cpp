@@ -324,11 +324,11 @@ struct SequelSaveWidget : ModuleWidget
 	SequelSaveWidget(SequelSave *module)
 	{
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/SequelSave.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/SequelSave.svg"),asset::plugin(pluginInstance, "res/panels/dark/SequelSave.svg")));
 
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
 		addParam(createParamCentered<CKD6>(mm2px(Vec(8.13, 39.665)), module, SequelSave::SWITCH_SAVE_0_PARAM));
 		addParam(createParamCentered<CKD6>(mm2px(Vec(41.317, 39.665)), module, SequelSave::SWITCH_LOAD_0_PARAM));
@@ -339,14 +339,14 @@ struct SequelSaveWidget : ModuleWidget
 		addParam(createParamCentered<CKD6>(mm2px(Vec(8.13, 102.132)), module, SequelSave::SWITCH_SAVE_3_PARAM));
 		addParam(createParamCentered<CKD6>(mm2px(Vec(41.317, 102.132)), module, SequelSave::SWITCH_LOAD_3_PARAM));
 
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(24.723, 39.665)), module, SequelSave::IN_SAVE_0_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(57.91, 39.665)), module, SequelSave::IN_LOAD_0_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(24.723, 60.487)), module, SequelSave::IN_SAVE_1_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(57.91, 60.487)), module, SequelSave::IN_LOAD_1_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(24.723, 81.309)), module, SequelSave::IN_SAVE_2_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(57.91, 81.31)), module, SequelSave::IN_LOAD_2_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(24.723, 102.132)), module, SequelSave::IN_SAVE_3_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(57.91, 102.132)), module, SequelSave::IN_LOAD_3_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(24.723, 39.665)), module, SequelSave::IN_SAVE_0_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(57.91, 39.665)), module, SequelSave::IN_LOAD_0_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(24.723, 60.487)), module, SequelSave::IN_SAVE_1_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(57.91, 60.487)), module, SequelSave::IN_LOAD_1_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(24.723, 81.309)), module, SequelSave::IN_SAVE_2_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(57.91, 81.31)), module, SequelSave::IN_LOAD_2_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(24.723, 102.132)), module, SequelSave::IN_SAVE_3_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(57.91, 102.132)), module, SequelSave::IN_LOAD_3_INPUT));
 
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(57.91, 13.551)), module, SequelSave::LIGHT_CONNECTED_LIGHT));
 	}

@@ -618,12 +618,12 @@ struct JamesWidget : ModuleWidget
 	JamesWidget(James *module)
 	{
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/James.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/James.svg"),asset::plugin(pluginInstance, "res/panels/dark/James.svg")));
 
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(77.362, 16.145)), module, James::KNOB_STEP_COUNT_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(117.661, 16.145)), module, James::KNOB_CLOCK_SPEED_PARAM));
@@ -841,16 +841,16 @@ struct JamesWidget : ModuleWidget
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(168.035, 104.783)), module, James::GATE_LIGHT_R5_C14_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(178.11, 104.783)), module, James::GATE_LIGHT_R5_C15_LIGHT));
 
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(57.212, 16.145)), module, James::IN_CLOCK_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(137.811, 16.145)), module, James::IN_RESET_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(57.212, 16.145)), module, James::IN_CLOCK_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(137.811, 16.145)), module, James::IN_RESET_INPUT));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(97.511, 16.145)), module, James::OUT_CLOCK_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.628, 33.874)), module, James::OUT_GATE_R0_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.628, 48.056)), module, James::OUT_GATE_R1_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.628, 62.238)), module, James::OUT_GATE_R2_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.628, 76.419)), module, James::OUT_GATE_R3_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.628, 90.601)), module, James::OUT_GATE_R4_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.628, 104.783)), module, James::OUT_GATE_R5_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(97.511, 16.145)), module, James::OUT_CLOCK_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(201.628, 33.874)), module, James::OUT_GATE_R0_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(201.628, 48.056)), module, James::OUT_GATE_R1_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(201.628, 62.238)), module, James::OUT_GATE_R2_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(201.628, 76.419)), module, James::OUT_GATE_R3_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(201.628, 90.601)), module, James::OUT_GATE_R4_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(201.628, 104.783)), module, James::OUT_GATE_R5_OUTPUT));
 
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(164.679, 11.551)), module, James::LIGHT_GATE_MODE_CONTINUOUS_LIGHT));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(164.679, 20.902)), module, James::LIGHT_GATE_MODE_TRIGGER_LIGHT));

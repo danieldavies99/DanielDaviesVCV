@@ -222,12 +222,12 @@ struct BendWidget : ModuleWidget
 	BendWidget(Bend *module)
 	{
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Bend.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Bend.svg"), asset::plugin(pluginInstance, "res/panels/dark/Bend.svg")));
 
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
 		addParam(createParamCentered<RedSliderMedium>(mm2px(Vec(47.895, 14.38)), module, Bend::KNOB_GLIDE_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(33.026, 32.229)), module, Bend::KNOB_COARSE_PARAM));
@@ -239,16 +239,16 @@ struct BendWidget : ModuleWidget
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(40.257, 79.833)), module, Bend::KNOB_FREQUENCY_MODULATION_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(54.331, 79.833)), module, Bend::KNOB_AMPLITUDE_MODULATION_PARAM));
 
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(33.02, 49.418)), module, Bend::PITCH_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(12.109, 94.148)), module, Bend::SYNC_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(26.183, 94.148)), module, Bend::BEND_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(40.257, 94.148)), module, Bend::FREQUENCY_MODULATION_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(54.331, 94.148)), module, Bend::AMPLITUDE_MODULATION_IN_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(33.02, 49.418)), module, Bend::PITCH_IN_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(12.109, 94.148)), module, Bend::SYNC_IN_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(26.183, 94.148)), module, Bend::BEND_IN_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(40.257, 94.148)), module, Bend::FREQUENCY_MODULATION_IN_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(54.331, 94.148)), module, Bend::AMPLITUDE_MODULATION_IN_INPUT));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(12.109, 110.457)), module, Bend::SQUARE_OUT_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(26.183, 110.457)), module, Bend::SIN_OUT_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(40.257, 110.457)), module, Bend::TRIANGLE_OUT_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(54.331, 110.457)), module, Bend::NOISE_OUT_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(12.109, 110.457)), module, Bend::SQUARE_OUT_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(26.183, 110.457)), module, Bend::SIN_OUT_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(40.257, 110.457)), module, Bend::TRIANGLE_OUT_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(54.331, 110.457)), module, Bend::NOISE_OUT_OUTPUT));
 	}
 
 	void appendContextMenu(Menu *menu) override

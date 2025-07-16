@@ -11,7 +11,7 @@ using namespace rack;
 
 struct Sequel8 : Module
 {
-	// https://coolors.co/ed6a5a-f4f1bb-9bc1bc-5d576b-e6ebe0
+	// https://coolors.co/ed6a5a-f4f1bb-9bc1bc-0b2027-e6ebe0
 	enum ParamIds
 	{
 		KNOB_STEP_R0_C0_PARAM,
@@ -630,18 +630,18 @@ struct Sequel8ModuleWidget : ModuleWidget
 	Sequel8ModuleWidget(Sequel8 *module)
 	{
 		setModule(module);
-		setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/panels/light/Sequel8.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Sequel8.svg"),asset::plugin(pluginInstance, "res/panels/dark/Sequel8.svg")));
 
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(96.113, 16.145)), module, Sequel8::KNOB_STEP_COUNT_PARAM));
 		addParam(createParamCentered<RedKnob>(mm2px(Vec(134.731, 16.145)), module, Sequel8::KNOB_CLOCK_SPEED_PARAM));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(76.805, 16.145)), module, Sequel8::IN_CLOCK_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(154.039, 16.145)), module, Sequel8::IN_RESET_INPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(115.422, 16.145)), module, Sequel8::OUT_CLOCK_OUTPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(76.805, 16.145)), module, Sequel8::IN_CLOCK_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(154.039, 16.145)), module, Sequel8::IN_RESET_INPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(115.422, 16.145)), module, Sequel8::OUT_CLOCK_OUTPUT));
 
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.076, 39.431)), module, Sequel8::KNOB_TIME_DIVIDE_R0_PARAM));
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(13.076, 69.329)), module, Sequel8::KNOB_TIME_DIVIDE_R1_PARAM));
@@ -732,12 +732,12 @@ struct Sequel8ModuleWidget : ModuleWidget
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(154.039, 104.783)), module, Sequel8::GATE_LIGHT_R2_C6_LIGHT));
 		addChild(createLightCentered<SmallSimpleLight<RedLight>>(mm2px(Vec(173.348, 104.783)), module, Sequel8::GATE_LIGHT_R2_C7_LIGHT));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.628, 33.591)), module, Sequel8::OUT_CV_R0_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.628, 44.704)), module, Sequel8::OUT_GATE_R0_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.629, 63.772)), module, Sequel8::OUT_CV_R1_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.629, 74.885)), module, Sequel8::OUT_GATE_R1_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.629, 93.67)), module, Sequel8::OUT_CV_R2_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(201.629, 104.783)), module, Sequel8::OUT_GATE_R2_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(201.628, 33.591)), module, Sequel8::OUT_CV_R0_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(201.628, 44.704)), module, Sequel8::OUT_GATE_R0_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(201.629, 63.772)), module, Sequel8::OUT_CV_R1_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(201.629, 74.885)), module, Sequel8::OUT_GATE_R1_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(201.629, 93.67)), module, Sequel8::OUT_CV_R2_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(201.629, 104.783)), module, Sequel8::OUT_GATE_R2_OUTPUT));
 
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(44.594, 29.28)), module, Sequel8::LIGHT_R0_C0_LIGHT));
 		addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(63.903, 29.28)), module, Sequel8::LIGHT_R0_C1_LIGHT));

@@ -136,23 +136,23 @@ struct SamuelWidget : ModuleWidget
 	SamuelWidget(Samuel *module)
 	{
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Samuel.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Samuel.svg"),asset::plugin(pluginInstance, "res/panels/dark/Samuel.svg")));
 
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(9.956, 94.672)), module, Samuel::KNOB_DOT_LENGTH_PARAM));
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(27.942, 94.672)), module, Samuel::KNOB_DASH_LENGTH_PARAM));
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(45.929, 94.672)), module, Samuel::KNOB_NEW_LETTER_LENGTH_PARAM));
 		addParam(createParamCentered<SteppedRedKnob>(mm2px(Vec(63.915, 94.672)), module, Samuel::KNOB_NEW_WORD_LENGTH_PARAM));
 
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(63.915, 16.245)), module, Samuel::INPUT_CLOCK_IN_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(81.901, 16.245)), module, Samuel::INPUT_RESET_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(63.915, 16.245)), module, Samuel::INPUT_CLOCK_IN_INPUT));
+		addInput(createInputCentered<ThemedPJ301MPort>(mm2px(Vec(81.901, 16.245)), module, Samuel::INPUT_RESET_INPUT));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(88.935, 88.853)), module, Samuel::OUTPUT_GATE_OUT_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(88.935, 99.276)), module, Samuel::OUT_END_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(88.935, 88.853)), module, Samuel::OUTPUT_GATE_OUT_OUTPUT));
+		addOutput(createOutputCentered<ThemedPJ301MPort>(mm2px(Vec(88.935, 99.276)), module, Samuel::OUT_END_OUTPUT));
 
 		if (module)
 		{
