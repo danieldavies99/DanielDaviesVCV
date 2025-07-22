@@ -68,7 +68,7 @@ I create each page of the manual as an individual A4 SVG in inkscape. The Python
 to run:  ```py ./manual/generator/svg2pdf.py```
 
 
-## How to build and run test plugin
+## How to build and run the plugin
 There are multiple ways to build and run VCV rack plugins, more can be found here: [https://vcvrack.com/manual/Building](https://vcvrack.com/manual/Building)
 
 I have outlined the simplest way (imo) to get up and running for each OS below. I primarily use windows, if you have any issues building/running this plugin please feel free to open an issue, and I will help you.
