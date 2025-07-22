@@ -71,7 +71,7 @@ to run:  ```py ./manual/generator/svg2pdf.py```
 ## How to build and test plugin
 There are multiple ways to build and run VCV rack plugins, more can be found here: [https://vcvrack.com/manual/Building](https://vcvrack.com/manual/Building)
 
-I have outlined the simplest way (imo) to get up and running for each OS below.
+I have outlined the simplest way (imo) to get up and running for each OS below. I primarily use windows, if you have any issues building/running this plugin please feel free to email me or message via discord (info at top of readme)
 
 <details>
 <summary>Windows</summary>
@@ -111,5 +111,80 @@ this will build the plugin from source and output the build into the ./dist dire
 
 Next copy the contents of the dist directory into your rack install plugin director, (probably C:\Users\\<your-user\>\Documents\Rack2\plugins-win-x64)
 
-run VCV rack and you should be able to see the DanielDaviesVCV modules inside the module browser.
+run VCV rack and you should be able to see the DanielDaviesVCV modules in the module browser.
+</details>
+
+<details>
+<summary>Mac</summary>
+
+## Setting up your development environment
+
+Install [Homebrew](https://brew.sh/), and install build dependencies.
+
+```
+brew install git wget cmake autoconf automake libtool jq python zstd pkg-config
+```
+
+## Building DanielDaviesVCV
+
+Download [VCV Rack](https://vcvrack.com/downloads/RackFree-2.6.4-mac-x64+arm64.pkg) and either the [Mac x64 (intel) Rack SDK](https://vcvrack.com/downloads/Rack-SDK-latest-mac-x64.zip) or the [Mac (ARM64) Rack SDK](https://vcvrack.com/downloads/Rack-SDK-latest-mac-arm64.zip)
+
+Unzip the Rack SDK folder and set the RACK_DIR environment variable (you will need to do this every time you open a new terminal instance):
+
+```export RACK_DIR=<Rack SDK dir>```
+
+clone the DanielDaviesVCV plugin source code:
+
+```git clone https://github.com/danieldavies99/DanielDaviesVCV.git```
+
+Next, cd into the repo, and run the following make command to build the plugin.
+
+```
+cd DanielDaviesVCV
+make install
+```
+
+This will build the plugin from source and output the build into the ./dist directory
+
+Copy the contents of the dist directory to your rack plugin directory, then run vcv rack. You should see the DanielDaviesVCV modules in the module brower.
+</details>
+
+<details>
+<summary>Linux</summary>
+
+## Setting up your development environment
+
+On Ubuntu 16.04+:
+
+```
+sudo apt install unzip git gdb curl cmake libx11-dev libglu1-mesa-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev zlib1g-dev libasound2-dev libgtk2.0-dev libgtk-3-dev libjack-jackd2-dev jq zstd libpulse-dev pkg-config
+```
+
+On Arch Linux:
+```
+pacman -S git wget gcc gdb make cmake tar unzip zip curl jq python zstd libpulse pkgconf
+```
+
+## Building DanielDaviesVCV
+
+Download [VCV Rack](https://vcvrack.com/downloads/RackFree-2.6.4-lin-x64.zip) and the [linux x64 Rack SDK](https://vcvrack.com/downloads/Rack-SDK-latest-lin-x64.zip).
+
+Unzip the Rack SDK folder and set the RACK_DIR environment variable (you will need to do this every time you open a new terminal instance):
+
+```export RACK_DIR=<Rack SDK dir>```
+
+clone the DanielDaviesVCV plugin source code:
+
+```git clone https://github.com/danieldavies99/DanielDaviesVCV.git```
+
+Next, cd into the repo, and run the following make command to build the plugin.
+
+```
+cd DanielDaviesVCV
+make install
+```
+
+This will build the plugin from source and output the build into the ./dist directory
+
+Copy the contents of the dist directory to your rack plugin directory, then run vcv rack. You should see the DanielDaviesVCV modules in the module brower.
 </details>
