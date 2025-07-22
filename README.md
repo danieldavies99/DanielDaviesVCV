@@ -62,13 +62,13 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 If you encounter any issues while using these modules, feel free to open an issue on this repo and I will look into it.
 
-## How to build manual
+## How to build the manual
 I create each page of the manual as an individual A4 SVG in inkscape. The Python script found at ./manual/generator/svg2pdf.py can be used to compile all of the SVGs into PDFs and then flatten them into a single manual PDF.
 
 to run:  ```py ./manual/generator/svg2pdf.py```
 
 
-## How to build and test plugin
+## How to build and run test plugin
 There are multiple ways to build and run VCV rack plugins, more can be found here: [https://vcvrack.com/manual/Building](https://vcvrack.com/manual/Building)
 
 I have outlined the simplest way (imo) to get up and running for each OS below. I primarily use windows, if you have any issues building/running this plugin please feel free to open an issue, and I will help you.
