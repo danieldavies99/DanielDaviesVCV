@@ -15,7 +15,7 @@
 '''
 import os
 from subprocess import PIPE, run
-from pypdf import PdfMerger
+from pypdf import PdfWriter
 import re
 
 __author__ = "Daniel Davies"
@@ -92,7 +92,7 @@ def svg2pdf(list):
 # merge all pdfs into a single pdf file
 def merge_pdfs(pdfs):
     print('merging pdfs')
-    merger = PdfMerger()
+    merger = PdfWriter()
     
     for pdf in pdfs:
         print('merging', pdf)
