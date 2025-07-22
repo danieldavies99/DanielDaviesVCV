@@ -71,7 +71,7 @@ to run:  ```py ./manual/generator/svg2pdf.py```
 ## How to build and test plugin
 There are multiple ways to build and run VCV rack plugins, more can be found here: [https://vcvrack.com/manual/Building](https://vcvrack.com/manual/Building)
 
-I have outlined the simplest way (imo) to get up and running for each OS below. I primarily use windows, if you have any issues building/running this plugin please feel free to email me or message via discord (info at top of readme)
+I have outlined the simplest way (imo) to get up and running for each OS below. I primarily use windows, if you have any issues building/running this plugin please feel free to open an issue, and I will help you.
 
 <details>
 <summary>Windows</summary>
