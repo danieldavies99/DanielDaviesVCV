@@ -66,3 +66,50 @@ If you encounter any issues while using these modules, feel free to open an issu
 I create each page of the manual as an individual A4 SVG in inkscape. The Python script found at ./manual/generator/svg2pdf.py can be used to compile all of the SVGs into PDFs and then flatten them into a single manual PDF.
 
 to run:  ```py ./manual/generator/svg2pdf.py```
+
+
+## How to build and test plugin
+There are multiple ways to build and run VCV rack plugins, more can be found here: [https://vcvrack.com/manual/Building](https://vcvrack.com/manual/Building)
+
+I have outlined the simplest way (imo) to get up and running for each OS below.
+
+<details>
+<summary>Windows</summary>
+
+## Setting up your development environment
+
+If you have an anti-virus program running, disable it or it may interfere with the build process or make builds very slow.
+
+Install [MSYS2](https://www.msys2.org/) and launch the MinGW 64-bit shell from the Start menu, not the default MSYS shell. Update the package manager itself:
+
+```pacman -Syu```
+
+Then restart the shell and install packages.
+
+```pacman -Syu git wget make tar unzip zip mingw-w64-x86_64-gcc mingw-w64-x86_64-gdb mingw-w64-x86_64-cmake autoconf automake libtool mingw-w64-x86_64-jq python zstd mingw-w64-x86_64-pkgconf```
+
+## Building DanielDaviesVCV
+
+Download [VCV Rack](https://vcvrack.com/downloads/RackFree-2.6.4-win-x64.exe) and the [windows x64 Rack SDK](https://vcvrack.com/downloads/Rack-SDK-latest-win-x64.zip)
+
+Unzip the Rack SDK folder and set the RACK_DIR environment variable inside the MYSYS2 commandline (you will need to do this every time you launch MYSYS2, unless you add it to your .bashrc file):
+
+```export RACK_DIR=<Rack SDK dir>```
+
+clone the DanielDaviesVCV plugin source code:
+
+```git clone https://github.com/danieldavies99/DanielDaviesVCV.git```
+
+Next, in MYSYS2, cd into the repo, and run the following make command to build the plugin.
+
+```
+cd DanielDaviesVCV
+make install
+```
+
+this will build the plugin from source and output the build into the ./dist directory
+
+Next copy the contents of the dist directory into your rack install plugin director, (probably C:\Users\\<your-user\>\Documents\Rack2\plugins-win-x64)
+
+run VCV rack and you should be able to see the DanielDaviesVCV modules inside the module browser.
+</details>
