@@ -3,13 +3,14 @@ This repo contains the source code for the Daniel Davies VCV rack modules. If yo
 
 I can't wait to see/hear what you come up with!
 
-The manual for all my modules can be found here (this is very much a WIP): 
+The manual for all my modules can be found here: 
 https://github.com/danieldavies99/sequel/blob/master/manual/daniel_davies_modular_manual.pdf
 
 The manual is released under the GPL3-or-later license.
 
 
-![All modules](https://i.imgur.com/NiQAJyR.png)
+![All modules (Light)](https://i.imgur.com/jM5JmNR.png)
+![All modules (Dark)](https://i.imgur.com/hQmZZfP.png)
 
 # Sequel 8
 3 row / 8 step sequencer with built-in clock divider.
@@ -45,6 +46,11 @@ Morse code based rhythm generator.
 Phase modulation oscillator.
 
 ![Bend](https://i.imgur.com/LMEtzcI.png)
+
+# Knot
+4x4 sequential switch.
+
+![Knot](https://i.imgur.com/v8zWH7Y.gif)
 
 # Blank 3 & Blank 5
 3HP and 5HP blank panels.
