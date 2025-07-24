@@ -1,18 +1,19 @@
 #include "DanielDavies.hpp"
-#include <functional>
+#include <unordered_map>
 #include "widgets/Knobs.hpp"
 #include "widgets/Buttons.hpp"
 #include "widgets/KeyboardDisplay.hpp"
+#include "utilities/Quantize.hpp"
 
 using namespace rack;
 
+static constexpr int RESOLUTION = 1000;					 // 1mV resolution
+static constexpr int RANGE_MIN = -10 * RESOLUTION;		 // -10000
+static constexpr int RANGE_MAX = 10 * RESOLUTION;		 //  10000
+static constexpr int TABLE_SIZE = RANGE_MAX - RANGE_MIN; // 20000
+
 struct Quantify : Module
 {
-
-	double keyboardDisplayR0KeyOnValue = 0;
-	double keyboardDisplayR1KeyOnValue = 0;
-	double keyboardDisplayR2KeyOnValue = 0;
-
 	enum ParamId
 	{
 		KNOB_ATTENUVERT_R0_PARAM,
@@ -65,6 +66,14 @@ struct Quantify : Module
 		LIGHTS_LEN
 	};
 
+	double roundedVoltageR0 = 0;
+	double roundedVoltageR1 = 0;
+	double roundedVoltageR2 = 0;
+
+	bool displayR0on = 0;
+	bool displayR1on = 0;
+	bool displayR2on = 0;
+
 	Quantify()
 	{
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
@@ -95,169 +104,84 @@ struct Quantify : Module
 		configOutput(OUT_CV_R2_OUTPUT, "CV 3");
 	}
 
-	std::vector<double> handleKeyButtons()
+	quantize::KeyMask handleKeyButtons()
 	{
-		// 0 = c4
-		// note interval = 1v/12
-		// c = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-		// c# = ...+ 1/12
-		// d = ...+ 2/12
-		// etc
-		std::vector<double> res;
-		if (params[SWITCH_NOTE_C_PARAM].getValue() == 1)
+		quantize::KeyMask mask = 0;
+
+		auto setNote = [&](int paramIndex, int lightIndex, int bitPosition)
 		{
-			res.push_back(KEY_ON_C);
-			lights[LIGHT_KEY_BUTTON_C_LIGHT].setBrightness(0.5);
-		}
-		else
-		{
-			lights[LIGHT_KEY_BUTTON_C_LIGHT].setBrightness(0);
-		}
-		if (params[SWITCH_NOTE_C_SHARP_PARAM].getValue() == 1)
-		{
-			res.push_back(KEY_ON_C_SHARP);
-			lights[LIGHT_KEY_BUTTON_C_SHARP_LIGHT].setBrightness(0.5);
-		}
-		else
-		{
-			lights[LIGHT_KEY_BUTTON_C_SHARP_LIGHT].setBrightness(0);
-		}
-		if (params[SWITCH_NOTE_D_PARAM].getValue() == 1)
-		{
-			res.push_back(KEY_ON_D);
-			lights[LIGHT_KEY_BUTTON_D_LIGHT].setBrightness(0.5);
-		}
-		else
-		{
-			lights[LIGHT_KEY_BUTTON_D_LIGHT].setBrightness(0);
-		}
-		if (params[SWITCH_NOTE_D_SHARP_PARAM].getValue() == 1)
-		{
-			res.push_back(KEY_ON_D_SHARP);
-			lights[LIGHT_KEY_BUTTON_D_SHARP_LIGHT].setBrightness(0.5);
-		}
-		else
-		{
-			lights[LIGHT_KEY_BUTTON_D_SHARP_LIGHT].setBrightness(0);
-		}
-		if (params[SWITCH_NOTE_E_PARAM].getValue() == 1)
-		{
-			res.push_back(KEY_ON_E);
-			lights[LIGHT_KEY_BUTTON_E_LIGHT].setBrightness(0.5);
-		}
-		else
-		{
-			lights[LIGHT_KEY_BUTTON_E_LIGHT].setBrightness(0);
-		}
-		if (params[SWITCH_NOTE_F_PARAM].getValue() == 1)
-		{
-			res.push_back(KEY_ON_F);
-			lights[LIGHT_KEY_BUTTON_F_LIGHT].setBrightness(0.5);
-		}
-		else
-		{
-			lights[LIGHT_KEY_BUTTON_F_LIGHT].setBrightness(0);
-		}
-		if (params[SWITCH_NOTE_F_SHARP_PARAM].getValue() == 1)
-		{
-			res.push_back(KEY_ON_F_SHARP);
-			lights[LIGHT_KEY_BUTTON_F_SHARP_LIGHT].setBrightness(0.5);
-		}
-		else
-		{
-			lights[LIGHT_KEY_BUTTON_F_SHARP_LIGHT].setBrightness(0);
-		}
-		if (params[SWITCH_NOTE_G_PARAM].getValue() == 1)
-		{
-			res.push_back(KEY_ON_G);
-			lights[LIGHT_KEY_BUTTON_G_LIGHT].setBrightness(0.5);
-		}
-		else
-		{
-			lights[LIGHT_KEY_BUTTON_G_LIGHT].setBrightness(0);
-		}
-		if (params[SWITCH_NOTE_G_SHARP_PARAM].getValue() == 1)
-		{
-			res.push_back(KEY_ON_G_SHARP);
-			lights[LIGHT_KEY_BUTTON_G_SHARP_LIGHT].setBrightness(0.5);
-		}
-		else
-		{
-			lights[LIGHT_KEY_BUTTON_G_SHARP_LIGHT].setBrightness(0);
-		}
-		if (params[SWITCH_NOTE_A_PARAM].getValue() == 1)
-		{
-			res.push_back(KEY_ON_A);
-			lights[LIGHT_KEY_BUTTON_A_LIGHT].setBrightness(0.5);
-		}
-		else
-		{
-			lights[LIGHT_KEY_BUTTON_A_LIGHT].setBrightness(0);
-		}
-		if (params[SWITCH_NOTE_A_SHARP_PARAM].getValue() == 1)
-		{
-			res.push_back(KEY_ON_A_SHARP);
-			lights[LIGHT_KEY_BUTTON_A_SHARP_LIGHT].setBrightness(0.5);
-		}
-		else
-		{
-			lights[LIGHT_KEY_BUTTON_A_SHARP_LIGHT].setBrightness(0);
-		}
-		if (params[SWITCH_NOTE_B_PARAM].getValue() == 1)
-		{
-			res.push_back(KEY_ON_B);
-			lights[LIGHT_KEY_BUTTON_B_LIGHT].setBrightness(0.5);
-		}
-		else
-		{
-			lights[LIGHT_KEY_BUTTON_B_LIGHT].setBrightness(0);
-		}
-		return res;
+			if (params[paramIndex].getValue() == 1)
+			{
+				mask |= (1 << bitPosition);
+				lights[lightIndex].setBrightness(0.5f);
+			}
+			else
+			{
+				lights[lightIndex].setBrightness(0.0f);
+			}
+		};
+
+		setNote(SWITCH_NOTE_C_PARAM, LIGHT_KEY_BUTTON_C_LIGHT, 0);
+		setNote(SWITCH_NOTE_C_SHARP_PARAM, LIGHT_KEY_BUTTON_C_SHARP_LIGHT, 1);
+		setNote(SWITCH_NOTE_D_PARAM, LIGHT_KEY_BUTTON_D_LIGHT, 2);
+		setNote(SWITCH_NOTE_D_SHARP_PARAM, LIGHT_KEY_BUTTON_D_SHARP_LIGHT, 3);
+		setNote(SWITCH_NOTE_E_PARAM, LIGHT_KEY_BUTTON_E_LIGHT, 4);
+		setNote(SWITCH_NOTE_F_PARAM, LIGHT_KEY_BUTTON_F_LIGHT, 5);
+		setNote(SWITCH_NOTE_F_SHARP_PARAM, LIGHT_KEY_BUTTON_F_SHARP_LIGHT, 6);
+		setNote(SWITCH_NOTE_G_PARAM, LIGHT_KEY_BUTTON_G_LIGHT, 7);
+		setNote(SWITCH_NOTE_G_SHARP_PARAM, LIGHT_KEY_BUTTON_G_SHARP_LIGHT, 8);
+		setNote(SWITCH_NOTE_A_PARAM, LIGHT_KEY_BUTTON_A_LIGHT, 9);
+		setNote(SWITCH_NOTE_A_SHARP_PARAM, LIGHT_KEY_BUTTON_A_SHARP_LIGHT, 10);
+		setNote(SWITCH_NOTE_B_PARAM, LIGHT_KEY_BUTTON_B_LIGHT, 11);
+
+		return mask;
 	}
 
-	double roundToNearestAllowedDecimal(
-		double input,
-		double allowedDecimals[],
-		int numAllowedDecimals,
-		double &keyOnValue)
-	{
-		// See:
-		// https://stackoverflow.com/questions/70825012/function-to-round-a-double-to-nearest-double-with-specific-allowed-decimals/70825614#70825614
-		double inputFractional = input - floor(input);
-		double result = input;
-		double minDiff = 1;
-		int keyOnIndex = -1;
-		for (int i = 0; i < numAllowedDecimals; ++i)
-		{
-			if (fabs(inputFractional - allowedDecimals[i]) < minDiff)
-			{
-				result = floor(input) + allowedDecimals[i];
-				keyOnIndex++;
-			}
-			else if (fabs(inputFractional + 1 - allowedDecimals[i]) < minDiff)
-			{
-				result = floor(input) - 1 + allowedDecimals[i];
-				keyOnIndex++;
-			}
+	std::unordered_map<quantize::KeyMask, std::vector<double>> cachedTables;
 
-			minDiff = fabs(input - result);
-		}
-		if (keyOnIndex >= 0)
+	const std::vector<double> &getCachedTable(quantize::KeyMask mask)
+	{
+		auto it = cachedTables.find(mask);
+		if (it != cachedTables.end())
+			return it->second;
+
+		std::vector<double> table(TABLE_SIZE); // 20000 entries from -10V to +10V
+		auto allowed = quantize::allowedDecimalsFromMask(mask);
+
+		for (int i = 0; i < TABLE_SIZE; ++i)
 		{
-			keyOnValue = allowedDecimals[keyOnIndex];
+			double input = (RANGE_MIN + i) / static_cast<double>(RESOLUTION); // Convert to volts
+			table[i] = quantize::roundToNearestAllowedDecimal(input, allowed.data(), allowed.size());
 		}
-		return result;
+
+		cachedTables[mask] = std::move(table);
+		return cachedTables[mask];
+	}
+
+	double quantizeFast(double input, quantize::KeyMask mask)
+	{
+		if (mask == 0)
+			return input; // fail-safe
+
+		int index = clamp(int(input * RESOLUTION) - RANGE_MIN, 0, TABLE_SIZE - 1);
+		return getCachedTable(mask)[index];
 	}
 
 	void process(const ProcessArgs &args) override
 	{
-		std::vector<double> allowedDecimalValues = handleKeyButtons();
+		quantize::KeyMask mask = handleKeyButtons();
 
 		double transposeVal = params[KNOB_TRANSPOSE_PARAM].getValue();
 		double nudgeVal = params[KNOB_NUDGE_PARAM].getValue();
 
+		displayR0on = 0;
+		displayR1on = 0;
+		displayR2on = 0;
+
 		if (inputs[IN_CV_R0_INPUT].isConnected())
 		{ // handle row 1
+			displayR0on = 1;
+
 			double r0Input = inputs[IN_CV_R0_INPUT].getVoltage();
 			double r0AttenuvertValue = params[KNOB_ATTENUVERT_R0_PARAM].getValue();
 			double r0AttenuvertedVoltage = (r0Input * r0AttenuvertValue) + nudgeVal;
@@ -269,27 +193,21 @@ struct Quantify : Module
 			{
 				r0AttenuvertedVoltage = -10;
 			}
-			double roundedVoltageR0 = 0;
-			double keyOnValue = 0;
-			if (allowedDecimalValues.size() != 0)
+			if (mask != 0)
 			{
-				roundedVoltageR0 = roundToNearestAllowedDecimal(
-					r0AttenuvertedVoltage,
-					allowedDecimalValues.data(),
-					allowedDecimalValues.size(),
-					keyOnValue);
+				roundedVoltageR0 = quantizeFast(r0AttenuvertedVoltage, mask) + (transposeVal * 1 / 12);
 			}
-			keyboardDisplayR0KeyOnValue = keyOnValue;
-			outputs[OUT_CV_R0_OUTPUT].setVoltage(roundedVoltageR0 + (transposeVal * 1 / 12));
+			outputs[OUT_CV_R0_OUTPUT].setVoltage(roundedVoltageR0);
 		}
 		else
 		{
 			outputs[OUT_CV_R0_OUTPUT].setVoltage(0);
-			keyboardDisplayR0KeyOnValue = -1; // set to minus one so that no keys light up
 		}
 
 		if (inputs[IN_CV_R1_INPUT].isConnected())
 		{ // handle row 1
+			displayR1on = 1;
+
 			double r1Input = inputs[IN_CV_R1_INPUT].getVoltage();
 			double r1AttenuvertValue = params[KNOB_ATTENUVERT_R1_PARAM].getValue();
 			double r1AttenuvertedVoltage = (r1Input * r1AttenuvertValue) + nudgeVal;
@@ -301,27 +219,21 @@ struct Quantify : Module
 			{
 				r1AttenuvertedVoltage = -10;
 			}
-			double roundedVoltageR1 = 0;
-			double keyOnValue = 0;
-			if (allowedDecimalValues.size() != 0)
+			if (mask != 0)
 			{
-				roundedVoltageR1 = roundToNearestAllowedDecimal(
-					r1AttenuvertedVoltage,
-					allowedDecimalValues.data(),
-					allowedDecimalValues.size(),
-					keyOnValue);
+				roundedVoltageR1 = quantizeFast(r1AttenuvertedVoltage, mask) + (transposeVal * 1 / 12);
 			}
-			keyboardDisplayR1KeyOnValue = keyOnValue;
-			outputs[OUT_CV_R1_OUTPUT].setVoltage(roundedVoltageR1 + (transposeVal * 1 / 12));
+			outputs[OUT_CV_R1_OUTPUT].setVoltage(roundedVoltageR1);
 		}
 		else
 		{
 			outputs[OUT_CV_R1_OUTPUT].setVoltage(0);
-			keyboardDisplayR1KeyOnValue = -1; // set to minus one so that no keys light up
 		}
 
 		if (inputs[IN_CV_R2_INPUT].isConnected())
 		{ // handle row 1
+			displayR2on = 1;
+
 			double r2Input = inputs[IN_CV_R2_INPUT].getVoltage();
 			double r2AttenuvertValue = params[KNOB_ATTENUVERT_R2_PARAM].getValue();
 			double r2AttenuvertedVoltage = (r2Input * r2AttenuvertValue) + nudgeVal;
@@ -333,23 +245,15 @@ struct Quantify : Module
 			{
 				r2AttenuvertedVoltage = -10;
 			}
-			double roundedVoltageR2 = 0;
-			double keyOnValue = 0;
-			if (allowedDecimalValues.size() != 0)
+			if (mask != 0)
 			{
-				roundedVoltageR2 = roundToNearestAllowedDecimal(
-					r2AttenuvertedVoltage,
-					allowedDecimalValues.data(),
-					allowedDecimalValues.size(),
-					keyOnValue);
+				roundedVoltageR2 = quantizeFast(r2AttenuvertedVoltage, mask) + (transposeVal * 1 / 12);
 			}
-			keyboardDisplayR2KeyOnValue = keyOnValue;
-			outputs[OUT_CV_R2_OUTPUT].setVoltage(roundedVoltageR2 + (transposeVal * 1 / 12));
+			outputs[OUT_CV_R2_OUTPUT].setVoltage(roundedVoltageR2);
 		}
 		else
 		{
 			outputs[OUT_CV_R2_OUTPUT].setVoltage(0);
-			keyboardDisplayR2KeyOnValue = -1; // set to minus one so that no keys light up
 		}
 	}
 };
@@ -359,7 +263,7 @@ struct QuantifyWidget : ModuleWidget
 	QuantifyWidget(Quantify *module)
 	{
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Quantify.svg"),asset::plugin(pluginInstance, "res/panels/dark/Quantify.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Quantify.svg"), asset::plugin(pluginInstance, "res/panels/dark/Quantify.svg")));
 
 		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, 0)));
 		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
@@ -411,17 +315,20 @@ struct QuantifyWidget : ModuleWidget
 		{
 			KeyboardDisplay *keyboardDisplayR0 = new KeyboardDisplay();
 			keyboardDisplayR0->box.pos = mm2px(Vec(56.9, 34.16));
-			keyboardDisplayR0->keyOnValue = &module->keyboardDisplayR0KeyOnValue;
+			keyboardDisplayR0->mappedVoltage = &module->roundedVoltageR0;
+			keyboardDisplayR0->on = &module->displayR0on;
 			addChild(keyboardDisplayR0);
 
 			KeyboardDisplay *keyboardDisplayR1 = new KeyboardDisplay();
 			keyboardDisplayR1->box.pos = mm2px(Vec(56.9, 64.05));
-			keyboardDisplayR1->keyOnValue = &module->keyboardDisplayR1KeyOnValue;
+			keyboardDisplayR1->mappedVoltage = &module->roundedVoltageR1;
+			keyboardDisplayR1->on = &module->displayR1on;
 			addChild(keyboardDisplayR1);
 
 			KeyboardDisplay *keyboardDisplayR2 = new KeyboardDisplay();
 			keyboardDisplayR2->box.pos = mm2px(Vec(56.9, 93.85));
-			keyboardDisplayR2->keyOnValue = &module->keyboardDisplayR2KeyOnValue;
+			keyboardDisplayR2->mappedVoltage = &module->roundedVoltageR2;
+			keyboardDisplayR2->on = &module->displayR2on;
 			addChild(keyboardDisplayR2);
 		}
 	}
