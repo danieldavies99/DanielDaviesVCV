@@ -7,9 +7,9 @@
 
 using namespace rack;
 
-static constexpr int RESOLUTION = 1000; // 1mV resolution
-static constexpr int RANGE_MIN = -10 * RESOLUTION; // -10000
-static constexpr int RANGE_MAX = 10 * RESOLUTION;  //  10000
+static constexpr int RESOLUTION = 1000;					 // 1mV resolution
+static constexpr int RANGE_MIN = -10 * RESOLUTION;		 // -10000
+static constexpr int RANGE_MAX = 10 * RESOLUTION;		 //  10000
 static constexpr int TABLE_SIZE = RANGE_MAX - RANGE_MIN; // 20000
 
 struct Quantify : Module
@@ -108,7 +108,8 @@ struct Quantify : Module
 	{
 		quantize::KeyMask mask = 0;
 
-		auto setNote = [&](int paramIndex, int lightIndex, int bitPosition) {
+		auto setNote = [&](int paramIndex, int lightIndex, int bitPosition)
+		{
 			if (params[paramIndex].getValue() == 1)
 			{
 				mask |= (1 << bitPosition);
@@ -120,43 +121,47 @@ struct Quantify : Module
 			}
 		};
 
-		setNote(SWITCH_NOTE_C_PARAM,        LIGHT_KEY_BUTTON_C_LIGHT,        0);
-		setNote(SWITCH_NOTE_C_SHARP_PARAM,  LIGHT_KEY_BUTTON_C_SHARP_LIGHT,  1);
-		setNote(SWITCH_NOTE_D_PARAM,        LIGHT_KEY_BUTTON_D_LIGHT,        2);
-		setNote(SWITCH_NOTE_D_SHARP_PARAM,  LIGHT_KEY_BUTTON_D_SHARP_LIGHT,  3);
-		setNote(SWITCH_NOTE_E_PARAM,        LIGHT_KEY_BUTTON_E_LIGHT,        4);
-		setNote(SWITCH_NOTE_F_PARAM,        LIGHT_KEY_BUTTON_F_LIGHT,        5);
-		setNote(SWITCH_NOTE_F_SHARP_PARAM,  LIGHT_KEY_BUTTON_F_SHARP_LIGHT,  6);
-		setNote(SWITCH_NOTE_G_PARAM,        LIGHT_KEY_BUTTON_G_LIGHT,        7);
-		setNote(SWITCH_NOTE_G_SHARP_PARAM,  LIGHT_KEY_BUTTON_G_SHARP_LIGHT,  8);
-		setNote(SWITCH_NOTE_A_PARAM,        LIGHT_KEY_BUTTON_A_LIGHT,        9);
-		setNote(SWITCH_NOTE_A_SHARP_PARAM,  LIGHT_KEY_BUTTON_A_SHARP_LIGHT, 10);
-		setNote(SWITCH_NOTE_B_PARAM,        LIGHT_KEY_BUTTON_B_LIGHT,       11);
+		setNote(SWITCH_NOTE_C_PARAM, LIGHT_KEY_BUTTON_C_LIGHT, 0);
+		setNote(SWITCH_NOTE_C_SHARP_PARAM, LIGHT_KEY_BUTTON_C_SHARP_LIGHT, 1);
+		setNote(SWITCH_NOTE_D_PARAM, LIGHT_KEY_BUTTON_D_LIGHT, 2);
+		setNote(SWITCH_NOTE_D_SHARP_PARAM, LIGHT_KEY_BUTTON_D_SHARP_LIGHT, 3);
+		setNote(SWITCH_NOTE_E_PARAM, LIGHT_KEY_BUTTON_E_LIGHT, 4);
+		setNote(SWITCH_NOTE_F_PARAM, LIGHT_KEY_BUTTON_F_LIGHT, 5);
+		setNote(SWITCH_NOTE_F_SHARP_PARAM, LIGHT_KEY_BUTTON_F_SHARP_LIGHT, 6);
+		setNote(SWITCH_NOTE_G_PARAM, LIGHT_KEY_BUTTON_G_LIGHT, 7);
+		setNote(SWITCH_NOTE_G_SHARP_PARAM, LIGHT_KEY_BUTTON_G_SHARP_LIGHT, 8);
+		setNote(SWITCH_NOTE_A_PARAM, LIGHT_KEY_BUTTON_A_LIGHT, 9);
+		setNote(SWITCH_NOTE_A_SHARP_PARAM, LIGHT_KEY_BUTTON_A_SHARP_LIGHT, 10);
+		setNote(SWITCH_NOTE_B_PARAM, LIGHT_KEY_BUTTON_B_LIGHT, 11);
 
 		return mask;
 	}
 
 	std::unordered_map<quantize::KeyMask, std::vector<double>> cachedTables;
 
-	const std::vector<double>& getCachedTable(quantize::KeyMask mask) {
+	const std::vector<double> &getCachedTable(quantize::KeyMask mask)
+	{
 		auto it = cachedTables.find(mask);
-		if (it != cachedTables.end()) return it->second;
+		if (it != cachedTables.end())
+			return it->second;
 
-		std::vector<double> table(TABLE_SIZE);  // 20000 entries from -10V to +10V
+		std::vector<double> table(TABLE_SIZE); // 20000 entries from -10V to +10V
 		auto allowed = quantize::allowedDecimalsFromMask(mask);
 
-		for (int i = 0; i < TABLE_SIZE; ++i) {
-			double dummy;
-			double input = (RANGE_MIN + i) / static_cast<double>(RESOLUTION);  // Convert to volts
-			table[i] = quantize::roundToNearestAllowedDecimal(input, allowed.data(), allowed.size(), dummy);
+		for (int i = 0; i < TABLE_SIZE; ++i)
+		{
+			double input = (RANGE_MIN + i) / static_cast<double>(RESOLUTION); // Convert to volts
+			table[i] = quantize::roundToNearestAllowedDecimal(input, allowed.data(), allowed.size());
 		}
 
 		cachedTables[mask] = std::move(table);
 		return cachedTables[mask];
 	}
 
-	double quantizeFast(double input, quantize::KeyMask mask) {
-		if (mask == 0) return input; // fail-safe
+	double quantizeFast(double input, quantize::KeyMask mask)
+	{
+		if (mask == 0)
+			return input; // fail-safe
 
 		int index = clamp(int(input * RESOLUTION) - RANGE_MIN, 0, TABLE_SIZE - 1);
 		return getCachedTable(mask)[index];
@@ -188,7 +193,8 @@ struct Quantify : Module
 			{
 				r0AttenuvertedVoltage = -10;
 			}
-			if (mask != 0) {
+			if (mask != 0)
+			{
 				roundedVoltageR0 = quantizeFast(r0AttenuvertedVoltage, mask) + (transposeVal * 1 / 12);
 			}
 			outputs[OUT_CV_R0_OUTPUT].setVoltage(roundedVoltageR0);
@@ -213,7 +219,8 @@ struct Quantify : Module
 			{
 				r1AttenuvertedVoltage = -10;
 			}
-			if (mask != 0) {
+			if (mask != 0)
+			{
 				roundedVoltageR1 = quantizeFast(r1AttenuvertedVoltage, mask) + (transposeVal * 1 / 12);
 			}
 			outputs[OUT_CV_R1_OUTPUT].setVoltage(roundedVoltageR1);
@@ -238,8 +245,9 @@ struct Quantify : Module
 			{
 				r2AttenuvertedVoltage = -10;
 			}
-			if (mask != 0) {
-				roundedVoltageR2 = quantizeFast(r2AttenuvertedVoltage, mask)  + (transposeVal * 1 / 12);
+			if (mask != 0)
+			{
+				roundedVoltageR2 = quantizeFast(r2AttenuvertedVoltage, mask) + (transposeVal * 1 / 12);
 			}
 			outputs[OUT_CV_R2_OUTPUT].setVoltage(roundedVoltageR2);
 		}
@@ -255,7 +263,7 @@ struct QuantifyWidget : ModuleWidget
 	QuantifyWidget(Quantify *module)
 	{
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Quantify.svg"),asset::plugin(pluginInstance, "res/panels/dark/Quantify.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/panels/light/Quantify.svg"), asset::plugin(pluginInstance, "res/panels/dark/Quantify.svg")));
 
 		addChild(createWidget<ThemedScrew>(Vec(RACK_GRID_WIDTH, 0)));
 		addChild(createWidget<ThemedScrew>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
