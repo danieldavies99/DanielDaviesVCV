@@ -661,19 +661,31 @@ struct Knot : Module
 
 		if (inputs[out1in].isConnected())
 		{
-			outputs[OUTPUT_OUT_1_OUTPUT].setVoltage(inputs[out1in].getVoltage());
+			int channels = inputs[out1in].getChannels();
+			outputs[OUTPUT_OUT_1_OUTPUT].setChannels(channels);
+			for (int c = 0; c < channels; c++)
+				outputs[OUTPUT_OUT_1_OUTPUT].setVoltage(inputs[out1in].getVoltage(c), c);
 		}
 		if (inputs[out2in].isConnected())
 		{
-			outputs[OUTPUT_OUT_2_OUTPUT].setVoltage(inputs[out2in].getVoltage());
+			int channels = inputs[out2in].getChannels();
+			outputs[OUTPUT_OUT_2_OUTPUT].setChannels(channels);
+			for (int c = 0; c < channels; c++)
+				outputs[OUTPUT_OUT_2_OUTPUT].setVoltage(inputs[out2in].getVoltage(c), c);
 		}
 		if (inputs[out3in].isConnected())
 		{
-			outputs[OUTPUT_OUT_3_OUTPUT].setVoltage(inputs[out3in].getVoltage());
+			int channels = inputs[out3in].getChannels();
+			outputs[OUTPUT_OUT_3_OUTPUT].setChannels(channels);
+			for (int c = 0; c < channels; c++)
+				outputs[OUTPUT_OUT_3_OUTPUT].setVoltage(inputs[out3in].getVoltage(c), c);
 		}
 		if (inputs[out4in].isConnected())
 		{
-			outputs[OUTPUT_OUT_4_OUTPUT].setVoltage(inputs[out4in].getVoltage());
+			int channels = inputs[out4in].getChannels();
+			outputs[OUTPUT_OUT_4_OUTPUT].setChannels(channels);
+			for (int c = 0; c < channels; c++)
+				outputs[OUTPUT_OUT_4_OUTPUT].setVoltage(inputs[out4in].getVoltage(c), c);
 		}
 	}
 
