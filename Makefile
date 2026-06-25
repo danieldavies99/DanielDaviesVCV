@@ -28,5 +28,8 @@ run:
 copy:
 	cp "C:\C++\Rack-SDK-2.6.4-win\Rack-SDK\DanielDaviesVCV\dist\SequelSequencers" "C:\Users\danie\Documents\Rack2\plugins" -r
 
+copy-pro:
+	cp "C:\C++\Rack-SDK-2.6.4-win\Rack-SDK\DanielDaviesVCV\dist\SequelSequencers" "C:\Users\danie\Documents\Rack2\plugins-win-x64" -r
+
 build-and-run:
 	make install && make copy && make run

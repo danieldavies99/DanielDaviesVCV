@@ -95,6 +95,12 @@ struct Bend : Module
 
 	bool lfoEnabled = false;
 
+	void onSampleRateChange(const SampleRateChangeEvent& e) override
+	{
+		for (auto& osc : oscillators)
+			osc.setSampleTime(e.sampleTime);
+	}
+
 	BendWavetable::InterpolationMode interpolationMode = BendWavetable::LINEAR;
 
 	void process(const ProcessArgs &args) override
