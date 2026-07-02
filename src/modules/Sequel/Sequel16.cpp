@@ -407,6 +407,44 @@ struct Sequel16 : Module
 	}
 	// ****** End *******
 
+	void rotateRowLeft(short row)
+	{
+		float tempKnob = params[getKnobId(row, 0)].getValue();
+		float tempGate = params[getButtonId(row, 0)].getValue();
+		for (int col = 0; col < 15; col++)
+		{
+			params[getKnobId(row, col)].setValue(params[getKnobId(row, col + 1)].getValue());
+			params[getButtonId(row, col)].setValue(params[getButtonId(row, col + 1)].getValue());
+		}
+		params[getKnobId(row, 15)].setValue(tempKnob);
+		params[getButtonId(row, 15)].setValue(tempGate);
+	}
+
+	void rotateRowRight(short row)
+	{
+		float tempKnob = params[getKnobId(row, 15)].getValue();
+		float tempGate = params[getButtonId(row, 15)].getValue();
+		for (int col = 15; col > 0; col--)
+		{
+			params[getKnobId(row, col)].setValue(params[getKnobId(row, col - 1)].getValue());
+			params[getButtonId(row, col)].setValue(params[getButtonId(row, col - 1)].getValue());
+		}
+		params[getKnobId(row, 0)].setValue(tempKnob);
+		params[getButtonId(row, 0)].setValue(tempGate);
+	}
+
+	void rotateAllLeft()
+	{
+		for (short row = 0; row < 3; row++)
+			rotateRowLeft(row);
+	}
+
+	void rotateAllRight()
+	{
+		for (short row = 0; row < 3; row++)
+			rotateRowRight(row);
+	}
+
 	int clockDivideDisplayValueR0 = 0;
 	int clockDivideDisplayValueR1 = 0;
 	int clockDivideDisplayValueR2 = 0;
@@ -1031,84 +1069,35 @@ struct Sequel16Widget : ModuleWidget
 		Sequel16 *module = dynamic_cast<Sequel16 *>(this->module);
 
 		menu->addChild(new MenuEntry);
-		menu->addChild(createMenuLabel("Randomize"));
 
-		struct RandomizeAllGates : MenuItem
-		{
-			Sequel16 *module;
-			void onAction(const event::Action &e) override
+		menu->addChild(createSubmenuItem("Randomize", "", [=](Menu *menu) {
+			menu->addChild(createMenuItem("Randomize all CV knobs", "", [=]() { module->randomizeCVKnobs(); }));
+			menu->addChild(createMenuItem("Randomize all gates", "", [=]() { module->randomizeGates(); }));
+			for (short row = 0; row < 3; row++)
 			{
-				module->randomizeGates();
+				menu->addChild(new MenuSeparator());
+				menu->addChild(createMenuItem("Randomize CV knobs for row " + std::to_string(row + 1), "", [=]() { module->randomizeCVKnobsForRow(row); }));
+				menu->addChild(createMenuItem("Randomize gates for row " + std::to_string(row + 1), "", [=]() { module->randomizeGatesForRow(row); }));
 			}
-		};
+		}));
 
-		struct RandomizeAllCVKnobs : MenuItem
-		{
-			Sequel16 *module;
-			void onAction(const event::Action &e) override
+		menu->addChild(createSubmenuItem("Rotate", "", [=](Menu *menu) {
+			menu->addChild(createMenuItem("Rotate all left", "", [=]() { module->rotateAllLeft(); }));
+			menu->addChild(createMenuItem("Rotate all right", "", [=]() { module->rotateAllRight(); }));
+			for (short row = 0; row < 3; row++)
 			{
-				module->randomizeCVKnobs();
+				menu->addChild(new MenuSeparator());
+				menu->addChild(createMenuItem("Rotate row " + std::to_string(row + 1) + " left", "", [=]() { module->rotateRowLeft(row); }));
+				menu->addChild(createMenuItem("Rotate row " + std::to_string(row + 1) + " right", "", [=]() { module->rotateRowRight(row); }));
 			}
-		};
+		}));
 
-		struct RandomizeCVKnobsForRow : MenuItem
-		{
-			short row;
-			Sequel16 *module;
-			void onAction(const event::Action &e) override
-			{
-				module->randomizeCVKnobsForRow(row);
-			}
-		};
-
-		struct RandomizeGatesForRow : MenuItem
-		{
-			short row;
-			Sequel16 *module;
-			void onAction(const event::Action &e) override
-			{
-				module->randomizeGatesForRow(row);
-			}
-		};
-
-		struct ToggleSampleAndHold : MenuItem
-		{
-			Sequel16 *module;
-			void onAction(const event::Action &e) override
-			{
-				module->sampleAndHoldEnabled = !module->sampleAndHoldEnabled;
-			}
-		};
-
-		RandomizeAllGates *randomizeAllGates = createMenuItem<RandomizeAllGates>("Randomize all gates");
-		randomizeAllGates->module = module;
-		RandomizeAllCVKnobs *randomizeAllCVKnobs = createMenuItem<RandomizeAllCVKnobs>("Randomize all CV knobs");
-		randomizeAllCVKnobs->module = module;
-
-		menu->addChild(randomizeAllCVKnobs);
-		menu->addChild(randomizeAllGates);
-
-		for (short row = 0; row < 3; row++)
-		{
-			menu->addChild(new MenuSeparator());
-
-			RandomizeCVKnobsForRow *randomizeCVKnobsForRow = createMenuItem<RandomizeCVKnobsForRow>("Randomize CV knobs for row " + std::to_string(row + 1));
-			randomizeCVKnobsForRow->row = row;
-			randomizeCVKnobsForRow->module = module;
-
-			RandomizeGatesForRow *randomizeGatesForRow = createMenuItem<RandomizeGatesForRow>("Randomize Gates for row " + std::to_string(row + 1));
-			randomizeGatesForRow->row = row;
-			randomizeGatesForRow->module = module;
-
-			menu->addChild(randomizeCVKnobsForRow);
-			menu->addChild(randomizeGatesForRow);
-		}
 		menu->addChild(new MenuSeparator());
 		menu->addChild(createMenuLabel("Settings"));
-		ToggleSampleAndHold *sampleAndHoldToggle = createMenuItem<ToggleSampleAndHold>("Sample and hold");
-		sampleAndHoldToggle->rightText = CHECKMARK(module->sampleAndHoldEnabled);
-		sampleAndHoldToggle->module = module;
-		menu->addChild(sampleAndHoldToggle);
+		menu->addChild(createCheckMenuItem("Sample and hold", "",
+			[=]() { return module->sampleAndHoldEnabled; },
+			[=]() { module->sampleAndHoldEnabled = !module->sampleAndHoldEnabled; }
+		));
 	}
 };
 
